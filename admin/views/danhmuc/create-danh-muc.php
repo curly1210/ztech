@@ -93,8 +93,8 @@
 
                                                 <div class=" mb-3">
                                                     <label for="hinh_anh" class="form-label d-block">Icon danh mục</label>
-                                                    <!-- <input type="file" class="form-control"> -->
-                                                    <input type="file" name="hinh_anh">
+                                                    <input type="file" name="hinh_anh" class="form-control">
+
                                                     <span class="text-danger">
                                                         <?= !empty($_SESSION['errors']['hinh_anh']) ? $_SESSION['errors']['hinh_anh'] : '' ?>
                                                     </span>

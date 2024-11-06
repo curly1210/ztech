@@ -86,7 +86,7 @@
                                                             <td><?= $danhMuc['ten'] ?></td>
                                                             <td> <img src="<?= $danhMuc['hinh_anh'] ?>" alt="" width="50px"> </td>
                                                             <td>
-                                                                <?php if ($danhMuc['trang_thai'] == 1) {
+                                                                <?php if ($danhMuc['trang_thai'] == 2) {
 
                                                                 ?>
                                                                     <span class="badge bg-success-subtle text-success">Hiển thị</span>
@@ -101,7 +101,7 @@
                                                             <td>
                                                                 <div class="hstack gap-3 fs-15">
                                                                     <a href="?act=form-sua-danh-muc&id=<?= $danhMuc['id'] ?>" class="link-primary"><i class="ri-settings-4-line"></i></a>
-                                                                    <form action="?act=xoa-danh-muc" method="POST" onsubmit='confirm("Bạn có chắc muốn xóa dữ liệu này ?")'>
+                                                                    <form action="?act=xoa-danh-muc" method="POST" onsubmit='return confirm("Bạn có chắc muốn xóa dữ liệu này ?")'>
                                                                         <input type="hidden" name="danh_muc_id" value="<?= $danhMuc['id'] ?>">
                                                                         <button type="submit" class="link-danger" style="border: none; background:none"><i class="ri-delete-bin-5-line"></i></button>
                                                                     </form>

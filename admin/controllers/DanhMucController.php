@@ -55,12 +55,15 @@ class DanhMucController
     public function update()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            if (isset($_FILES['hinh_anh'])) {
+            if (isset($_FILES)) {
                 $upFile = '../uploads/' . basename($_FILES['hinh_anh']['name']);
-                $hinhAnh = move_uploaded_file($_FILES['hinh_anh']['tmp_name'], $upFile);
-            } else {
-                $hinhAnh = $_POST['hinh-anh-truoc'];
+                if (move_uploaded_file($_FILES['hinh_anh']['tmp_name'], $upFile)) {
+                    $hinhAnh = $upFile;
+                } else {
+                    $hinhAnh = $_POST['hinh-anh-truoc'];
+                };
             }
+
             $tenDanhMuc = $_POST['ten_danh_muc'];
             $trangThai = $_POST['trang_thai'] ?? null;
             $id = $_POST['id'];
@@ -69,8 +72,11 @@ class DanhMucController
                 $errors['ten_danh_muc'] = 'Tên danh mục là bắt buộc';
             }
             if (empty($errors)) {
+                echo $hinhAnh;
                 $this->modelDanhMuc->updateData($id, $tenDanhMuc, $trangThai, $hinhAnh);
-                // die();
+
+
+                print_r($_POST['hinh-anh-truoc']);
                 unset($_SESSION['errors']);
                 header('Location: ?act=danh-mucs');
                 exit();

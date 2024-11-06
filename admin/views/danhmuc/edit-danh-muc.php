@@ -83,8 +83,8 @@
                                                         <label for="trang_thai" class="form-label">Trạng thái</label>
                                                         <select name="trang_thai" class="form-select">
                                                             <option selected disabled>Chọn trạng thái</option>
-                                                            <option value="0" <?= $danhMuc['trang_thai'] == 0 ? 'selected' : '' ?>>Ẩn</option>
-                                                            <option value="1" <?= $danhMuc['trang_thai'] == 1 ? 'selected' : '' ?>>Hiển thị</option>
+                                                            <option value="1" <?= $danhMuc['trang_thai'] == 1 ? 'selected' : '' ?>>Ẩn</option>
+                                                            <option value="2" <?= $danhMuc['trang_thai'] == 2 ? 'selected' : '' ?>>Hiển thị</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -92,7 +92,7 @@
                                                 <div class=" mb-3">
                                                     <label for="hinh_anh" class="form-label d-block">Icon danh mục</label>
                                                     <input type="file" class="form-control" id="hinh_anh" name="hinh_anh" aria-describedby="inputGroupFileAddon03" aria-label="Upload">
-                                                    <input type="hidden" name="hinh-anh-truoc" value="<?= $danhMuc['hinh_anh'] ?>">
+                                                    <input type="hidden" name="hinh-anh-truoc" value="<?= $danhMuc['hinh_anh'] ?? '' ?>">
 
                                                 </div>
 
