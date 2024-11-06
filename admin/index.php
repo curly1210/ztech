@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 // Require file Common
 require_once '../commons/env.php'; // Khai báo biến môi trường
 require_once '../commons/function.php'; // Hàm hỗ trợ
@@ -17,7 +17,7 @@ $act = $_GET['act'] ?? '/';
 
 match ($act) {
     // Dashboards
-    '/' => (new DashboardController())->index(),
+    '/'                     => (new DashboardController())->index(),
     //Quản lý danh mục
     'danh-mucs'             => (new DanhMucController())->index(),
     'form-them-danh-muc'    => (new DanhMucController())->create(),
