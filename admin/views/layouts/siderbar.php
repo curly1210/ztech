@@ -77,6 +77,13 @@
 
                 </li>
 
+                <li class="nav-item">
+                    <a class="nav-link menu-link " href="?act=nguoi-dungs">
+                        <i class="ri-account-circle-line"></i> <span data-key="t-forms">Người dùng</span>
+                    </a>
+
+                </li>
+
 
 
                 <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Bán hàng</span></li>

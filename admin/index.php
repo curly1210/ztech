@@ -8,10 +8,12 @@ require_once '../commons/function.php'; // Hàm hỗ trợ
 require_once 'controllers/DashboardController.php';
 require_once 'controllers/DanhMucController.php';
 require_once 'controllers/LienHeController.php';
+require_once 'controllers/NguoiDungController.php';
 
 // Require toàn bộ file Models
 require_once 'models/DanhMuc.php';
 require_once 'models/LienHe.php';
+require_once 'models/NguoiDung.php';
 // Route
 $act = $_GET['act'] ?? '/';
 
@@ -31,5 +33,8 @@ match ($act) {
     //Quản lý liên hệ
     'lien-hes' => (new LienHeController())->index(),
     'xoa-lien-he' => (new LienHeController())->destroy(),
-    // 'tim-kiem-lien-he' => (new LienHeController())->search(),
+
+    //Quản lý người dùng
+    'nguoi-dungs' => (new NguoiDungController())->index(),
+    'xoa-nguoi-dung' => (new NguoiDungController())->destroy(),
 };
