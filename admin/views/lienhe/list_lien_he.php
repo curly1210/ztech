@@ -89,29 +89,27 @@
                         <table class="table  align-middle table-bordered   mb-0">
                           <thead>
                             <tr>
-                              <th class="col-1" scope="col">STT</th>
-                              <th class="col-2" scope="col">Họ tên</th>
-                              <th class="col-2" scope="col">Số điện thoại</th>
-                              <th class="col-2" scope="col">Email</th>
-                              <th class="col-4" scope="col">Nội dung</th>
-                              <th class="col-1 text-center" scope="col">Hành động</th>
+                              <th class="col-1 text-center" scope="col">STT</th>
+                              <th class="col-3 text-center" scope="col">Họ tên</th>
+                              <th class="col-3 text-center" scope="col">Email</th>
+                              <th class="col-3 text-center" scope="col">Hành động</th>
                             </tr>
                           </thead>
                           <tbody>
 
                             <?php foreach ($lienHes as $index => $lienHe): ?>
                               <tr>
-                                <td><?= $index + 1 ?></td>
-                                <td><?= $lienHe['ho_ten'] ?></td>
-                                <td><?= $lienHe['so_dien_thoai'] ?></td>
-                                <td><?= $lienHe['email'] ?></td>
-                                <td><?= $lienHe['noi_dung'] ?></td>
+                                <td class="text-center"><?= $index + 1 ?></td>
+                                <td class="text-center"><?= $lienHe['ho_ten'] ?></td>
+                                <td class="text-center"><?= $lienHe['email'] ?></td>
                                 <td class="text-center align-middle">
                                   <div class="hstack justify-content-center align-items-center fs-20">
+                                    <a href="#" class="btn btn-sm btn-light">Chi tiết</a>
                                     <form action="?act=xoa-lien-he" method="POST" onsubmit='return confirm("Bạn có chắc muốn xóa dữ liệu này ?")'>
                                       <input type="hidden" name="id_lien_he" value="<?= $lienHe['id'] ?>">
                                       <button type="submit" class="link-danger" style="border: none; background:none"><i class="ri-delete-bin-5-line"></i></button>
                                     </form>
+
                                   </div>
                                 </td>
                               </tr>

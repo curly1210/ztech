@@ -104,12 +104,11 @@
                                   <input class="form-check-input" type="checkbox" value="0" id="select_all">
                                 </div>
                               </th>
-                              <th class="col-2 text-center" scope="col">Họ tên</th>
-                              <th class="col-2 text-center" scope="col">Số điện thoại</th>
-                              <th class="col-1 text-center" scope="col">Giới tính</th>
+                              <th class="col-3 text-center" scope="col">Họ tên</th>
+                              <!-- <th class="col-1 text-center" scope="col">Giới tính</th> -->
                               <th class="col-3 text-center" scope="col">Email</th>
-                              <th class="col-2 text-center" scope="col">Admin</th>
-                              <th class="col-2 text-center" scope="col">Trạng thái</th>
+                              <th class="col-3 text-center" scope="col">Vai trò</th>
+                              <th class="col-3 text-center" scope="col">Hành động</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -123,11 +122,13 @@
                                 </td>
                                 <td class="id" style="display:none;"><a href="javascript:void(0);" class="fw-medium link-primary">#VZ10</a></td>
                                 <td class="text-center"><?= $nguoiDung['ho_ten'] ?></td>
-                                <td class="text-center"><?= $nguoiDung['dien_thoai'] ?></td>
-                                <td class="text-center"><?php if ($nguoiDung['gioi_tinh'] == 1) { ?>Nam<?php } else { ?>Nữ<?php } ?></td>
                                 <td class="text-center"><?= $nguoiDung['email'] ?></td>
                                 <td class="text-center"><?php if ($nguoiDung['admin'] == 0) { ?>Khách hàng<?php } else { ?>Admin<?php } ?></td>
-                                <td class="text-center"><?php if ($nguoiDung['trang_thai'] == 0) { ?>Vô hiệu hóa<?php } else { ?>Kích hoạt<?php } ?></td>
+                                <td>
+                                  <div class="d-flex justify-content-center align-items-center hstack gap-3 flex-wrap">
+                                    <a href="#" class="btn btn-sm btn-light">Chi tiết</a>
+                                  </div>
+                                </td>
 
                                 <!-- <td>
                                   <div class="d-flex justify-content-center align-items-center">
