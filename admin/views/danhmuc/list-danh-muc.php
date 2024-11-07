@@ -68,7 +68,9 @@
                                 <div class="card-body">
 
                                     <div class="live-preview">
+
                                         <div class="table-responsive">
+
                                             <table class="table table-borderless align-middle table-nowrap mb-0">
                                                 <thead>
                                                     <tr>
@@ -94,7 +96,7 @@
                                                                 ?>
                                                                     <span class="badge bg-danger-subtle text-danger">Ẩn</span>
 
-                                                                <?
+                                                                <?php
                                                                 } ?>
 
                                                             </td>
