@@ -7,7 +7,7 @@
 <head>
 
     <meta charset="utf-8" />
-    <title>Cập nhật danh mục | TechZ</title>
+    <title>Thêm Tin Tức | TechZ</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
@@ -46,11 +46,11 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
-                                <h4 class="mb-sm-0">Quản lý danh mục</h4>
+                                <h4 class="mb-sm-0">Quản lý tin tức</h4>
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
                                         <li class="breadcrumb-item"><a href="?act=/">Dashboards</a></li>
-                                        <li class="breadcrumb-item active">Quản lý danh mục</li>
+                                        <li class="breadcrumb-item active">Quản lý tin tức</li>
                                     </ol>
                                 </div>
 
@@ -59,48 +59,69 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header align-items-center d-flex">
-                                    <h4 class="card-title mb-0 flex-grow-1">Cập nhật danh mục</h4>
+                                    <h4 class="card-title mb-0 flex-grow-1">Thêm tin tức</h4>
                                 </div><!-- end card header -->
 
                                 <div class="card-body">
 
                                     <div class="live-preview">
-                                        <form action="?act=sua-danh-muc" method="POST" enctype="multipart/form-data">
-                                            <input type="hidden" name="id" value="<?= $danhMuc['id'] ?>">
+                                        <form action="?act=them-tin-tuc" method="POST" enctype="multipart/form-data">
                                             <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="mb-3">
-                                                        <label for="ten_danh_muc" class="form-label">Tên danh mục</label>
-                                                        <input type="text" class="form-control" placeholder="Nhập tên danh mục" id="ten_danh_muc" name="ten_danh_muc" value="<?= $danhMuc['ten'] ?? '' ?>">
+                                                <div class="col-6">
+                                                    <div>
+                                                        <label for="tieu_de" class="form-label">Tiêu đề</label>
+                                                        <input type="text" class="form-control" placeholder="Nhập tên danh mục" id="tieu_de" name="tieu_de">
                                                         <span class="text-danger">
-                                                            <?= isset($_SESSION['errors']['ten_danh_muc']) ? $_SESSION['errors']['ten_danh_muc'] : '' ?>
+                                                            <?= !empty($_SESSION['errors']['tieu_de']) ? $_SESSION['errors']['tieu_de'] : '' ?>
                                                         </span>
                                                     </div>
                                                 </div>
-                                                <!--end col-->
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
                                                         <label for="trang_thai" class="form-label">Trạng thái</label>
                                                         <select name="trang_thai" class="form-select">
                                                             <option selected disabled>Chọn trạng thái</option>
-                                                            <option value="1" <?= $danhMuc['trang_thai'] == 1 ? 'selected' : '' ?>>Ẩn</option>
-                                                            <option value="2" <?= $danhMuc['trang_thai'] == 2 ? 'selected' : '' ?>>Hiển thị</option>
+                                                            <option value="1">Ẩn</option>
+                                                            <option value="2">Hiển thị</option>
                                                         </select>
+                                                        <span class="text-danger">
+                                                            <?= !empty($_SESSION['errors']['trang_thai']) ? $_SESSION['errors']['trang_thai'] : '' ?>
+                                                        </span>
                                                     </div>
                                                 </div>
-
-                                                <div class=" mb-3">
-                                                    <label for="hinh_anh" class="form-label d-block">Icon danh mục</label>
-                                                    <input type="file" class="form-control" id="hinh_anh" name="hinh_anh" aria-describedby="inputGroupFileAddon03" aria-label="Upload">
-                                                    <input type="hidden" name="hinh-anh-truoc" value="<?= $danhMuc['hinh_anh'] ?? '' ?>">
-
+                                                <div class="col-12">
+                                                    <div class=" mb-3">
+                                                        <label for="hinh_anh" class="form-label d-block">Hình ảnh bìa</label>
+                                                        <input type="file" name="hinh_anh" class="form-control">
+                                                        <span class="text-danger">
+                                                            <?= !empty($_SESSION['errors']['hinh_anh']) ? $_SESSION['errors']['hinh_anh'] : '' ?>
+                                                        </span>
+                                                    </div>
                                                 </div>
-
+                                                <div class="col-12">
+                                                    <div>
+                                                        <label for="exampleFormControlTextarea5" class="form-label">Mô tả ngắn</label>
+                                                        <textarea class="form-control" id="exampleFormControlTextarea5" name="mo_ta" rows="3" maxlength="249"></textarea>
+                                                        <span class="text-danger">
+                                                            <?= !empty($_SESSION['errors']['mo_ta']) ? $_SESSION['errors']['mo_ta'] : '' ?>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div>
+                                                        <label for="exampleFormControlTextarea5" class="form-label">Nội dung </label>
+                                                        <textarea class="form-control" id="exampleFormControlTextarea5" name="noi_dung" rows="20"></textarea>
+                                                        <span class="text-danger">
+                                                            <?= !empty($_SESSION['errors']['noi_dung']) ? $_SESSION['errors']['noi_dung'] : '' ?>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <!--end col-->
 
                                                 <!--end col-->
                                                 <div class="col-lg-12">
                                                     <div class="text-end">
-                                                        <button type="submit" class="btn btn-primary">Cập nhật</button>
+                                                        <button type="submit" class="btn btn-primary mt-3">Thêm mới</button>
                                                     </div>
                                                 </div>
                                                 <!--end col-->

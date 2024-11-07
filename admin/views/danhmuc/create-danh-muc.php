@@ -49,7 +49,7 @@
                                 <h4 class="mb-sm-0">Quản lý danh mục</h4>
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboards</a></li>
+                                        <li class="breadcrumb-item"><a href="?act=/">Dashboards</a></li>
                                         <li class="breadcrumb-item active">Quản lý danh mục</li>
                                     </ol>
                                 </div>

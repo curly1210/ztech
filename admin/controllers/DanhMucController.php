@@ -19,8 +19,8 @@ class DanhMucController
     {
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $upFile = '../uploads/' . basename($_FILES['hinh_anh']['name']);
-            $hinhAnh = move_uploaded_file($_FILES['hinh_anh']['tmp_name'], $upFile) ? $upFile : null;
+            $upFile = './uploads/' . basename($_FILES['hinh_anh']['name']);
+            $hinhAnh = move_uploaded_file($_FILES['hinh_anh']['tmp_name'], $upFile) ? $upFile : '';
             $tenDanhMuc = $_POST['ten_danh_muc'];
             $trangThai = $_POST['trang_thai'] ?? null;
 
@@ -56,7 +56,7 @@ class DanhMucController
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_FILES)) {
-                $upFile = '../uploads/' . basename($_FILES['hinh_anh']['name']);
+                $upFile = './uploads/' . basename($_FILES['hinh_anh']['name']);
                 if (move_uploaded_file($_FILES['hinh_anh']['tmp_name'], $upFile)) {
                     $hinhAnh = $upFile;
                 } else {

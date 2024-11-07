@@ -7,7 +7,7 @@
 <head>
 
     <meta charset="utf-8" />
-    <title>Dashboard | NN Shop</title>
+    <title>Dashboard | TechZ</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
@@ -30,7 +30,7 @@
 
         require_once "layouts/siderbar.php";
         ?>
-        
+
         <!-- Left Sidebar End -->
         <!-- Vertical Overlay-->
         <div class="vertical-overlay"></div>

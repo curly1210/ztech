@@ -7,7 +7,7 @@
 <head>
 
     <meta charset="utf-8" />
-    <title>Danh mục sản phẩm | TechZ</title>
+    <title>Quản lý danh mục | TechZ</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
@@ -49,7 +49,7 @@
                                 <h4 class="mb-sm-0">Quản lý danh mục</h4>
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboards</a></li>
+                                        <li class="breadcrumb-item"><a href="?act=/">Dashboards</a></li>
                                         <li class="breadcrumb-item active">Quản lý danh mục</li>
                                     </ol>
                                 </div>
@@ -92,7 +92,7 @@
                                                                     <span class="badge bg-success-subtle text-success">Hiển thị</span>
                                                                 <?php } else {
                                                                 ?>
-                                                                    <span class="badge bg-danger-subtle text-success">Ẩn</span>
+                                                                    <span class="badge bg-danger-subtle text-danger">Ẩn</span>
 
                                                                 <?
                                                                 } ?>

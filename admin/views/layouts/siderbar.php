@@ -69,7 +69,19 @@
                         </ul>
                     </div>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarPages" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarPages">
+                        <i class="ri-pages-line"></i> <span data-key="t-pages">Tin Tức</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarPages">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="?act=tin-tucs" class="nav-link" data-key="t-starter"> Danh sách </a>
+                            </li>
 
+                        </ul>
+                    </div>
+                </li>
                 <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Bán hàng</span></li>
 
             </ul>
