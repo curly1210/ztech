@@ -17,14 +17,15 @@ class DanhMuc
             echo "Lỗi : " . $e->getMessage();
         }
     }
-    public function postData($tenDanhMuc, $trangThai, $hinhAnh)
+    public function postData($tenDanhMuc, $trangThai, $hinhAnh, $moTa)
     {
         try {
-            $sql = "INSERT INTO danh_mucs (ten,hinh_anh,trang_thai) VALUES (:ten_danh_muc,:hinh_anh,:trang_thai)";
+            $sql = "INSERT INTO danh_mucs (ten,hinh_anh,trang_thai,mo_ta) VALUES (:ten_danh_muc,:hinh_anh,:trang_thai,:mo_ta)";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':ten_danh_muc', $tenDanhMuc);
             $stmt->bindParam(':hinh_anh', $hinhAnh);
             $stmt->bindParam(':trang_thai', $trangThai);
+            $stmt->bindParam(':mo_ta', $moTa);
             $stmt->execute();
             return true;
         } catch (PDOException $e) {
@@ -43,13 +44,14 @@ class DanhMuc
             echo "Lỗi : " . $e->getMessage();
         }
     }
-    public function updateData($id, $tenDanhMuc, $trangThai, $hinhAnh)
+    public function updateData($id, $tenDanhMuc, $trangThai, $hinhAnh, $moTa)
     {
         try {
-            $sql = "UPDATE danh_mucs SET ten=:ten_danh_muc ,hinh_anh=:hinh_anh,trang_thai=:trang_thai WHERE id = :id";
+            $sql = "UPDATE danh_mucs SET ten = :ten_danh_muc , hinh_anh = :hinh_anh, trang_thai = :trang_thai, mo_ta = :mo_ta WHERE id = :id";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':ten_danh_muc', $tenDanhMuc);
             $stmt->bindParam(':hinh_anh', $hinhAnh);
+            $stmt->bindParam(':mo_ta', $moTa);
             $stmt->bindParam(':trang_thai', $trangThai);
             $stmt->bindParam(':id', $id);
 

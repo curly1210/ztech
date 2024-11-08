@@ -27,6 +27,7 @@ match ($act) {
     '/'                     => (new DashboardController())->index(),
     //Quản lý danh mục
     'danh-mucs'             => (new DanhMucController())->index(),
+    'xem-chi-tiet-danh-muc' => (new DanhMucController())->detail(),
     'form-them-danh-muc'    => (new DanhMucController())->create(),
     'them-danh-muc'         => (new DanhMucController())->store(),
     'form-sua-danh-muc'     => (new DanhMucController())->edit(),

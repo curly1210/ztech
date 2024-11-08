@@ -100,7 +100,13 @@
                                                     </span>
                                                 </div>
 
-
+                                                <div class="mb-3">
+                                                    <label for="exampleFormControlTextarea5" class="form-label">Mô tả</label>
+                                                    <textarea class="form-control" name="mo_ta" id="exampleFormControlTextarea5" rows="4" maxlength="249"></textarea>
+                                                    <span class="text-danger">
+                                                        <?= !empty($_SESSION['errors']['mo_ta']) ? $_SESSION['errors']['mo_ta'] : '' ?>
+                                                    </span>
+                                                </div>
                                                 <!--end col-->
                                                 <div class="col-lg-12">
                                                     <div class="text-end">

@@ -11,6 +11,12 @@ class DanhMucController
         $danhMucs = $this->modelDanhMuc->getAll();
         require_once('./views/danhmuc/list-danh-muc.php');
     }
+    public function detail()
+    {
+        $id = $_GET['id'];
+        $danhMuc = $this->modelDanhMuc->getDetailData($id);
+        require_once("./views/danhmuc/detail-danh-muc.php");
+    }
     public function create()
     {
         require_once('./views/danhmuc/create-danh-muc.php');
@@ -22,11 +28,15 @@ class DanhMucController
             $upFile = './uploads/' . basename($_FILES['hinh_anh']['name']);
             $hinhAnh = move_uploaded_file($_FILES['hinh_anh']['tmp_name'], $upFile) ? $upFile : '';
             $tenDanhMuc = $_POST['ten_danh_muc'];
+            $moTa = $_POST['mo_ta'];
             $trangThai = $_POST['trang_thai'] ?? null;
 
             $errors = [];
             if (empty($tenDanhMuc)) {
                 $errors['ten_danh_muc'] = 'Tên danh mục là bắt buộc';
+            }
+            if (empty($moTa)) {
+                $errors['mo_ta'] = 'Mô tả là bắt buộc';
             }
             if (empty($trangThai)) {
                 $errors['trang_thai'] = 'Trạng thái là bắt buộc';
@@ -35,7 +45,7 @@ class DanhMucController
                 $errors['hinh_anh'] = 'Icon là bắt buộc';
             }
             if (empty($errors)) {
-                $this->modelDanhMuc->postData($tenDanhMuc, $trangThai, $hinhAnh);
+                $this->modelDanhMuc->postData($tenDanhMuc, $trangThai, $hinhAnh, $moTa);
                 unset($_SESSION['errors']);
                 header('Location: ?act=danh-mucs');
                 exit();
@@ -65,24 +75,26 @@ class DanhMucController
             }
 
             $tenDanhMuc = $_POST['ten_danh_muc'];
+            $moTa = $_POST['mo_ta'];
             $trangThai = $_POST['trang_thai'] ?? null;
             $id = $_POST['id'];
             $errors = [];
+
             if (empty($tenDanhMuc)) {
                 $errors['ten_danh_muc'] = 'Tên danh mục là bắt buộc';
             }
+            if (empty($moTa)) {
+                $errors['mo_ta'] = 'Mô tả là bắt buộc';
+            }
             if (empty($errors)) {
-                echo $hinhAnh;
-                $this->modelDanhMuc->updateData($id, $tenDanhMuc, $trangThai, $hinhAnh);
+                $this->modelDanhMuc->updateData($id, $tenDanhMuc, $trangThai, $hinhAnh, $moTa);
 
-
-                print_r($_POST['hinh-anh-truoc']);
                 unset($_SESSION['errors']);
                 header('Location: ?act=danh-mucs');
                 exit();
             } else {
                 $_SESSION['errors'] = $errors;
-                header('Location: ?act=form-sua-danh-muc');
+                header('Location: ?act=form-sua-danh-muc&id=' . $id);
                 exit();
             }
         }

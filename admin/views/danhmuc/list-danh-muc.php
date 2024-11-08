@@ -103,6 +103,7 @@
                                                             <td>
                                                                 <div class="hstack gap-3 fs-15">
                                                                     <a href="?act=form-sua-danh-muc&id=<?= $danhMuc['id'] ?>" class="link-primary"><i class="ri-settings-4-line"></i></a>
+                                                                    <a href="?act=xem-chi-tiet-danh-muc&id=<?= $danhMuc['id'] ?>" class="link-primary"><i class="ri-file-list-line"></i></a>
                                                                     <form action="?act=xoa-danh-muc" method="POST" onsubmit='return confirm("Bạn có chắc muốn xóa dữ liệu này ?")'>
                                                                         <input type="hidden" name="danh_muc_id" value="<?= $danhMuc['id'] ?>">
                                                                         <button type="submit" class="link-danger" style="border: none; background:none"><i class="ri-delete-bin-5-line"></i></button>
