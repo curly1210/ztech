@@ -73,6 +73,7 @@
                     <div class="row g-4 ">
                       <div class="col-sm-auto">
                         <div>
+                          <button type="button" class="btn btn-success add-btn" data-bs-toggle="modal" id="create-btn" data-bs-target="#showModal"><i class="ri-add-line align-bottom me-1"></i>Thêm</button>
                           <button class="btn btn-soft-danger" id="delete"><i class="ri-delete-bin-2-line"></i></button>
                         </div>
                       </div>
@@ -232,6 +233,104 @@
     </div>
   </div>
 
+  <div class="modal fade" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-light p-3">
+          <h5 class="modal-title" id="exampleModalLabel"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+        </div>
+        <form class="tablelist-form" id="addUserForm" autocomplete="off">
+          <div class="modal-body">
+
+            <div class="mb-3">
+              <label for="customername-field" class="form-label">Họ và tsên</label>
+              <input name="ho_ten" type="text" id="customername-field" class="form-control" placeholder="Điền họ và tên" />
+              <div id="err_hoTen" class="invalid-feedback"></div>
+            </div>
+
+            <div class="mb-3">
+              <label for="email-field" class="form-label">Địa chỉ Email</label>
+              <input name="email" type="email" id="email-field" class="form-control" placeholder="Điền email" />
+              <div id="err_email" class="invalid-feedback"></div>
+            </div>
+
+            <div class="mb-3">
+              <label for="email-field" class="form-label">Mật khẩu</label>
+              <input name="mat_khau" type="password" id="email-field" class="form-control" placeholder="Điền mật khẩu" />
+              <div id="err_matKhau" class="invalid-feedback"></div>
+            </div>
+
+            <div class="mb-3">
+              <label for="email-field" class="form-label">Xác nhận mật khẩu</label>
+              <input name="re_mat_khau" type="password" id="email-field" class="form-control" placeholder="Điền xác nhận mật khẩu" />
+              <div id="err_reMatKhau" class="invalid-feedback"></div>
+            </div>
+
+            <div class="mb-3">
+              <label for="phone-field" class="form-label">Số điện thoại</label>
+              <input name="dien_thoai" type="text" id="phone-field" class="form-control" placeholder="Điền số điện thoại" />
+              <div id="err_dienThoai" class="invalid-feedback"></div>
+            </div>
+
+
+            <div class="mb-3">
+              <label for="phone-field" class="form-label">Giới tính</label>
+              <div class="d-flex gap-3">
+                <div class="d-flex align-items-center gap-1">
+                  <label for="phone-field" class="form-label mb-0">Nam</label>
+                  <input class="form-check-input mt-0" type="radio" name="gioi_tinh" value="1">
+
+                </div>
+                <div class="d-flex align-items-center gap-1">
+                  <label for=" phone-field" class="form-label mb-0">Nữ</label>
+                  <input class="form-check-input mt-0" type="radio" name="gioi_tinh" value="2">
+
+                </div>
+              </div>
+              <div id="err_gioiTinh" class="invalid-feedback"></div>
+
+            </div>
+
+            <div class="mb-3">
+              <label for="date-field" class="form-label">Năm sinh</label>
+              <input name="nam_sinh" type="date" class="form-control" id="exampleInputdate">
+              <div id="err_namSinh" class="invalid-feedback"></div>
+            </div>
+
+            <!-- <div class="row">
+              <div class="col">
+                <label for="status-field" class="form-label">Status</label>
+                <select class="form-control" data-trigger name="status-field" id="status-field">
+                  <option value="">Vai trò</option>
+                  <option value="0">Người dùng</option>
+                  <option value="1">Admin</option>
+                </select>
+              </div>
+
+              <div class="col">
+                <label for="status-field" class="form-label">Status</label>
+                <select class="form-control" data-trigger name="status-field" id="status-field">
+                  <option value="">Status</option>
+                  <option value="Active">Active</option>
+                  <option value="Block">Block</option>
+                </select>
+              </div>
+            </div> -->
+
+          </div>
+          <div class="modal-footer">
+            <div class="hstack gap-2 justify-content-end">
+              <button type="button" class="btn btn-light" data-bs-dismiss="modal">Đóng</button>
+              <button type="submit" class="btn btn-success" id="add-btn">Thêm người dùng</button>
+              <!-- <button type="button" class="btn btn-success" id="edit-btn">Update</button> -->
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <!-- JAVASCRIPT -->
   <?php
   require_once "views/layouts/libs_js.php";
@@ -239,6 +338,89 @@
 
 </body>
 
+<!-- Thêm người dùng -->
+<script>
+  $(document).ready(function() {
+    $("#addUserForm").submit(function(event) {
+      event.preventDefault(); // Ngăn chặn form nạp lại trang
+
+      $.ajax({
+        url: "?act=them-nguoi-dung",
+        type: "POST",
+        data: $(this).serialize(), // Lấy dữ liệu form
+        success: function(response) {
+          response = JSON.parse(response);
+
+          const err_hoTen = document.getElementById("err_hoTen");
+          const err_email = document.getElementById("err_email");
+          const err_matKhau = document.getElementById("err_matKhau")
+          const err_reMatKhau = document.getElementById("err_reMatKhau");
+          const err_dienThoai = document.getElementById("err_dienThoai");
+          const err_gioiTinh = document.getElementById("err_gioiTinh");
+          const err_namSinh = document.getElementById("err_namSinh");
+
+          err_hoTen.innerHTML = "";
+          err_email.innerHTML = "";
+          err_matKhau.innerHTML = "";
+          err_reMatKhau.innerHTML = "";
+          err_dienThoai.innerHTML = "";
+          err_gioiTinh.innerHTML = "";
+          err_namSinh.innerHTML = "";
+
+
+
+          if (response['check'] == 1) {
+            if ("ho_ten" in response) {
+              err_hoTen.innerHTML = response["ho_ten"];
+              err_hoTen.style = "display:block";
+            }
+
+            if ("email" in response) {
+              err_email.innerHTML = response["email"];
+              err_email.style = "display:block";
+            }
+            if ("mat_khau" in response) {
+              err_matKhau.innerHTML = response["mat_khau"];
+              err_matKhau.style = "display:block";
+            }
+
+            if ("re_mat_khau" in response) {
+              err_reMatKhau.innerHTML = response["re_mat_khau"];
+              err_reMatKhau.style = "display:block";
+            }
+
+            if ("dien_thoai" in response) {
+              err_dienThoai.innerHTML = response["dien_thoai"];
+              err_dienThoai.style = "display:block";
+            }
+
+            if ("gioi_tinh" in response) {
+              err_gioiTinh.innerHTML = response["gioi_tinh"];
+              err_gioiTinh.style = "display:block";
+            }
+
+            if ("nam_sinh" in response) {
+              err_namSinh.innerHTML = response["nam_sinh"];
+              err_namSinh.style = "display:block";
+            }
+          } else {
+            setTimeout(() => {
+              alert("Chúc mừng bạn đã đăng ký thành công!");
+              window.location.reload();
+            }, 100);
+          }
+
+
+        },
+        error: function(xhr, status, error) {
+          console.error("Error:", error);
+        }
+      });
+    });
+  });
+</script>
+
+<!-- Xóa người dùng -->
 <script>
   $('#select_all').change(function() {
     if ($(this).is(":checked") && isNaN()) {

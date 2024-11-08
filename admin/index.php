@@ -38,7 +38,10 @@ match ($act) {
 
     //Quản lý người dùng
     'nguoi-dungs' => (new NguoiDungController())->index(),
+    'them-nguoi-dung' => (new NguoiDungController())->create(),
     'xoa-nguoi-dung' => (new NguoiDungController())->destroy(),
+
+
     //Quản lý tin tức
     'tin-tucs'             => (new TinTucController())->index(),
     'form-them-tin-tuc'    => (new TinTucController())->create(),
