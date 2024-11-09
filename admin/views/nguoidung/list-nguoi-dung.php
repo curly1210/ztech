@@ -127,7 +127,7 @@
                                 <td class="text-center"><?php if ($nguoiDung['admin'] == 0) { ?>Khách hàng<?php } else { ?>Admin<?php } ?></td>
                                 <td>
                                   <div class="d-flex justify-content-center align-items-center hstack gap-3 flex-wrap">
-                                    <a href="#" class="btn btn-sm btn-light">Chi tiết</a>
+                                    <a href="?act=chi-tiet-nguoi-dung&id=<?= $nguoiDung["id"] ?>" class="btn btn-sm btn-light">Chi tiết</a>
                                   </div>
                                 </td>
 
@@ -423,7 +423,7 @@
 <!-- Xóa người dùng -->
 <script>
   $('#select_all').change(function() {
-    if ($(this).is(":checked") && isNaN()) {
+    if ($(this).is(":checked")) {
       $('input[type=checkbox]').each(function() {
         $('#' + this.id).prop('checked', true);
       });
