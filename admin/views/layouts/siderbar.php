@@ -2,7 +2,7 @@
     <!-- LOGO -->
     <div class="navbar-brand-box">
         <!-- Dark Logo-->
-        <a href="index.html" class="logo logo-dark">
+        <a href="?act=/" class="logo logo-dark">
             <span class="logo-sm">
                 <img src="assets/images/logo-sm.png" alt="" height="22">
             </span>
@@ -55,34 +55,14 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarDanhMuc" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDanhMuc">
+                    <a class="nav-link menu-link" href="?act=danh-mucs">
                         <i class="ri-stack-line"></i> <span data-key="t-advance-ui">Danh mục sản phẩm</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="sidebarDanhMuc">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="?act=danh-mucs" class="nav-link" data-key="t-sweet-alerts">
-                                    Danh sách
-                                </a>
-                            </li>
-
-                            <
-
-                                </ul>
-                    </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarPages" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarPages">
+                    <a class="nav-link menu-link" href="?act=tin-tucs">
                         <i class="ri-pages-line"></i> <span data-key="t-pages">Tin Tức</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="sidebarPages">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="?act=tin-tucs" class="nav-link" data-key="t-starter"> Danh sách </a>
-                            </li>
-
-                        </ul>
-                    </div>
                 </li>
 
                 <li class="nav-item">
