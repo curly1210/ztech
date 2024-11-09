@@ -43,6 +43,36 @@ class TrangThaiDonHang
     }
   }
 
+  public function update($id, $ten)
+  {
+    try {
+      $sql = "UPDATE trang_thai_don_hangs SET ten = :ten WHERE id = :id";
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(':id', $id);
+      $stmt->bindParam(':ten', $ten);
+
+      $stmt->execute();
+      return true;
+    } catch (PDOException $e) {
+      echo "Lỗi : " . $e->getMessage();
+    }
+  }
+
+  public function create($ten)
+  {
+    try {
+      $sql = "INSERT INTO trang_thai_don_hangs (ten) 
+      VALUES (:ten)";
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(':ten', $ten);
+
+      $stmt->execute();
+      return true;
+    } catch (PDOException $e) {
+      echo "Lỗi : " . $e->getMessage();
+    }
+  }
+
   public function deleteData($id)
   {
     try {

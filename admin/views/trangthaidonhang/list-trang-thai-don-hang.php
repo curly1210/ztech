@@ -71,7 +71,7 @@
                     <div class="row g-4 ">
                       <div class="col-sm-auto">
                         <div>
-                          <button type="button" class="btn btn-success add-btn" data-bs-toggle="modal" id="create-btn" data-bs-target="#showModal"><i class="ri-add-line align-bottom me-1"></i>Thêm</button>
+                          <a href="?act=form-them-trang-thai-don-hang" class="btn btn-success add-btn"><i class="ri-add-line align-bottom me-1"></i>Thêm</a>
                         </div>
                       </div>
                       <div class="col-sm">
@@ -108,10 +108,8 @@
                                 <td class="text-center"><?= $trangThaiDonHang['ten'] ?></td>
                                 <td class="text-center align-middle">
                                   <div class="hstack justify-content-center align-items-center fs-20">
-                                    <form action="?act=form-sua-trang-thai-don-hang" method="post">
-                                      <input type="hidden" name="id" value="<?= $trangThaiDonHang['id'] ?>">
-                                      <button type="submit" class="link-danger" style="border: none; background:none"><i style="color:#0ab39c" class="ri-edit-2-line"></i></button>
-                                    </form>
+
+                                    <a href="?act=form-sua-trang-thai-don-hang&id=<?= $trangThaiDonHang['id'] ?>"><i style="color:#0ab39c" class="ri-edit-2-line"></i></a>
                                     <form action="?act=xoa-trang-thai-don-hang" method="POST" onsubmit='return confirm("Bạn có chắc muốn xóa dữ liệu này ?")'>
                                       <input type="hidden" name="id" value="<?= $trangThaiDonHang['id'] ?>">
                                       <button type="submit" class="link-danger" style="border: none; background:none"><i class="ri-delete-bin-5-line"></i></button>

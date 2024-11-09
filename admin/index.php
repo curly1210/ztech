@@ -10,12 +10,16 @@ require_once 'controllers/DanhMucController.php';
 require_once 'controllers/TinTucController.php';
 require_once 'controllers/NguoiDungController.php';
 require_once 'controllers/LienHeController.php';
+require_once 'controllers/TrangThaiDonHangController.php';
+require_once 'controllers/BannerController.php';
 
 // Require toàn bộ file Models
 require_once 'models/DanhMuc.php';
 require_once 'models/TinTuc.php';
 require_once 'models/NguoiDung.php';
 require_once 'models/LienHe.php';
+require_once 'models/TrangThaiDonHang.php';
+require_once 'models/Banner.php';
 
 // Route
 $act = $_GET['act'] ?? '/';
@@ -55,6 +59,7 @@ match ($act) {
     'sua-tin-tuc'          => (new TinTucController())->update(),
     'xoa-tin-tuc'          => (new TinTucController())->destroy(),
     'xem-chi-tiet-tin-tuc' => (new TinTucController())->detail(),
+
     //Quản lý banner
     'banners'             => (new BannerController())->index(),
     'form-them-banner'    => (new BannerController())->create(),
@@ -63,8 +68,12 @@ match ($act) {
     'sua-banner'          => (new BannerController())->update(),
     'xoa-banner'          => (new BannerController())->destroy(),
     'xem-chi-tiet-banner' => (new BannerController())->detail(),
+
     //Quản lý trạng thái đơn hàng
     'trang-thai-don-hangs'          => (new TrangThaiDonHangController())->index(),
     'xoa-trang-thai-don-hang'       => (new TrangThaiDonHangController())->destroy(),
-    'form-sua-trang-thai-don-hang'  => (new TrangThaiDonHangController())->formEdit()
+    'form-sua-trang-thai-don-hang'  => (new TrangThaiDonHangController())->formEdit(),
+    'sua-trang-thai-don-hang'       => (new TrangThaiDonHangController())->update(),
+    'form-them-trang-thai-don-hang' => (new TrangThaiDonHangController())->formCreate(),
+    'them-trang-thai-don-hang' => (new TrangThaiDonHangController())->create(),
 };
