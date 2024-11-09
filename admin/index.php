@@ -10,12 +10,14 @@ require_once 'controllers/DanhMucController.php';
 require_once 'controllers/TinTucController.php';
 require_once 'controllers/NguoiDungController.php';
 require_once 'controllers/LienHeController.php';
+require_once 'controllers/TrangThaiDonHangController.php';
 
 // Require toàn bộ file Models
 require_once 'models/DanhMuc.php';
 require_once 'models/TinTuc.php';
 require_once 'models/NguoiDung.php';
 require_once 'models/LienHe.php';
+require_once 'models/TrangThaiDonHang.php';
 
 // Route
 $act = $_GET['act'] ?? '/';
@@ -40,10 +42,10 @@ match ($act) {
     'chi-tiet-lien-he' => (new LienHeController())->detail(),
 
     //Quản lý người dùng
-    'nguoi-dungs' => (new NguoiDungController())->index(),
-    'them-nguoi-dung' => (new NguoiDungController())->create(),
-    'xoa-nguoi-dung' => (new NguoiDungController())->destroy(),
-    'chi-tiet-nguoi-dung' => (new NguoiDungController())->detail(),
+    'nguoi-dungs'           => (new NguoiDungController())->index(),
+    'them-nguoi-dung'       => (new NguoiDungController())->create(),
+    'xoa-nguoi-dung'        => (new NguoiDungController())->destroy(),
+    'chi-tiet-nguoi-dung'   => (new NguoiDungController())->detail(),
     'trang-thai-nguoi-dung' => (new NguoiDungController())->changeStatus(),
 
 
@@ -55,4 +57,9 @@ match ($act) {
     'sua-tin-tuc'          => (new TinTucController())->update(),
     'xoa-tin-tuc'          => (new TinTucController())->destroy(),
     'xem-chi-tiet-tin-tuc' => (new TinTucController())->detail(),
+
+    //Quản lý trạng thái đơn hàng
+    'trang-thai-don-hangs'          => (new TrangThaiDonHangController())->index(),
+    'xoa-trang-thai-don-hang'       => (new TrangThaiDonHangController())->destroy(),
+    'form-sua-trang-thai-don-hang'  => (new TrangThaiDonHangController())->formEdit()
 };

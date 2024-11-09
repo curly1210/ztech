@@ -79,6 +79,13 @@
 
                 </li>
 
+                <li class="nav-item">
+                    <a class="nav-link menu-link " href="?act=trang-thai-don-hangs">
+                        <i class="ri-honour-line"></i> <span data-key="t-forms">Trạng thái đơn hàng</span>
+                    </a>
+
+                </li>
+
                 <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Bán hàng</span></li>
 
             </ul>
