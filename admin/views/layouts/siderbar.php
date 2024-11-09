@@ -78,6 +78,12 @@
                     </a>
 
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link " href="?act=banners">
+                        <i class="las la-images"></i> <span data-key="t-forms">Banner</span>
+                    </a>
+
+                </li>
 
                 <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Bán hàng</span></li>
 

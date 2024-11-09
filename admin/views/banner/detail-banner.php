@@ -7,7 +7,7 @@
 <head>
 
     <meta charset="utf-8" />
-    <title>Chi tiết danh mục | TechZ</title>
+    <title>Quản lý Banner | TechZ</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
@@ -47,12 +47,12 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
-                                <h4 class="mb-sm-0">Chi tiết danh mục </h4>
+                                <h4 class="mb-sm-0">Quản lý Banner </h4>
 
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="?act=danh-mucs">Quản lý danh mục</a></li>
-                                        <li class="breadcrumb-item active">Chi tiết danh mục</li>
+                                        <li class="breadcrumb-item"><a href="?act=banners">Quản lý Banner</a></li>
+                                        <li class="breadcrumb-item active">Chi tiết Banner</li>
                                     </ol>
                                 </div>
 
@@ -71,13 +71,11 @@
                                                 <div class="flex-grow-1">
                                                     <div class="mt-sm-5 mt-4">
                                                         <h6 class="text-muted text-uppercase fw-semibold">Thông tin</h6>
-                                                        <p class="text-muted mb-1" id="address-details">Tên danh mục : <?= $danhMuc['ten'] ?></p>
-                                                        <p class="text-muted mb-0" id="zip-code"><span>ID:</span> <?= $danhMuc['id'] ?></p>
+                                                        <p class="text-muted mb-1" id="address-details">Tiêu đề : <?= $banner['tieu_de'] ?></p>
+                                                        <p class="text-muted mb-0" id="zip-code"><span>ID:</span> <?= $banner['id'] ?></p>
 
                                                     </div>
                                                 </div>
-
-
                                             </div>
                                         </div>
                                         <!--end card-header-->
@@ -87,8 +85,8 @@
                                         <div class="card-body p-4 border-top border-top-dashed">
                                             <div class="row g-3">
                                                 <div class="col-6">
-                                                    <h6 class="text-muted text-uppercase fw-semibold mb-3">Mô tả</h6>
-                                                    <p class="text-muted mb-1" id="billing-address-line-1"><?= $danhMuc['mo_ta'] ?></p>
+                                                    <h6 class="text-muted text-uppercase fw-semibold mb-3">Hình Banner :</h6>
+                                                    <img src="<?= $banner['hinh_anh'] ?>" width="300" alt="">
                                                 </div>
                                                 <!--end col-->
 
