@@ -80,66 +80,37 @@
                                             </thead>
 
                                             <tbody>
-                                                <tr>
-                                                    <td>01</td>
-                                                    <td>
-                                                        <img src="assets/images/blog/img-2.jpg" alt="" class="me-2 rounded" height="40">
-                                                        <a href="#!" class="text-body fw-medium">The Evolution of Minimalism in Design</a>
-                                                    </td>
-                                                    <td>20 Sep, 2024</td>
-                                                    <td><span class="badge bg-success-subtle text-success p-2">MinimalDesign</span></td>
-                                                    <td>23</td>
-                                                    <td>157</td>
+                                                <?php foreach ($tinTucs as $index => $tinTuc): ?>
+                                                    <tr>
+                                                        <td><?= $index + 1 ?></td>
+                                                        <td>
+                                                            <img src="<?= $tinTuc['hinh_anh'] ?>" alt="" class="me-2 rounded" height="40">
+                                                            <a href="#!" class="text-body fw-medium"><?= $tinTuc['tieu_de'] ?></a>
+                                                        </td>
+                                                        <td><?= date("d-m-Y", strtotime($tinTuc['ngay_tao']))  ?></td>
+                                                        <td>
+                                                            <?php if ($tinTuc['trang_thai'] == 2) { ?>
+                                                                <span class="badge bg-success-subtle text-success p-2">Hiển thị</span>
+                                                            <?php } else { ?>
+                                                                <span class="badge bg-danger-subtle text-danger p-2">Ẩn</span>
+                                                            <?php } ?>
+                                                        </td>
+                                                        <td><?= $tinTuc['luot_xem'] ?></td>
+                                                        <td>
+                                                            <div class="hstack gap-3 fs-15">
+                                                                <a href="?act=form-sua-tin-tuc&id=<?= $tinTuc['id'] ?>" class="link-primary"><i class="ri-settings-4-line"></i></a>
+                                                                <a href="?act=xem-chi-tiet-tin-tuc&id=<?= $tinTuc['id'] ?>" class="link-primary"><i class="ri-file-list-line"></i></a>
+                                                                <form action="?act=xoa-tin-tuc" method="POST" onsubmit='return confirm("Bạn có chắc muốn xóa dữ liệu này ?")'>
+                                                                    <input type="hidden" name="tin_tuc_id" value="<?= $tinTuc['id'] ?>">
+                                                                    <button type="submit" class="link-danger" style="border: none; background:none"><i class="ri-delete-bin-5-line"></i></button>
+                                                                </form>
+                                                            </div>
 
-                                                </tr>
-                                                <tr>
-                                                    <td>02</td>
-                                                    <td>
-                                                        <img src="assets/images/blog/img-3.jpg" alt="" class="me-2 rounded" height="40">
-                                                        <a href="#!" class="text-body fw-medium">Mastering User Experience Through Storytelling</a>
-                                                    </td>
-                                                    <td>11 Feb, 2024</td>
-                                                    <td><span class="badge bg-success-subtle text-success p-2">UXDesign</span></td>
-                                                    <td>547</td>
-                                                    <td>1458</td>
+                                                        </td>
 
-                                                </tr>
-                                                <tr>
-                                                    <td>03</td>
-                                                    <td>
-                                                        <img src="assets/images/blog/img-4.jpg" alt="" class="me-2 rounded" height="40">
-                                                        <a href="#!" class="text-body fw-medium">Designing for Purpose: A Mindful Approach</a>
-                                                    </td>
-                                                    <td>15 Sep, 2024</td>
-                                                    <td><span class="badge bg-success-subtle text-success p-2">CreativeProcess</span></td>
-                                                    <td>88</td>
-                                                    <td>649</td>
+                                                    </tr>
+                                                <?php endforeach; ?>
 
-                                                </tr>
-                                                <tr>
-                                                    <td>04</td>
-                                                    <td>
-                                                        <img src="assets/images/blog/img-5.jpg" alt="" class="me-2 rounded" height="40">
-                                                        <a href="#!" class="text-body fw-medium">How to Overcome Creative Block</a>
-                                                    </td>
-                                                    <td>09 July, 2024</td>
-                                                    <td><span class="badge bg-success-subtle text-success p-2">CreativeBlock</span></td>
-                                                    <td>67</td>
-                                                    <td>1114</td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>05</td>
-                                                    <td>
-                                                        <img src="assets/images/blog/img-6.jpg" alt="" class="me-2 rounded" height="40">
-                                                        <a href="#!" class="text-body fw-medium">Building Brand Identity through Design</a>
-                                                    </td>
-                                                    <td>19 Nov, 2024</td>
-                                                    <td><span class="badge bg-success-subtle text-success p-2">BrandDesign</span></td>
-                                                    <td>8</td>
-                                                    <td>10</td>
-
-                                                </tr>
                                             </tbody><!-- end tbody -->
                                         </table><!-- end table -->
                                     </div>

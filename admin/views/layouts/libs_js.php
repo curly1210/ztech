@@ -20,3 +20,5 @@
 
 <!-- App js -->
 <script src="assets/js/app.js"></script>
+<!-- CKEditor -->
+<script src="admin/assets/libs/ckeditor/ckeditor.js"></script>

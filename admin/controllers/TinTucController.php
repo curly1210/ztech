@@ -15,6 +15,12 @@ class TinTucController
     {
         require_once('./views/tintuc/create-tin-tuc.php');
     }
+    public function detail()
+    {
+        $id = $_GET['id'];
+        $tinTuc = $this->modelTinTuc->getDetailData($id);
+        require_once('./views/tintuc/detail-tin-tuc.php');
+    }
     public function store()
     {
 
@@ -25,8 +31,7 @@ class TinTucController
             $trangThai = $_POST['trang_thai'] ?? null;
             $noiDung = $_POST['noi_dung'];
             $moTa = $_POST['mo_ta'];
-            $ngayTao = date("Y-m-d H:i:s");
-            echo $ngayTao;
+            $ngayTao = date("Y-m-d ");
             $errors = [];
             if (empty($tieuDe)) {
                 $errors['tieu_de'] = 'Tiêu đề là bắt buộc';
@@ -46,7 +51,6 @@ class TinTucController
 
             if (empty($errors)) {
                 $this->modelTinTuc->postData($tieuDe, $moTa, $hinhAnh, $ngayTao, $noiDung, $trangThai);
-                die();
                 unset($_SESSION['errors']);
                 header('Location: ?act=tin-tucs');
                 exit();
@@ -65,38 +69,47 @@ class TinTucController
     }
     public function update()
     {
-        // if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        //     if (isset($_FILES)) {
-        //         $upFile = './uploads/' . basename($_FILES['hinh_anh']['name']);
-        //         if (move_uploaded_file($_FILES['hinh_anh']['tmp_name'], $upFile)) {
-        //             $hinhAnh = $upFile;
-        //         } else {
-        //             $hinhAnh = $_POST['hinh-anh-truoc'];
-        //         };
-        //     }
-
-        //     $tenDanhMuc = $_POST['ten_danh_muc'];
-        //     $trangThai = $_POST['trang_thai'] ?? null;
-        //     $id = $_POST['id'];
-        //     $errors = [];
-        //     if (empty($tenDanhMuc)) {
-        //         $errors['ten_danh_muc'] = 'Tên danh mục là bắt buộc';
-        //     }
-        //     if (empty($errors)) {
-        //         echo $hinhAnh;
-        //         $this->modelDanhMuc->updateData($id, $tenDanhMuc, $trangThai, $hinhAnh);
-
-
-        //         print_r($_POST['hinh-anh-truoc']);
-        //         unset($_SESSION['errors']);
-        //         header('Location: ?act=danh-mucs');
-        //         exit();
-        //     } else {
-        //         $_SESSION['errors'] = $errors;
-        //         header('Location: ?act=form-sua-danh-muc');
-        //         exit();
-        //     }
-        // }
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_FILES)) {
+                $upFile = './uploads/' . basename($_FILES['hinh_anh']['name']);
+                if (move_uploaded_file($_FILES['hinh_anh']['tmp_name'], $upFile)) {
+                    $hinhAnh = $upFile;
+                } else {
+                    $hinhAnh = $_POST['hinh_anh_truoc'];
+                };
+            }
+            $tieuDe = $_POST['tieu_de'];
+            $trangThai = $_POST['trang_thai'] ?? null;
+            $noiDung = $_POST['noi_dung'];
+            $moTa = $_POST['mo_ta'];
+            $id = $_POST['id'];
+            $errors = [];
+            if (empty($tieuDe)) {
+                $errors['tieu_de'] = 'Tiêu đề là bắt buộc';
+            }
+            if (empty($trangThai)) {
+                $errors['trang_thai'] = 'Trạng thái là bắt buộc';
+            }
+            if (empty($noiDung)) {
+                $errors['noi_dung'] = 'Nội dung là bắt buộc';
+            }
+            if (empty($moTa)) {
+                $errors['mo_ta'] = 'Mô tả là bắt buộc';
+            }
+            if (empty($hinhAnh)) {
+                $errors['hinh_anh'] = 'Ảnh bìa là bắt buộc';
+            }
+            if (empty($errors)) {
+                $this->modelTinTuc->updateData($id, $tieuDe, $moTa, $hinhAnh, $noiDung, $trangThai);
+                unset($_SESSION['errors']);
+                header('Location: ?act=tin-tucs');
+                exit();
+            } else {
+                $_SESSION['errors'] = $errors;
+                header("Location: ?act=form-sua-tin-tuc&id=$id");
+                exit();
+            }
+        }
     }
     public function destroy()
     {

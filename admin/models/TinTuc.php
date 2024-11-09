@@ -24,8 +24,8 @@ class TinTuc
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':tieu_de', $tieuDe);
             $stmt->bindParam(':mo_ta_ngan', $moTaNgan);
-            $stmt->bindParam(':ngay_tao', $hinhAnh);
-            $stmt->bindParam(':hinh_anh', $ngayTao);
+            $stmt->bindParam(':ngay_tao', $ngayTao);
+            $stmt->bindParam(':hinh_anh', $hinhAnh);
             $stmt->bindParam(':noi_dung', $noiDung);
             $stmt->bindParam(':trang_thai', $trangThai);
             $stmt->bindParam(':luot_xem', $luotXem);
@@ -47,21 +47,23 @@ class TinTuc
             echo "Lỗi : " . $e->getMessage();
         }
     }
-    public function updateData($id, $tenDanhMuc, $trangThai, $hinhAnh)
+    public function updateData($id, $tieuDe, $moTaNgan, $hinhAnh, $noiDung, $trangThai)
     {
-        // try {
-        //     $sql = "UPDATE danh_mucs SET ten=:ten_danh_muc ,hinh_anh=:hinh_anh,trang_thai=:trang_thai WHERE id = :id";
-        //     $stmt = $this->conn->prepare($sql);
-        //     $stmt->bindParam(':ten_danh_muc', $tenDanhMuc);
-        //     $stmt->bindParam(':hinh_anh', $hinhAnh);
-        //     $stmt->bindParam(':trang_thai', $trangThai);
-        //     $stmt->bindParam(':id', $id);
+        try {
+            $sql = "UPDATE tin_tucs SET tieu_de=:tieu_de, mo_ta_ngan = :mo_ta_ngan , hinh_anh=:hinh_anh ,noi_dung = :noi_dung, trang_thai=:trang_thai WHERE id = :id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':tieu_de', $tieuDe);
+            $stmt->bindParam(':mo_ta_ngan', $moTaNgan);
+            $stmt->bindParam(':hinh_anh', $hinhAnh);
+            $stmt->bindParam(':noi_dung', $noiDung);
+            $stmt->bindParam(':trang_thai', $trangThai);
+            $stmt->bindParam(':id', $id);
 
-        //     $stmt->execute();
-        //     return true;
-        // } catch (PDOException $e) {
-        //     echo "Lỗi : " . $e->getMessage();
-        // }
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            echo "Lỗi : " . $e->getMessage();
+        }
     }
     public function deleteData($id)
     {

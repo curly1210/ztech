@@ -15,7 +15,9 @@
     <!-- CSS -->
     <?php
     require_once "views/layouts/libs_css.php";
+
     ?>
+    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.3.1/ckeditor5.css" />
 
 </head>
 
@@ -110,7 +112,7 @@
                                                 <div class="col-12">
                                                     <div>
                                                         <label for="exampleFormControlTextarea5" class="form-label">Nội dung </label>
-                                                        <textarea class="form-control" id="exampleFormControlTextarea5" name="noi_dung" rows="20"></textarea>
+                                                        <textarea class="form-control ckeditor" id="ckeditor" name="noi_dung" rows="20"></textarea>
                                                         <span class="text-danger">
                                                             <?= !empty($_SESSION['errors']['noi_dung']) ? $_SESSION['errors']['noi_dung'] : '' ?>
                                                         </span>
@@ -185,10 +187,41 @@
         </div>
 
         <!-- JAVASCRIPT -->
+        <script type="importmap">
+            {
+                "imports": {
+                    "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/43.3.1/ckeditor5.js",
+                    "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/43.3.1/"
+                }
+            }
+        </script>
+
+        <script type="module">
+            import {
+                ClassicEditor,
+                Essentials,
+                Bold,
+                Italic,
+                Font,
+                Paragraph
+            } from 'ckeditor5';
+
+            ClassicEditor
+                .create(document.querySelector('#ckeditor'), {
+                    plugins: [Essentials, Bold, Italic, Font, Paragraph],
+                    toolbar: [
+                        'undo', 'redo', '|', 'bold', 'italic', '|',
+                        'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'link', 'uploadImage'
+                    ]
+                })
+                .then( /* ... */ )
+                .catch( /* ... */ );
+        </script>
         <?php
         require_once "views/layouts/libs_js.php";
         ?>
 
 </body>
+
 
 </html>

@@ -50,4 +50,5 @@ match ($act) {
     'form-sua-tin-tuc'     => (new TinTucController())->edit(),
     'sua-tin-tuc'          => (new TinTucController())->update(),
     'xoa-tin-tuc'          => (new TinTucController())->destroy(),
+    'xem-chi-tiet-tin-tuc' => (new TinTucController())->detail(),
 };
