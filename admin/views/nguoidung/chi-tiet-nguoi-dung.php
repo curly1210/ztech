@@ -12,10 +12,14 @@
   <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
   <meta content="Themesbrand" name="author" />
 
+
   <!-- CSS -->
   <?php
   require_once "views/layouts/libs_css.php";
   ?>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 
 </head>
 
@@ -49,7 +53,7 @@
                 <div class="page-title-right">
                   <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboards</a></li>
-                    <li class="breadcrumb-item active">Quản lý liên hệ</li>
+                    <li class="breadcrumb-item active">Chi tiết liên hệ</li>
                   </ol>
                 </div>
 
@@ -58,7 +62,7 @@
             <div class="col-12">
               <div class="card">
                 <div class="card-header  ">
-                  <h4 class="card-title mb-0 flex-grow-1">Danh sách tin tức</h4>
+                  <h4 class="card-title mb-0 flex-grow-1">Chi tiết liên hệ</h4>
 
                 </div><!-- end card header -->
 
@@ -66,63 +70,55 @@
 
                 <div class="card-body">
 
-
-                  <div class="live-preview">
-
-                    <div>
-                      <form class="row g-2" action="?act=lien-hes" method="post">
-                        <div class="col-auto">
-                          <label for="inputPassword2" class="visually-hidden"></label>
-                          <input type="text" name="ho_ten" class="form-control" id="inputPassword2" <?php if ($search == "") { ?> placeholder="Họ tên..." <?php } else { ?> value="<?= $search ?>" <?php } ?>>
+                  <div>
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="gen-info-email-input">Họ và tên</label>
+                          <input value="<?= $nguoiDung["ho_ten"] ?>" readonly type="text" class="form-control" id="gen-info-email-input">
                         </div>
-                        <div class="col-auto">
-                          <button type="submit" class="btn btn-primary mb-3">Tìm kiếm</button>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="gen-info-username-input">Email</label>
+                          <input value="<?= $nguoiDung["email"] ?>" readonly type="text" class="form-control" id="gen-info-username-input">
                         </div>
-                      </form>
+                      </div>
                     </div>
-                    <div class="table-responsive">
-                      <!-- <form action="">
-                        <label>Search:<input type="search" class="" placeholder=""></label>
-                      </form> -->
-
-                      <?php if (count($lienHes) != 0) { ?>
-                        <table class="table  align-middle table-bordered   mb-0">
-                          <thead>
-                            <tr>
-                              <th class="col-1 text-center" scope="col">STT</th>
-                              <th class="col-3 text-center" scope="col">Họ tên</th>
-                              <th class="col-3 text-center" scope="col">Email</th>
-                              <th class="col-3 text-center" scope="col">Hành động</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-
-                            <?php foreach ($lienHes as $index => $lienHe): ?>
-                              <tr>
-                                <td class="text-center"><?= $index + 1 ?></td>
-                                <td class="text-center"><?= $lienHe['ho_ten'] ?></td>
-                                <td class="text-center"><?= $lienHe['email'] ?></td>
-                                <td class="text-center align-middle">
-                                  <div class="hstack justify-content-center align-items-center fs-20">
-                                    <a href="?act=chi-tiet-lien-he&id=<?= $lienHe['id'] ?>" class="btn btn-sm btn-light">Chi tiết</a>
-                                    <form action="?act=xoa-lien-he" method="POST" onsubmit='return confirm("Bạn có chắc muốn xóa dữ liệu này ?")'>
-                                      <input type="hidden" name="id_lien_he" value="<?= $lienHe['id'] ?>">
-                                      <button type="submit" class="link-danger" style="border: none; background:none"><i class="ri-delete-bin-5-line"></i></button>
-                                    </form>
-
-                                  </div>
-                                </td>
-                              </tr>
-                            <?php endforeach; ?>
-                          </tbody>
-                        </table>
-                      <?php } else { ?>
-                        <div class="d-flex justify-content-center align-items-center" style="height: 200px;">
-                          <p class="fs-2">Không tìm thấy liên hệ !</p>
+                    <div class=" row">
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="gen-info-email-input">Năm sinh</label>
+                          <input value="<?php echo date("d/m/Y", strtotime($nguoiDung['nam_sinh'])) ?>" readonly type="text" class="form-control" id="gen-info-email-input">
                         </div>
-                      <?php } ?>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="gen-info-username-input">Giới Tính</label>
+                          <input value="<?php if ($nguoiDung['gioi_tinh'] == 1) { ?>Nam <?php } else { ?>Nữ <?php } ?>" readonly type="text" class="form-control" id="gen-info-username-input">
+                        </div>
+                      </div>
                     </div>
+                    <div class=" row align-items-center">
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="gen-info-email-input">Số điện thoại</label>
+                          <input value="<?= $nguoiDung["dien_thoai"] ?>" readonly type="text" class="form-control" id="gen-info-email-input">
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="gen-info-username-input">Trạng thái</label>
+                          <div class="form-check form-switch form-switch-lg" dir="ltr">
+                            <input type="checkbox" class="form-check-input" id="userStatus" value="<?= $nguoiDung["id"] ?>" <?php if ($nguoiDung["trang_thai"] == 1) { ?>checked <?php } ?>>
+                            <label class="form-check-label" for="customSwitchsizelg">Vô hiệu hóa/Hoạt động</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
                   </div>
+
                 </div><!-- end card-body -->
               </div><!-- end card -->
             </div><!-- end col -->
@@ -132,7 +128,7 @@
         </div>
         <!-- End Page-content -->
 
-        <footer class="footer">
+        <footer class=" footer">
           <div class="container-fluid">
             <div class="row">
               <div class="col-sm-6">
@@ -202,6 +198,43 @@
   <?php
   require_once "views/layouts/libs_js.php";
   ?>
+
+  <script>
+    // JavaScript (jQuery)
+
+
+    $(document).ready(function() {
+      $('#userStatus').click(function() {
+        const id = $(this).val();
+        $.ajax({
+          url: '?act=trang-thai-nguoi-dung',
+          method: 'post',
+          data: {
+            id: id
+          },
+          success: function(response) {
+            if (response == 1) {
+              setTimeout(() => {
+                alert("Kích hoạt thành thành công");
+              }, 200);
+            } else {
+              setTimeout(() => {
+                alert("Vô hiệu hóa thành công");
+              }, 200);
+            }
+
+          },
+          error: function() {
+            alert("Error");
+          }
+        });
+        // if ($(this).is(":checked")) {
+
+        //   alert($(this).val());
+        // }
+      });
+    });
+  </script>
 
 </body>
 

@@ -19,6 +19,22 @@ class NguoiDungController
     require_once('./views/nguoidung/list-nguoi-dung.php');
   }
 
+  public function detail()
+  {
+    $id = $_GET["id"];
+    $nguoiDung = $this->modelNguoiDung->getOneById($id);
+    require_once('./views/nguoidung/chi-tiet-nguoi-dung.php');
+  }
+
+  public function changeStatus()
+  {
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+      $id = $_POST['id'];
+      $this->modelNguoiDung->changeStatus($id);
+      echo $this->modelNguoiDung->getOneById($id)['trang_thai'];
+    }
+  }
+
   public function create()
   {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {

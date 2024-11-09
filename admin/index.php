@@ -33,14 +33,18 @@ match ($act) {
     'form-sua-danh-muc'     => (new DanhMucController())->edit(),
     'sua-danh-muc'          => (new DanhMucController())->update(),
     'xoa-danh-muc'          => (new DanhMucController())->destroy(),
+
     //Quản lý liên hệ
     'lien-hes' => (new LienHeController())->index(),
     'xoa-lien-he' => (new LienHeController())->destroy(),
+    'chi-tiet-lien-he' => (new LienHeController())->detail(),
 
     //Quản lý người dùng
     'nguoi-dungs' => (new NguoiDungController())->index(),
     'them-nguoi-dung' => (new NguoiDungController())->create(),
     'xoa-nguoi-dung' => (new NguoiDungController())->destroy(),
+    'chi-tiet-nguoi-dung' => (new NguoiDungController())->detail(),
+    'trang-thai-nguoi-dung' => (new NguoiDungController())->changeStatus(),
 
 
     //Quản lý tin tức

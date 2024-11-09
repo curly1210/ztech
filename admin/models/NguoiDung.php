@@ -23,10 +23,46 @@ class NguoiDung
     }
   }
 
+  public function getOneById($id)
+  {
+    try {
+      $sql = "SELECT * FROM nguoi_dungs WHERE id=:id";
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(':id', $id);
+      $stmt->execute();
+
+      return $stmt->fetch();
+    } catch (PDOException $e) {
+      echo "Lỗi : " . $e->getMessage();
+    }
+  }
+
+  public function changeStatus($id)
+  {
+    $status = $this->getOneById($id)['trang_thai'];
+    if ($status == 1) {
+      $status = 0;
+    } else {
+      $status = 1;
+    }
+
+    try {
+      $sql = "UPDATE nguoi_dungs SET trang_thai=:userStatus WHERE id=:id";
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(':userStatus', $status);
+      $stmt->bindParam(':id', $id);
+
+      $stmt->execute();
+      return true;
+    } catch (PDOException $e) {
+      echo "Lỗi : " . $e->getMessage();
+    }
+  }
+
   public function delete($delete_id)
   {
     try {
-      $sql = "DELETE FROM `nguoi_dungs` WHERE id IN ($delete_id)";
+      $sql = "DELETE FROM `nguoi_dungs` WHERE id IN ($delete_id) and id NOT IN(5)";
       $stmt = $this->conn->prepare($sql);
       // $stmt->bindParam(':id', $id);
 

@@ -49,7 +49,7 @@
                 <div class="page-title-right">
                   <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboards</a></li>
-                    <li class="breadcrumb-item active">Quản lý liên hệ</li>
+                    <li class="breadcrumb-item active">Chi tiết liên hệ</li>
                   </ol>
                 </div>
 
@@ -58,7 +58,7 @@
             <div class="col-12">
               <div class="card">
                 <div class="card-header  ">
-                  <h4 class="card-title mb-0 flex-grow-1">Danh sách tin tức</h4>
+                  <h4 class="card-title mb-0 flex-grow-1">Chi tiết liên hệ</h4>
 
                 </div><!-- end card header -->
 
@@ -66,63 +66,41 @@
 
                 <div class="card-body">
 
-
-                  <div class="live-preview">
-
-                    <div>
-                      <form class="row g-2" action="?act=lien-hes" method="post">
-                        <div class="col-auto">
-                          <label for="inputPassword2" class="visually-hidden"></label>
-                          <input type="text" name="ho_ten" class="form-control" id="inputPassword2" <?php if ($search == "") { ?> placeholder="Họ tên..." <?php } else { ?> value="<?= $search ?>" <?php } ?>>
+                  <div>
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="gen-info-email-input">Họ và tên</label>
+                          <input value="<?= $lienHe["ho_ten"] ?>" readonly type="text" class="form-control" id="gen-info-email-input">
                         </div>
-                        <div class="col-auto">
-                          <button type="submit" class="btn btn-primary mb-3">Tìm kiếm</button>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="gen-info-username-input">Số điện thoại</label>
+                          <input value="<?= $lienHe["so_dien_thoai"] ?>" readonly type="text" class="form-control" id="gen-info-username-input">
                         </div>
-                      </form>
+                      </div>
                     </div>
-                    <div class="table-responsive">
-                      <!-- <form action="">
-                        <label>Search:<input type="search" class="" placeholder=""></label>
-                      </form> -->
-
-                      <?php if (count($lienHes) != 0) { ?>
-                        <table class="table  align-middle table-bordered   mb-0">
-                          <thead>
-                            <tr>
-                              <th class="col-1 text-center" scope="col">STT</th>
-                              <th class="col-3 text-center" scope="col">Họ tên</th>
-                              <th class="col-3 text-center" scope="col">Email</th>
-                              <th class="col-3 text-center" scope="col">Hành động</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-
-                            <?php foreach ($lienHes as $index => $lienHe): ?>
-                              <tr>
-                                <td class="text-center"><?= $index + 1 ?></td>
-                                <td class="text-center"><?= $lienHe['ho_ten'] ?></td>
-                                <td class="text-center"><?= $lienHe['email'] ?></td>
-                                <td class="text-center align-middle">
-                                  <div class="hstack justify-content-center align-items-center fs-20">
-                                    <a href="?act=chi-tiet-lien-he&id=<?= $lienHe['id'] ?>" class="btn btn-sm btn-light">Chi tiết</a>
-                                    <form action="?act=xoa-lien-he" method="POST" onsubmit='return confirm("Bạn có chắc muốn xóa dữ liệu này ?")'>
-                                      <input type="hidden" name="id_lien_he" value="<?= $lienHe['id'] ?>">
-                                      <button type="submit" class="link-danger" style="border: none; background:none"><i class="ri-delete-bin-5-line"></i></button>
-                                    </form>
-
-                                  </div>
-                                </td>
-                              </tr>
-                            <?php endforeach; ?>
-                          </tbody>
-                        </table>
-                      <?php } else { ?>
-                        <div class="d-flex justify-content-center align-items-center" style="height: 200px;">
-                          <p class="fs-2">Không tìm thấy liên hệ !</p>
+                    <div class=" row">
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="gen-info-email-input">Email</label>
+                          <input value="<?= $lienHe["email"] ?>" readonly type="text" class="form-control" id="gen-info-email-input">
                         </div>
-                      <?php } ?>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="gen-info-username-input">Ngày tạo</label>
+                          <input value="<?php echo date("H:i:s d/m/Y", strtotime($lienHe['ngay_tao'])) ?>" readonly type="text" class="form-control" id="gen-info-username-input">
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <label class="form-label" for="des-info-description-input">Nội dung</label>
+                      <textarea readonly class="form-control" id="des-info-description-input" rows="3"><?= $lienHe["noi_dung"] ?></textarea>
                     </div>
                   </div>
+
                 </div><!-- end card-body -->
               </div><!-- end card -->
             </div><!-- end col -->
@@ -132,7 +110,7 @@
         </div>
         <!-- End Page-content -->
 
-        <footer class="footer">
+        <footer class=" footer">
           <div class="container-fluid">
             <div class="row">
               <div class="col-sm-6">

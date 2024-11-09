@@ -19,6 +19,14 @@ class LienHeController
     require_once('./views/lienhe/list_lien_he.php');
   }
 
+  public function detail()
+  {
+    $id = $_GET['id'];
+    $lienHe = $this->modelLienHe->getOneById($id);
+    // var_dump($lienHe);
+    require_once('./views/lienhe/chi-tiet-lien-he.php');
+  }
+
   public function destroy()
   {
     if ($_SERVER['REQUEST_METHOD'] == "POST") {

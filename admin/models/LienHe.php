@@ -21,6 +21,20 @@ class LienHe
     }
   }
 
+  public function getOneById($id)
+  {
+    try {
+      $sql = "SELECT * FROM lien_hes WHERE id=:id";
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(':id', $id);
+      $stmt->execute();
+
+      return $stmt->fetch();
+    } catch (PDOException $e) {
+      echo "Lỗi : " . $e->getMessage();
+    }
+  }
+
   public function deleteData($id)
   {
     try {
