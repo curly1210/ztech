@@ -10,6 +10,11 @@ class NguoiDung
     $this->conn = connectDB();
   }
 
+  public function __destruct()
+  {
+    $this->conn = null;
+  }
+
   public function getAll($search)
   {
     try {
@@ -121,8 +126,5 @@ class NguoiDung
   //   }
   // }
 
-  // public function __destruct()
-  // {
-  //   $this->conn = null;
-  // }
+
 }
