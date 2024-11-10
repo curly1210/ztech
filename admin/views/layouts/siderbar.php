@@ -91,6 +91,12 @@
                     </a>
 
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link " href="?act=ma-khuyen-mais">
+                        <i class=" lab la-hotjar"></i> <span data-key="t-forms">Mã khuyến mãi</span>
+                    </a>
+
+                </li>
 
                 <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Bán hàng</span></li>
 
