@@ -37,7 +37,16 @@ class TrangThaiDonHangController
 
       if (empty($ten)) {
         $errors['ten'] = "Vui lòng nhập tên trạng thái";
+      } else {
+        $trangThaiDonHang = $this->modelTrangThaiDonHang->getOne($id);
+        $trangThaiDonHangs = $this->modelTrangThaiDonHang->getAll('');
+        foreach ($trangThaiDonHangs as $trangThai) {
+          if ($ten == $trangThai['ten'] && $ten != $trangThaiDonHang['ten']) {
+            $errors['ten'] = "Trạng thái đơn hàng đã tồn tại";
+          }
+        }
       }
+
 
       if (empty($errors)) {
         $this->modelTrangThaiDonHang->update($id, $ten);
@@ -66,8 +75,14 @@ class TrangThaiDonHangController
 
       if (empty($ten)) {
         $errors['ten'] = "Vui lòng nhập tên trạng thái";
+      } else {
+        $trangThaiDonHangs = $this->modelTrangThaiDonHang->getAll('');
+        foreach ($trangThaiDonHangs as $trangThaiDonHang) {
+          if ($ten == $trangThaiDonHang['ten']) {
+            $errors['ten'] = "Trạng thái đơn hàng đã tồn tại";
+          }
+        }
       }
-
       if (empty($errors)) {
         $this->modelTrangThaiDonHang->create($ten);
         unset($_SESSION['errors']);
