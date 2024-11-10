@@ -7,7 +7,7 @@
 <head>
 
   <meta charset="utf-8" />
-  <title>Dashboard | NN Shop</title>
+  <title>Quản Lý Liên Hệ | TechZ</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
   <meta content="Themesbrand" name="author" />
@@ -79,6 +79,9 @@
                           <button type="submit" class="btn btn-primary mb-3">Tìm kiếm</button>
                         </div>
                       </form>
+                      <div class="alert alert-danger <?= !empty($_SESSION['error']) ?  "" : "d-none" ?>" role="alert">
+                        <?= !empty($_SESSION['error']) ? $_SESSION['error'] : "" ?>
+                      </div>
                     </div>
                     <div class="table-responsive">
                       <!-- <form action="">
@@ -92,6 +95,7 @@
                               <th class="col-1 text-center" scope="col">STT</th>
                               <th class="col-3 text-center" scope="col">Họ tên</th>
                               <th class="col-3 text-center" scope="col">Email</th>
+                              <th class="col-3 text-center" scope="col">Trạng thái</th>
                               <th class="col-3 text-center" scope="col">Hành động</th>
                             </tr>
                           </thead>
@@ -102,6 +106,13 @@
                                 <td class="text-center"><?= $index + 1 ?></td>
                                 <td class="text-center"><?= $lienHe['ho_ten'] ?></td>
                                 <td class="text-center"><?= $lienHe['email'] ?></td>
+                                <td class="text-center">
+                                  <?php if ($lienHe['trang_thai'] == 2) { ?>
+                                    <span class="badge bg-success-subtle text-success p-2">Đã xử lý</span>
+                                  <?php } else { ?>
+                                    <span class="badge bg-warning-subtle text-body p-2">Đang xử lý</span>
+                                  <?php } ?>
+                                </td>
                                 <td class="text-center align-middle">
                                   <div class="hstack justify-content-center align-items-center fs-20">
                                     <a href="?act=chi-tiet-lien-he&id=<?= $lienHe['id'] ?>" class="btn btn-sm btn-light">Chi tiết</a>

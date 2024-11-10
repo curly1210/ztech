@@ -7,7 +7,7 @@
 <head>
 
   <meta charset="utf-8" />
-  <title>Dashboard | NN Shop</title>
+  <title>Chi Tiết Liên Hệ | TechZ</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
   <meta content="Themesbrand" name="author" />
@@ -99,18 +99,63 @@
                       <label class="form-label" for="des-info-description-input">Nội dung</label>
                       <textarea readonly class="form-control" id="des-info-description-input" rows="3"><?= $lienHe["noi_dung"] ?></textarea>
                     </div>
+
                   </div>
 
                 </div><!-- end card-body -->
-              </div><!-- end card -->
-            </div><!-- end col -->
+                <!-- end card -->
+              </div><!-- end col -->
 
+            </div>
+            <div class="col-12">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row mt-3">
+                    <form action="?act=sua-trang-thai-lien-he" method="post">
+                      <div class="col-md-3 mb-3">
+                        <input type="hidden" name="id" value="<?= $lienHe['id'] ?>">
+                        <label for="trang_thai" class="form-label">Trạng thái</label>
+                        <select name="trang_thai" class="form-select">
+                          <option selected disabled>Chọn trạng thái</option>
+                          <option value="1" <?= $lienHe['trang_thai'] == 1 ? 'selected' : '' ?>>Đang xử lý</option>
+                          <option value="2" <?= $lienHe['trang_thai'] == 2 ? 'selected' : '' ?>>Đã xử lý</option>
+                        </select>
+
+                      </div>
+                      <div class="col-md-3 mt-4">
+                        <button type="submit" class="btn btn-primary" style="margin-top: 4px;">Cập nhật trạng thái</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- container-fluid -->
           </div>
-          <!-- container-fluid -->
+          <!-- End Page-content -->
+
+          <footer class=" footer">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-sm-6">
+                  <script>
+                    document.write(new Date().getFullYear())
+                  </script> © Velzon.
+                </div>
+                <div class="col-sm-6">
+                  <div class="text-sm-end d-none d-sm-block">
+                    Design & Develop by Themesbrand
+                  </div>
+                </div>
+              </div>
+            </div>
+          </footer>
         </div>
+
+
         <!-- End Page-content -->
 
-        <footer class=" footer">
+        <footer class="footer">
           <div class="container-fluid">
             <div class="row">
               <div class="col-sm-6">
@@ -127,59 +172,38 @@
           </div>
         </footer>
       </div>
+      <!-- end main content-->
 
-
-      <!-- End Page-content -->
-
-      <footer class="footer">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-sm-6">
-              <script>
-                document.write(new Date().getFullYear())
-              </script> © Velzon.
-            </div>
-            <div class="col-sm-6">
-              <div class="text-sm-end d-none d-sm-block">
-                Design & Develop by Themesbrand
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
-    <!-- end main content-->
-
-  </div>
-  <!-- END layout-wrapper -->
+    <!-- END layout-wrapper -->
 
 
 
-  <!--start back-to-top-->
-  <button onclick="topFunction()" class="btn btn-danger btn-icon" id="back-to-top">
-    <i class="ri-arrow-up-line"></i>
-  </button>
-  <!--end back-to-top-->
+    <!--start back-to-top-->
+    <button onclick="topFunction()" class="btn btn-danger btn-icon" id="back-to-top">
+      <i class="ri-arrow-up-line"></i>
+    </button>
+    <!--end back-to-top-->
 
-  <!--preloader-->
-  <div id="preloader">
-    <div id="status">
-      <div class="spinner-border text-primary avatar-sm" role="status">
-        <span class="visually-hidden">Loading...</span>
+    <!--preloader-->
+    <div id="preloader">
+      <div id="status">
+        <div class="spinner-border text-primary avatar-sm" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="customizer-setting d-none d-md-block">
-    <div class="btn-info rounded-pill shadow-lg btn btn-icon btn-lg p-2" data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas">
-      <i class='mdi mdi-spin mdi-cog-outline fs-22'></i>
+    <div class="customizer-setting d-none d-md-block">
+      <div class="btn-info rounded-pill shadow-lg btn btn-icon btn-lg p-2" data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas">
+        <i class='mdi mdi-spin mdi-cog-outline fs-22'></i>
+      </div>
     </div>
-  </div>
 
-  <!-- JAVASCRIPT -->
-  <?php
-  require_once "views/layouts/libs_js.php";
-  ?>
+    <!-- JAVASCRIPT -->
+    <?php
+    require_once "views/layouts/libs_js.php";
+    ?>
 
 </body>
 

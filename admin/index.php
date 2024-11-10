@@ -41,9 +41,10 @@ match ($act) {
     'xoa-danh-muc'          => (new DanhMucController())->destroy(),
 
     //Quản lý liên hệ
-    'lien-hes' => (new LienHeController())->index(),
-    'xoa-lien-he' => (new LienHeController())->destroy(),
-    'chi-tiet-lien-he' => (new LienHeController())->detail(),
+    'lien-hes'               => (new LienHeController())->index(),
+    'xoa-lien-he'            => (new LienHeController())->destroy(),
+    'chi-tiet-lien-he'       => (new LienHeController())->detail(),
+    'sua-trang-thai-lien-he' => (new LienHeController())->updateStatus(),
 
     //Quản lý người dùng
     'nguoi-dungs'           => (new NguoiDungController())->index(),
@@ -77,7 +78,7 @@ match ($act) {
     'form-sua-trang-thai-don-hang'  => (new TrangThaiDonHangController())->formEdit(),
     'sua-trang-thai-don-hang'       => (new TrangThaiDonHangController())->update(),
     'form-them-trang-thai-don-hang' => (new TrangThaiDonHangController())->formCreate(),
-    'them-trang-thai-don-hang' => (new TrangThaiDonHangController())->create(),
+    'them-trang-thai-don-hang'      => (new TrangThaiDonHangController())->create(),
     //Quản lý mã khuyến mãi
     'ma-khuyen-mais'             => (new MaKhuyenMaiController())->index(),
     'form-them-ma-khuyen-mai'    => (new MaKhuyenMaiController())->create(),

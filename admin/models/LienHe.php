@@ -34,7 +34,19 @@ class LienHe
       echo "Lỗi : " . $e->getMessage();
     }
   }
-
+  public function update($id, $trangThai)
+  {
+    try {
+      $sql = "UPDATE lien_hes SET trang_thai=:trang_thai WHERE id=:id";
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(':id', $id);
+      $stmt->bindParam(':trang_thai', $trangThai);
+      $stmt->execute();
+      return true;
+    } catch (PDOException $e) {
+      echo "Lỗi : " . $e->getMessage();
+    }
+  }
   public function deleteData($id)
   {
     try {
