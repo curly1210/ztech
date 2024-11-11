@@ -46,16 +46,14 @@ class MaKhuyenMai
             echo "Lỗi : " . $e->getMessage();
         }
     }
-    public function updateData($id, $tenMa, $giaMa, $soLuong, $trangThai)
+    public function updateData($id, $tenMa, $giaMa, $soLuong)
     {
         try {
-            $sql = "UPDATE ma_khuyen_mais SET ten=:ten, gia=:gia, so_luong=:so_luong , trang_thai=:trang_thai  WHERE id = :id";
+            $sql = "UPDATE ma_khuyen_mais SET ten=:ten, gia=:gia, so_luong=:so_luong   WHERE id = :id";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':ten', $tenMa);
             $stmt->bindParam(':gia', $giaMa);
             $stmt->bindParam(':so_luong', $soLuong);
-            $stmt->bindParam(':trang_thai', $trangThai);
-
             $stmt->bindParam(':id', $id);
 
             $stmt->execute();

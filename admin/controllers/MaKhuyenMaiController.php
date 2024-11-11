@@ -24,15 +24,22 @@ class MaKhuyenmaiController
             $tenMa = $_POST['ten_ma'];
             $soLuong = $_POST['so_luong'];
             $giaMa = $_POST['gia_ma'];
-            $ngayBatDau = $_POST['ngay_bat_dau'];
-            $ngayKetThuc = $_POST['ngay_ket_thuc'];
-            $trangThai = $_POST['trang_thai'] ?? null;
+            $ngayBatDau = !empty($_POST['ngay_bat_dau']) ? date("Y-m-d", strtotime($_POST['ngay_bat_dau'])) : null;
+            $ngayKetThuc = !empty($_POST['ngay_ket_thuc']) ? date("Y-m-d", strtotime($_POST['ngay_ket_thuc'])) : null;
+            $ngayHienTai = date("Y-m-d");
+            if ($ngayHienTai > $ngayKetThuc) {
+                $trangThai = 1;
+            } else if ($ngayHienTai < $ngayBatDau) {
+                $trangThai = 2;
+            } else if ($ngayHienTai >= $ngayBatDau && $ngayHienTai <= $ngayKetThuc) {
+                $trangThai = 3;
+            } else {
+                $trangThai = null;
+            }
+
             $errors = [];
             if (empty($tenMa)) {
                 $errors['ten_ma'] = 'Tên mã là bắt buộc';
-            }
-            if (empty($trangThai)) {
-                $errors['trang_thai'] = 'Trạng thái là bắt buộc';
             }
             if (empty($soLuong)) {
                 $errors['so_luong'] = 'Số lượng mã là bắt buộc';
@@ -50,7 +57,11 @@ class MaKhuyenmaiController
             if (empty($ngayKetThuc)) {
                 $errors['ngay_ket_thuc'] = 'Ngày kết thúc là bắt buộc';
             }
-
+            if (!empty($ngayBatDau) && !empty($ngayKetThuc)) {
+                if ($ngayBatDau > $ngayKetThuc) {
+                    $errors['message'] = "Ngày bắt đầu không được vượt quá ngày kết thúc";
+                }
+            }
             if (empty($errors)) {
                 $this->modelMaKhuyenMai->postData($tenMa, $giaMa, $soLuong, $trangThai, $ngayBatDau, $ngayKetThuc);
                 unset($_SESSION['errors']);
@@ -81,16 +92,12 @@ class MaKhuyenmaiController
             $tenMa = $_POST['ten_ma'];
             $soLuong = $_POST['so_luong'];
             $giaMa = $_POST['gia_ma'];
-
-            $trangThai = $_POST['trang_thai'] ?? null;
             $id = $_POST['id'];
             $errors = [];
             if (empty($tenMa)) {
                 $errors['ten_ma'] = 'Tên mã là bắt buộc';
             }
-            if (empty($trangThai)) {
-                $errors['trang_thai'] = 'Trạng thái là bắt buộc';
-            }
+
             if (empty($soLuong)) {
                 $errors['so_luong'] = 'Số lượng mã là bắt buộc';
             } else if ($soLuong < 0) {
@@ -102,8 +109,9 @@ class MaKhuyenmaiController
                 $errors['gia_ma'] = 'Giá phải là số dương ';
             }
 
+
             if (empty($errors)) {
-                $this->modelMaKhuyenMai->updateData($id, $tenMa, $giaMa, $soLuong, $trangThai);
+                $this->modelMaKhuyenMai->updateData($id, $tenMa, $giaMa, $soLuong);
                 unset($_SESSION['errors']);
                 header('Location: ?act=ma-khuyen-mais');
                 exit();

@@ -57,6 +57,7 @@
                                 </div>
 
                             </div>
+
                         </div>
                         <div class="col-12">
                             <div class="card">
@@ -78,6 +79,7 @@
                                                             <?= !empty($_SESSION['errors']['ten_ma']) ? $_SESSION['errors']['ten_ma'] : '' ?>
                                                         </span>
                                                     </div>
+
                                                 </div>
                                                 <div class="col-12 mb-3">
                                                     <div>
@@ -105,20 +107,7 @@
                                                     <label for="exampleInputdate" class="form-label">Ngày kết thúc : <?= date("d-m-Y", strtotime($maKhuyenMai['ngay_ket_thuc'])) ?></label>
 
                                                 </div>
-                                                <div class="col-md-3 mt-3">
-                                                    <div class="mb-3">
-                                                        <label for="trang_thai" class="form-label">Trạng thái</label>
-                                                        <select name="trang_thai" class="form-select">
-                                                            <option selected disabled>Chọn trạng thái</option>
-                                                            <option value="1" <?= $maKhuyenMai['trang_thai'] == 1 ? 'selected' : '' ?>>Hết hạn</option>
-                                                            <option value="2" <?= $maKhuyenMai['trang_thai'] == 2 ? 'selected' : '' ?>>Chưa có hiệu lực</option>
-                                                            <option value="3" <?= $maKhuyenMai['trang_thai'] == 3 ? 'selected' : '' ?>>Có hiệu lực</option>
-                                                        </select>
-                                                        <span class="text-danger">
-                                                            <?= !empty($_SESSION['errors']['trang_thai']) ? $_SESSION['errors']['trang_thai'] : '' ?>
-                                                        </span>
-                                                    </div>
-                                                </div>
+
                                                 <div class="col-lg-12">
                                                     <div class="text-end">
                                                         <button type="submit" class="btn btn-primary mt-3">Cập nhật</button>

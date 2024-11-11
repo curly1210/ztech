@@ -56,6 +56,10 @@
                                     </ol>
                                 </div>
 
+
+                            </div>
+                            <div class="alert alert-danger <?= !empty($_SESSION['errors']['message']) ? "" : "d-none" ?>" role="alert">
+                                <?= !empty($_SESSION['errors']['message']) ? $_SESSION['errors']['message'] : "" ?>
                             </div>
                         </div>
                         <div class="col-12">
@@ -110,20 +114,7 @@
                                                         <?= !empty($_SESSION['errors']['ngay_ket_thuc']) ? $_SESSION['errors']['ngay_ket_thuc'] : '' ?>
                                                     </span>
                                                 </div>
-                                                <div class="col-md-3 mt-3">
-                                                    <div class="mb-3">
-                                                        <label for="trang_thai" class="form-label">Trạng thái</label>
-                                                        <select name="trang_thai" class="form-select">
-                                                            <option selected disabled>Chọn trạng thái</option>
-                                                            <option value="1">Hết hạn</option>
-                                                            <option value="2">Chưa có hiệu lực</option>
-                                                            <option value="3">Có hiệu lực</option>
-                                                        </select>
-                                                        <span class="text-danger">
-                                                            <?= !empty($_SESSION['errors']['trang_thai']) ? $_SESSION['errors']['trang_thai'] : '' ?>
-                                                        </span>
-                                                    </div>
-                                                </div>
+
                                                 <div class="col-lg-12">
                                                     <div class="text-end">
                                                         <button type="submit" class="btn btn-primary mt-3">Thêm mới</button>
