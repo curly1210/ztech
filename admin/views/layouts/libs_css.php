@@ -19,3 +19,5 @@
 <link href="assets/css/custom.min.css" rel="stylesheet" type="text/css" />
 <!-- CKeditor css -->
 <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.3.1/ckeditor5.css" />
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
