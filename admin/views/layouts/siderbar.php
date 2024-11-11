@@ -59,6 +59,13 @@
                         <i class="ri-stack-line"></i> <span data-key="t-advance-ui">Danh mục sản phẩm</span>
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="?act=san-phams">
+                        <i class="bi bi-box"></i> <span data-key="t-advance-ui">Sản phẩm</span>
+                    </a>
+                </li>
+
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="?act=tin-tucs">
                         <i class="ri-pages-line"></i> <span data-key="t-pages">Tin Tức</span>

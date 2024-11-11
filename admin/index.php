@@ -13,6 +13,7 @@ require_once 'controllers/LienHeController.php';
 require_once 'controllers/TrangThaiDonHangController.php';
 require_once 'controllers/BannerController.php';
 require_once 'controllers/MaKhuyenMaiController.php';
+require_once 'controllers/SanPhamController.php';
 
 // Require toàn bộ file Models
 require_once 'models/DanhMuc.php';
@@ -22,6 +23,7 @@ require_once 'models/LienHe.php';
 require_once 'models/TrangThaiDonHang.php';
 require_once 'models/Banner.php';
 require_once 'models/MaKhuyenMai.php';
+require_once 'models/SanPham.php';
 
 // Route
 $act = $_GET['act'] ?? '/';
@@ -79,6 +81,7 @@ match ($act) {
     'sua-trang-thai-don-hang'       => (new TrangThaiDonHangController())->update(),
     'form-them-trang-thai-don-hang' => (new TrangThaiDonHangController())->formCreate(),
     'them-trang-thai-don-hang'      => (new TrangThaiDonHangController())->create(),
+
     //Quản lý mã khuyến mãi
     'ma-khuyen-mais'             => (new MaKhuyenMaiController())->index(),
     'form-them-ma-khuyen-mai'    => (new MaKhuyenMaiController())->create(),
@@ -87,4 +90,15 @@ match ($act) {
     'sua-ma-khuyen-mai'          => (new MaKhuyenMaiController())->update(),
     'xoa-ma-khuyen-mai'          => (new MaKhuyenMaiController())->destroy(),
     'xem-chi-tiet-ma-khuyen-mai' => (new MaKhuyenMaiController())->detail(),
+
+    //Quản lý sản phẩm
+    'san-phams'             => (new SanPhamController())->index(),
+    'chi-tiet-san-pham'     => (new SanPhamController())->detail(),
+    'form-them-san-pham'    => (new SanPhamController())->formCreate(),
+    'them-san-pham'         => (new SanPhamController())->create(),
+    'xoa-san-pham'          => (new SanPhamController())->destroy(),
+    'form-sua-san-pham'     => (new SanPhamController())->formUpdate(),
+    'sua-san-pham'          => (new SanPhamController())->update(),
+    'xoa-danh-gia'          => (new SanPhamController())->deleteReview(),
+    'xoa-binh-luan'         => (new SanPhamController())->deleteComment(),
 };
