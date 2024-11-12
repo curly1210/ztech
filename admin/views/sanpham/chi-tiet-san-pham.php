@@ -179,7 +179,7 @@
                             <th class="col-3 text-center" scope="col">Nội dung</th>
                             <th class="col-3 text-center" scope="col">Người bình luận</th>
                             <th class="col-3 text-center" scope="col">Ngày bình luận</th>
-                            <th class="col-3 text-center" scope="col">Hành động</th>
+                            <th class="col-1 text-center" scope="col">Hành động</th>
                           </tr>
                         </thead>
                         <tbody>

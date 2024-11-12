@@ -34,7 +34,7 @@ class SanPhamController
 
   public function formCreate()
   {
-    $danhMucs = $this->modelDanhMuc->getAll();
+    $danhMucs = $this->modelDanhMuc->getAll('');
     require_once('./views/sanpham/create-san-pham.php');
   }
 
@@ -121,7 +121,7 @@ class SanPhamController
   {
     $id = $_GET['id'];
     $sanPham = $this->modelSanPham->getOneById($id);
-    $danhMucs = $this->modelDanhMuc->getAll();
+    $danhMucs = $this->modelDanhMuc->getAll('');
     require_once('./views/sanpham/update-san-pham.php');
   }
 
