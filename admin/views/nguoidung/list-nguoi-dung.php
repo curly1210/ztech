@@ -78,9 +78,10 @@
                         </div>
                       </div>
                       <div class="col-sm">
-                        <form class="row g-2 " style="margin-bottom: 0;" action="?act=nguoi-dungs" method="post">
+                        <form class="row g-2 " style="margin-bottom: 0;" action="?" method="get">
                           <div class="col-auto">
                             <label for="inputPassword2" class="visually-hidden"></label>
+                            <input type="hidden" name="act" value="nguoi-dungs" class="form-control" <?php if ($search == "") { ?> placeholder="Họ tên..." <?php } else { ?> value="<?= $search ?>" <?php } ?>>
                             <input type="text" name="ho_ten" class="form-control" <?php if ($search == "") { ?> placeholder="Họ tên..." <?php } else { ?> value="<?= $search ?>" <?php } ?>>
                           </div>
                           <div class="col-auto">

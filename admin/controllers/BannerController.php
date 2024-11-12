@@ -8,7 +8,8 @@ class BannerController
     }
     public function index()
     {
-        $banners = $this->modelBanner->getAll();
+        $search = $_GET["tieu_de"] ??  '';
+        $banners = $this->modelBanner->getAll($search);
         require_once('./views/banner/list-banner.php');
     }
     public function create()

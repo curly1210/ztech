@@ -8,7 +8,8 @@ class TinTucController
     }
     public function index()
     {
-        $tinTucs = $this->modelTinTuc->getAll();
+        $search = $_GET["tieu_de"] ??  '';
+        $tinTucs = $this->modelTinTuc->getAll($search);
         require_once('./views/tintuc/list-tin-tuc.php');
     }
     public function create()

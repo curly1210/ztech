@@ -68,6 +68,21 @@
                                 <div class="card-body">
 
                                     <div class="live-preview">
+                                        <div>
+                                            <form class="row g-2" action="?" method="get">
+                                                <div class="col-auto">
+                                                    <label for="inputPassword2" class="visually-hidden"></label>
+                                                    <input type="hidden" name="act" value="danh-mucs" class="form-control" <?php if ($search == "") { ?> placeholder="Tên danh mục..." <?php } else { ?> value="<?= $search ?>" <?php } ?>>
+                                                    <input type="text" name="ten" class="form-control" id="inputPassword2" <?php if ($search == "") { ?> placeholder="Tên danh mục..." <?php } else { ?> value="<?= $search ?>" <?php } ?>>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <button type="submit" class="btn btn-primary mb-3">Tìm kiếm</button>
+                                                </div>
+                                            </form>
+                                            <div class="alert alert-danger <?= !empty($_SESSION['error']) ?  "" : "d-none" ?>" role="alert">
+                                                <?= !empty($_SESSION['error']) ? $_SESSION['error'] : "" ?>
+                                            </div>
+                                        </div>
 
                                         <div class="table-responsive">
 

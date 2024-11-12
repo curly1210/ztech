@@ -6,10 +6,10 @@ class DanhMuc
     {
         $this->conn = connectDB();
     }
-    public function getAll()
+    public function getAll($search)
     {
         try {
-            $sql = "SELECT * FROM danh_mucs";
+            $sql = "SELECT * FROM danh_mucs WHERE ten LIKE '%$search%' ";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll();

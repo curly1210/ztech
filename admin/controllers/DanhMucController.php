@@ -8,7 +8,8 @@ class DanhMucController
     }
     public function index()
     {
-        $danhMucs = $this->modelDanhMuc->getAll();
+        $search = $_GET["ten"] ??  '';
+        $danhMucs = $this->modelDanhMuc->getAll($search);
         require_once('./views/danhmuc/list-danh-muc.php');
     }
     public function detail()

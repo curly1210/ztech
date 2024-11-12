@@ -70,18 +70,17 @@
                   <div class="live-preview">
 
                     <div>
-                      <form class="row g-2" action="?act=lien-hes" method="post">
+                      <form class="row g-2" action="?" method="get">
                         <div class="col-auto">
                           <label for="inputPassword2" class="visually-hidden"></label>
+                          <input type="hidden" name="act" value="lien-hes" class="form-control" <?php if ($search == "") { ?> placeholder="Họ tên..." <?php } else { ?> value="<?= $search ?>" <?php } ?>>
                           <input type="text" name="ho_ten" class="form-control" id="inputPassword2" <?php if ($search == "") { ?> placeholder="Họ tên..." <?php } else { ?> value="<?= $search ?>" <?php } ?>>
                         </div>
                         <div class="col-auto">
                           <button type="submit" class="btn btn-primary mb-3">Tìm kiếm</button>
                         </div>
                       </form>
-                      <div class="alert alert-danger <?= !empty($_SESSION['error']) ?  "" : "d-none" ?>" role="alert">
-                        <?= !empty($_SESSION['error']) ? $_SESSION['error'] : "" ?>
-                      </div>
+
                     </div>
                     <div class="table-responsive">
                       <!-- <form action="">

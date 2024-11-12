@@ -12,7 +12,7 @@ class TrangThaiDonHangController
 
   public function index()
   {
-    $search = $_POST["ten"] ??  '';
+    $search = $_GET["ten"] ??  '';
     $trangThaiDonHangs = $this->modelTrangThaiDonHang->getAll($search);
 
 

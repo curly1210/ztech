@@ -13,7 +13,7 @@ class NguoiDungController
   {
 
 
-    $search = $_POST["ho_ten"] ??  '';
+    $search = $_GET["ho_ten"] ??  '';
     $nguoiDungs = $this->modelNguoiDung->getAll($search);
 
     require_once('./views/nguoidung/list-nguoi-dung.php');

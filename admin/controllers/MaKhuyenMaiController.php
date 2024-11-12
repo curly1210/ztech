@@ -8,7 +8,7 @@ class MaKhuyenmaiController
     }
     public function index()
     {
-        $search = $_POST["ten_ma"] ??  '';
+        $search = $_GET["ten_ma"] ??  '';
         $maKhuyenMais = $this->modelMaKhuyenMai->getAll($search);
         require_once('./views/makhuyenmai/list-ma-khuyen-mai.php');
     }

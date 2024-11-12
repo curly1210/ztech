@@ -58,7 +58,7 @@
             <div class="col-12">
               <div class="card">
                 <div class="card-header  ">
-                  <h4 class="card-title mb-0 flex-grow-1">trạng thái đơn hàng</h4>
+                  <h4 class="card-title mb-0 flex-grow-1">Trạng thái đơn hàng</h4>
 
                 </div><!-- end card header -->
 
@@ -75,9 +75,10 @@
                         </div>
                       </div>
                       <div class="col-sm">
-                        <form class="row g-2 " style="margin-bottom: 0;" action="?act=trang-thai-don-hangs" method="post">
+                        <form class="row g-2 " style="margin-bottom: 0;" action="?" method="get">
                           <div class="col-auto">
                             <label for="inputPassword2" class="visually-hidden"></label>
+                            <input type="hidden" name="act" value="trang-thai-don-hangs" class="form-control" <?php if ($search == "") { ?> placeholder="Tên trạng thái..." <?php } else { ?> value="<?= $search ?>" <?php } ?>>
                             <input type="text" name="ten" class="form-control" <?php if ($search == "") { ?> placeholder="Tên trạng thái..." <?php } else { ?> value="<?= $search ?>" <?php } ?>>
                           </div>
                           <div class="col-auto">

@@ -6,10 +6,10 @@ class Banner
     {
         $this->conn = connectDB();
     }
-    public function getAll()
+    public function getAll($search)
     {
         try {
-            $sql = "SELECT * FROM banners";
+            $sql = "SELECT * FROM banners WHERE tieu_de LIKE '%$search%'";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll();

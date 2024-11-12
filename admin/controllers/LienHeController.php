@@ -12,7 +12,7 @@ class LienHeController
 
   public function index()
   {
-    $search = $_POST["ho_ten"] ??  '';
+    $search = $_GET["ho_ten"] ??  '';
 
     $lienHes = $this->modelLienHe->getAll($search);
     // var_dump($lienHes);

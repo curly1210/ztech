@@ -6,10 +6,10 @@ class TinTuc
     {
         $this->conn = connectDB();
     }
-    public function getAll()
+    public function getAll($search)
     {
         try {
-            $sql = "SELECT * FROM tin_tucs";
+            $sql = "SELECT * FROM tin_tucs WHERE tieu_de LIKE '%$search%'";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll();

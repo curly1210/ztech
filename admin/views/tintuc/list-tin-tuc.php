@@ -65,6 +65,19 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
+                                    <div class="mb-3">
+                                        <form class="row g-2" action="?" method="get">
+                                            <div class="col-auto">
+                                                <label for="inputPassword2" class="visually-hidden"></label>
+                                                <input type="hidden" name="act" value="tin-tucs" class="form-control" <?php if ($search == "") { ?> placeholder="Tiêu đề..." <?php } else { ?> value="<?= $search ?>" <?php } ?>>
+                                                <input type="text" name="tieu_de" class="form-control" id="inputPassword2" <?php if ($search == "") { ?> placeholder="Tiêu đề..." <?php } else { ?> value="<?= $search ?>" <?php } ?>>
+                                            </div>
+                                            <div class="col-auto">
+                                                <button type="submit" class="btn btn-primary mb-3">Tìm kiếm</button>
+                                            </div>
+                                        </form>
+
+                                    </div>
                                     <div class="table-responsive table-card">
                                         <table class="table table-hover table-nowrap align-middle mb-0">
                                             <thead class="table-light">
