@@ -79,6 +79,9 @@
                         <div class="col-auto">
                           <button type="submit" class="btn btn-primary mb-3">Tìm kiếm</button>
                         </div>
+                        <div class="alert alert-danger <?= !empty($_SESSION['error']) ?  "" : "d-none" ?>" role="alert">
+                          <?= !empty($_SESSION['error']) ? $_SESSION['error'] : "" ?>
+                        </div>
                       </form>
 
                     </div>

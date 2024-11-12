@@ -14,6 +14,7 @@ require_once 'controllers/TrangThaiDonHangController.php';
 require_once 'controllers/BannerController.php';
 require_once 'controllers/MaKhuyenMaiController.php';
 require_once 'controllers/SanPhamController.php';
+require_once 'controllers/DonHangController.php';
 
 // Require toàn bộ file Models
 require_once 'models/DanhMuc.php';
@@ -24,6 +25,7 @@ require_once 'models/TrangThaiDonHang.php';
 require_once 'models/Banner.php';
 require_once 'models/MaKhuyenMai.php';
 require_once 'models/SanPham.php';
+require_once 'models/DonHang.php';
 
 // Route
 $act = $_GET['act'] ?? '/';

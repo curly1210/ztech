@@ -99,19 +99,25 @@
                         <table class="table  align-middle table-bordered   mb-0">
                           <thead>
                             <tr>
-                              <th class="col-1 text-center" scope="col">STT</th>
-                              <th class="col-3 text-center" scope="col">Tên sản phẩm</th>
-                              <!-- <th class="col-3 text-center" scope="col">Hình ảnh</th> -->
-                              <th class="col-3 text-center" scope="col">Lượt xem</th>
-                              <th class="col-3 text-center" scope="col">Hành động</th>
+                              <!-- <th class="col-1c text-center" scope="col">STT</th> -->
+                              <th class="col-1 text-center" scope="col">Mã sản phẩm</th>
+                              <th class="col-2 text-center" scope="col">Tên sản phẩm</th>
+                              <th class="col-2 text-center" scope="col">Giá bán</th>
+                              <th class="col-2 text-center" scope="col">Số lượng</th>
+                              <!-- <th class="col-1 text-center" scope="col">Hình ảnh</th> -->
+                              <th class="col-2 text-center" scope="col">Lượt xem</th>
+                              <th class="col-2 text-center" scope="col">Hành động</th>
                             </tr>
                           </thead>
                           <tbody>
 
                             <?php foreach ($sanPhams as $index => $row): ?>
                               <tr>
-                                <td class="text-center"><?= $index + 1 ?></td>
+                                <!-- <td class="text-center"><?= $index + 1 ?></td> -->
+                                <td class="text-center"><?= $row['id'] ?></td>
                                 <td class="text-center"><?= $row['ten'] ?></td>
+                                <td class="text-center"><?= $row['gia_ban'] ?></td>
+                                <td class="text-center"><?= $row['hang_ton_kho'] ?></td>
                                 <td class="text-center"><?= $row['luot_xem'] ?></td>
                                 <td>
                                   <div class="d-flex justify-content-center align-items-center hstack gap-2 flex-wrap fs-20">
