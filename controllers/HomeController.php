@@ -1,8 +1,9 @@
-<?php 
+<?php
 
 class HomeController
 {
-    public function index() {
-        echo "Xưởng thực hành dự án 1";
+    public function index()
+    {
+        require_once './views/trangchu/trang-chu.php';
     }
 }
