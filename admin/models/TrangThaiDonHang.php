@@ -43,13 +43,14 @@ class TrangThaiDonHang
     }
   }
 
-  public function update($id, $ten)
+  public function update($id, $ten, $mau)
   {
     try {
-      $sql = "UPDATE trang_thai_don_hangs SET ten = :ten WHERE id = :id";
+      $sql = "UPDATE trang_thai_don_hangs SET ten = :ten, ma_mau = :ma_mau WHERE id = :id";
       $stmt = $this->conn->prepare($sql);
       $stmt->bindParam(':id', $id);
       $stmt->bindParam(':ten', $ten);
+      $stmt->bindParam(':ma_mau', $mau);
 
       $stmt->execute();
       return true;
@@ -58,13 +59,14 @@ class TrangThaiDonHang
     }
   }
 
-  public function create($ten)
+  public function create($ten, $mau)
   {
     try {
-      $sql = "INSERT INTO trang_thai_don_hangs (ten) 
-      VALUES (:ten)";
+      $sql = "INSERT INTO trang_thai_don_hangs (ten,ma_mau) 
+      VALUES (:ten,:ma_mau)";
       $stmt = $this->conn->prepare($sql);
       $stmt->bindParam(':ten', $ten);
+      $stmt->bindParam(':ma_mau', $mau);
 
       $stmt->execute();
       return true;

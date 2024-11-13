@@ -103,4 +103,9 @@ match ($act) {
     'sua-san-pham'          => (new SanPhamController())->update(),
     'xoa-danh-gia'          => (new SanPhamController())->deleteReview(),
     'xoa-binh-luan'         => (new SanPhamController())->deleteComment(),
+
+    //Quản lý đơn hàng
+    'don-hangs'                        => (new DonHangController())->index(),
+    'thay-doi-trang-thai-don-hang'     => (new DonHangController())->changeStatusOrder(),
+    'cap-nhat-trang-thai-thanh-toan'   => (new DonHangController())->changeStatusPayment()
 };

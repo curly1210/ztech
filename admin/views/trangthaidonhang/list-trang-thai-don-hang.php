@@ -106,7 +106,7 @@
                             <?php foreach ($trangThaiDonHangs as $index => $trangThaiDonHang): ?>
                               <tr>
                                 <td class="text-center"><?= $index + 1 ?></td>
-                                <td class="text-center"><?= $trangThaiDonHang['ten'] ?></td>
+                                <td style="color: <?= $trangThaiDonHang['ma_mau'] ?>;" class="text-center"><?= $trangThaiDonHang['ten'] ?></td>
                                 <td class="text-center align-middle">
                                   <div class="hstack justify-content-center align-items-center fs-20">
 

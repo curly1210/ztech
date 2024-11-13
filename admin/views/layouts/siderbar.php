@@ -67,6 +67,12 @@
                 </li>
 
                 <li class="nav-item">
+                    <a class="nav-link menu-link" href="?act=don-hangs">
+                        <i class="bi bi-receipt"></i> <span data-key="t-advance-ui">Đơn hàng</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
                     <a class="nav-link menu-link" href="?act=tin-tucs">
                         <i class="ri-pages-line"></i> <span data-key="t-pages">Tin Tức</span>
                     </a>

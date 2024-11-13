@@ -76,6 +76,11 @@
                       <input name="ten" value="<?= $trangThaiDonHang["ten"] ?>" type="text" class="form-control" id="gen-info-email-input">
                       <div class="invalid-feedback" style="display: block;"><?= !empty($_SESSION['errors']['ten']) ? $_SESSION['errors']['ten'] : '' ?></div>
                     </div>
+                    <div class="mb-3 w-25">
+                      <label for="colorPicker" class="form-label">Color Picker</label>
+                      <input name="mau" type="color" class="form-control form-control-color w-100" id="colorPicker" value="<?= $trangThaiDonHang['ma_mau'] ?>">
+                      <div class="invalid-feedback" style="display: block;"><?= !empty($_SESSION['errors']['mau']) ? $_SESSION['errors']['mau'] : '' ?></div>
+                    </div>
                     <button type="submit" class="btn btn-primary mb-3">Cập nhật</button>
                   </form>
 

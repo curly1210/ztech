@@ -32,14 +32,17 @@ class TrangThaiDonHangController
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
       $id = $_POST['id'];
       $ten = $_POST['ten'];
+      $mau = $_POST['mau'];
 
       $errors = [];
+
+
+      $trangThaiDonHangs = $this->modelTrangThaiDonHang->getAll('');
 
       if (empty($ten)) {
         $errors['ten'] = "Vui lòng nhập tên trạng thái";
       } else {
         $trangThaiDonHang = $this->modelTrangThaiDonHang->getOne($id);
-        $trangThaiDonHangs = $this->modelTrangThaiDonHang->getAll('');
         foreach ($trangThaiDonHangs as $trangThai) {
           if ($ten == $trangThai['ten'] && $ten != $trangThaiDonHang['ten']) {
             $errors['ten'] = "Trạng thái đơn hàng đã tồn tại";
@@ -47,9 +50,18 @@ class TrangThaiDonHangController
         }
       }
 
+      foreach ($trangThaiDonHangs as $trangThai) {
+        if ($mau == $trangThai['ma_mau'] && $mau != $trangThaiDonHang['ma_mau']) {
+          $errors['mau'] = "Màu trạng thái đơn hàng đã tồn tại";
+          break;
+        }
+      }
+
+
+
 
       if (empty($errors)) {
-        $this->modelTrangThaiDonHang->update($id, $ten);
+        $this->modelTrangThaiDonHang->update($id, $ten, $mau);
         unset($_SESSION['errors']);
         header('Location: ?act=trang-thai-don-hangs');
         exit();
@@ -70,21 +82,31 @@ class TrangThaiDonHangController
   {
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
       $ten = $_POST['ten'];
+      $mau = $_POST['mau'];
 
       $errors = [];
+      $trangThaiDonHangs = $this->modelTrangThaiDonHang->getAll('');
 
       if (empty($ten)) {
         $errors['ten'] = "Vui lòng nhập tên trạng thái";
       } else {
-        $trangThaiDonHangs = $this->modelTrangThaiDonHang->getAll('');
         foreach ($trangThaiDonHangs as $trangThaiDonHang) {
           if ($ten == $trangThaiDonHang['ten']) {
             $errors['ten'] = "Trạng thái đơn hàng đã tồn tại";
           }
         }
       }
+
+      foreach ($trangThaiDonHangs as $trangThai) {
+        if ($mau == $trangThai['ma_mau']) {
+          $errors['mau'] = "Màu trạng thái đơn hàng đã tồn tại";
+          break;
+        }
+      }
+
+
       if (empty($errors)) {
-        $this->modelTrangThaiDonHang->create($ten);
+        $this->modelTrangThaiDonHang->create($ten, $mau);
         unset($_SESSION['errors']);
         header('Location: ?act=trang-thai-don-hangs');
         exit();

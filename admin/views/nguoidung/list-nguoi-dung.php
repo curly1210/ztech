@@ -139,8 +139,8 @@
                                       <label class="form-check-label ms-2" for="SwitchCheck1">Yes/No</label>
                                     </div>
                                   </div>
-                                </td>
-                                <td>
+                                </td> -->
+                                <!-- <td>
                                   <div class="d-flex justify-content-center align-items-center">
                                     <div class="form-check form-switch">
                                       <input class="form-check-input" type="checkbox" role="switch" checked="">
