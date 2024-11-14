@@ -1,5 +1,15 @@
 <?php
 session_start();
+
+if (!isset($_SESSION['user']) && !isset($_SESSION['admin'])) {
+    header("Location: ../index.php");
+}
+
+if (isset($_SESSION['user']) && !isset($_SESSION['admin'])) {
+    header("Location: ../index.php");
+}
+
+
 // Require file Common
 require_once '../commons/env.php'; // Khai báo biến môi trường
 require_once '../commons/function.php'; // Hàm hỗ trợ
@@ -35,6 +45,7 @@ $act = $_GET['act'] ?? '/';
 match ($act) {
     // Dashboards
     '/'                     => (new DashboardController())->index(),
+
     //Quản lý danh mục
     'danh-mucs'             => (new DanhMucController())->index(),
     'xem-chi-tiet-danh-muc' => (new DanhMucController())->detail(),
@@ -56,6 +67,7 @@ match ($act) {
     'xoa-nguoi-dung'        => (new NguoiDungController())->destroy(),
     'chi-tiet-nguoi-dung'   => (new NguoiDungController())->detail(),
     'trang-thai-nguoi-dung' => (new NguoiDungController())->changeStatus(),
+    'dang-xuat'             => (new NguoiDungController())->logout(),
 
 
     //Quản lý tin tức

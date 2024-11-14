@@ -87,7 +87,7 @@ class NguoiDungController
       }
 
       if (empty($errors)) {
-        $matKhau = md5($matKhau);
+        // $matKhau = md5($matKhau);
         $this->modelNguoiDung->create($hoTen, $email, $matKhau, $dienThoai, $gioiTinh, $namSinh);
         $errors['check'] = 0;
         echo json_encode($errors);
@@ -112,5 +112,12 @@ class NguoiDungController
     $delete_id = implode(",", $delete_id);
 
     $this->modelNguoiDung->delete($delete_id);
+  }
+
+  public function logout()
+  {
+    session_unset();
+    session_destroy();
+    header("Location: ?act=/");
   }
 }

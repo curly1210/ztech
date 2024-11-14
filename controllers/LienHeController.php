@@ -43,6 +43,6 @@ class LienHeController
         $_SESSION['errors'] = $errors;
       }
     }
-    require_once './views/lienhe/index.php';
+    require_once './views/trangchu/lien-he.php';
   }
 }
