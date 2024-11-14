@@ -20,6 +20,7 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
+
   <!-- tool edit mô tả chi tiết -->
   <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.3.1/ckeditor5.css" />
 </head>
@@ -176,9 +177,10 @@
                         <thead>
                           <tr>
                             <th class="col-1 text-center" scope="col">STT</th>
-                            <th class="col-3 text-center" scope="col">Nội dung</th>
-                            <th class="col-3 text-center" scope="col">Người bình luận</th>
-                            <th class="col-3 text-center" scope="col">Ngày bình luận</th>
+                            <th class="col-2 text-center" scope="col">Nội dung</th>
+                            <th class="col-2 text-center" scope="col">Người bình luận</th>
+                            <th class="col-2 text-center" scope="col">Ngày bình luận</th>
+                            <th class="col-1 text-center" scope="col">Trạng thái</th>
                             <th class="col-1 text-center" scope="col">Hành động</th>
                           </tr>
                         </thead>
@@ -190,6 +192,14 @@
                               <td class="text-center"><?= $row['noi_dung'] ?>cuong</td>
                               <td class="text-center"><?= $row['ho_ten'] ?></td>
                               <td class="text-center"><?php echo date("H:i:s d/m/Y", strtotime($row['ngay_binh_luan'])) ?></td>
+                              <td class="text-center">
+                                <div class="d-flex justify-content-center align-items-center">
+                                  <div class="form-check form-switch form-switch-md " dir="ltr">
+                                    <input type="checkbox" onchange="changeStatusComment(<?= $row['id_binh_luan'] ?>,this)" <?= $row['status_binh_luan'] == 1 ? '' : 'checked' ?> class="form-check-input">
+                                  </div>
+                                  <label id="orderPayment1" class="form-check-label">Ẩn/Hiện</label>
+                                </div>
+                              </td>
                               <td class="text-center align-middle">
                                 <div class="hstack justify-content-center align-items-center fs-20">
                                   <form action="?act=xoa-binh-luan" method="POST" onsubmit="return confirm('Bạn có chắc muốn xóa bình luận này không?')">
@@ -229,9 +239,10 @@
                         <thead>
                           <tr>
                             <th class="col-1 text-center" scope="col">STT</th>
-                            <th class="col-3 text-center" scope="col">Nội dung</th>
-                            <th class="col-3 text-center" scope="col">Người đánh giá</th>
-                            <th class="col-3 text-center" scope="col">Ngày đánh giá</th>
+                            <th class="col-2 text-center" scope="col">Nội dung</th>
+                            <th class="col-2 text-center" scope="col">Người đánh giá</th>
+                            <th class="col-2 text-center" scope="col">Ngày đánh giá</th>
+                            <th class="col-1 text-center" scope="col">Trạng thái</th>
                             <th class="col-1 text-center" scope="col">Hành động</th>
                           </tr>
                         </thead>
@@ -240,9 +251,26 @@
                           <?php foreach ($danhGias as $index => $row): ?>
                             <tr>
                               <td class="text-center"><?= $index + 1 ?></td>
-                              <td class="text-center"><?= $row['noi_dung'] ?></td>
+                              <td class="text-center">
+                                <div class="text-warning fs-15">
+                                  <?php for ($x = 0; $x < $row['sao']; $x++) { ?>
+                                    <i class="ri-star-fill"></i>
+                                  <?php } ?>
+                                  <?php for ($x = 0; $x < 5 - $row['sao']; $x++) { ?>
+                                    <i class="ri-star-line"></i>
+                                  <?php } ?>
+                                </div>
+                              </td>
                               <td class="text-center"><?= $row['ho_ten'] ?></td>
                               <td class="text-center"><?php echo date("H:i:s d/m/Y", strtotime($row['ngay_danh_gia'])) ?></td>
+                              <td class="text-center">
+                                <div class="d-flex justify-content-center align-items-center">
+                                  <div class="form-check form-switch form-switch-md " dir="ltr">
+                                    <input type="checkbox" onchange="changeStatusReview(<?= $row['id_danh_gia'] ?>,this)" <?= $row['status_danh_gia'] == 1 ? '' : 'checked' ?> class="form-check-input">
+                                  </div>
+                                  <label id="orderPayment1" class="form-check-label">Ẩn/Hiện</label>
+                                </div>
+                              </td>
 
                               <td class="text-center align-middle">
                                 <div class="hstack justify-content-center align-items-center fs-20">
@@ -378,6 +406,52 @@
   <?php
   require_once "views/layouts/libs_js.php";
   ?>
+
+  <script>
+    function changeStatusReview(reviewId, checkBox) {
+      const newStatus = checkBox.checked ? '2' : '1';
+      $.ajax({
+        url: '?act=cap-nhat-trang-thai-danh-gia',
+        type: 'POST',
+        data: {
+          reviewId: reviewId,
+          review_status: newStatus
+        },
+        success: function(response) {
+          // Cập nhật trạng thái trong giao diện
+          setTimeout(() => {
+            alert(response);
+          }, 150);
+        },
+        error: function(error) {
+          console.error("Error:", error);
+          // checkbox.checked = false; // Reset lại toggle nếu có lỗi
+        }
+      });
+    }
+
+    function changeStatusComment(commentId, checkbox) {
+      const newStatus = checkbox.checked ? '2' : '1';
+      $.ajax({
+        url: '?act=cap-nhat-trang-thai-binh-luan',
+        type: 'POST',
+        data: {
+          commentId: commentId,
+          comment_status: newStatus
+        },
+        success: function(response) {
+          // Cập nhật trạng thái trong giao diện
+          setTimeout(() => {
+            alert(response);
+          }, 150);
+        },
+        error: function(error) {
+          console.error("Error:", error);
+          // checkbox.checked = false; // Reset lại toggle nếu có lỗi
+        }
+      });
+    }
+  </script>
 
 </body>
 

@@ -25,6 +25,7 @@ require_once 'controllers/BannerController.php';
 require_once 'controllers/MaKhuyenMaiController.php';
 require_once 'controllers/SanPhamController.php';
 require_once 'controllers/DonHangController.php';
+require_once 'controllers/ThongKeController.php';
 
 // Require toàn bộ file Models
 require_once 'models/DanhMuc.php';
@@ -36,6 +37,7 @@ require_once 'models/Banner.php';
 require_once 'models/MaKhuyenMai.php';
 require_once 'models/SanPham.php';
 require_once 'models/DonHang.php';
+require_once 'models/ThongKe.php';
 
 // Route
 $act = $_GET['act'] ?? '/';
@@ -106,19 +108,25 @@ match ($act) {
     'xem-chi-tiet-ma-khuyen-mai' => (new MaKhuyenMaiController())->detail(),
 
     //Quản lý sản phẩm
-    'san-phams'             => (new SanPhamController())->index(),
-    'chi-tiet-san-pham'     => (new SanPhamController())->detail(),
-    'form-them-san-pham'    => (new SanPhamController())->formCreate(),
-    'them-san-pham'         => (new SanPhamController())->create(),
-    'xoa-san-pham'          => (new SanPhamController())->destroy(),
-    'form-sua-san-pham'     => (new SanPhamController())->formUpdate(),
-    'sua-san-pham'          => (new SanPhamController())->update(),
-    'xoa-danh-gia'          => (new SanPhamController())->deleteReview(),
-    'xoa-binh-luan'         => (new SanPhamController())->deleteComment(),
+    'san-phams'                     => (new SanPhamController())->index(),
+    'chi-tiet-san-pham'             => (new SanPhamController())->detail(),
+    'form-them-san-pham'            => (new SanPhamController())->formCreate(),
+    'them-san-pham'                 => (new SanPhamController())->create(),
+    'xoa-san-pham'                  => (new SanPhamController())->destroy(),
+    'form-sua-san-pham'             => (new SanPhamController())->formUpdate(),
+    'sua-san-pham'                  => (new SanPhamController())->update(),
+    'xoa-danh-gia'                  => (new SanPhamController())->deleteReview(),
+    'xoa-binh-luan'                 => (new SanPhamController())->deleteComment(),
+    'cap-nhat-trang-thai-danh-gia'  => (new SanPhamController())->changeStatusReview(),
+    'cap-nhat-trang-thai-binh-luan' => (new SanPhamController())->changeStatusComment(),
+
 
     //Quản lý đơn hàng
     'don-hangs'                        => (new DonHangController())->index(),
     'thay-doi-trang-thai-don-hang'     => (new DonHangController())->changeStatusOrder(),
     'cap-nhat-trang-thai-thanh-toan'   => (new DonHangController())->changeStatusPayment(),
     'chi-tiet-don-hang'                => (new DonHangController())->showDetail(),
+
+    //Thống kê
+    'thong-ke' => (new ThongKeController())->index(),
 };

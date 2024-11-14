@@ -59,7 +59,7 @@ class SanPham
   {
     try {
 
-      $sql = "SELECT *, binh_luans.id as id_binh_luan FROM binh_luans JOIN nguoi_dungs ON 
+      $sql = "SELECT *, binh_luans.id as id_binh_luan, binh_luans.trang_thai as status_binh_luan  FROM binh_luans JOIN nguoi_dungs ON 
       binh_luans.id_nguoi_dung = nguoi_dungs.id WHERE binh_luans.id_san_pham= :id";
       $stmt = $this->conn->prepare($sql);
       $stmt->bindParam(':id', $id);
@@ -75,7 +75,7 @@ class SanPham
   {
     try {
 
-      $sql = "SELECT *, danh_gias.id as id_danh_gia FROM danh_gias JOIN nguoi_dungs ON 
+      $sql = "SELECT *, danh_gias.id as id_danh_gia, danh_gias.trang_thai as status_danh_gia FROM danh_gias JOIN nguoi_dungs ON 
       danh_gias.id_nguoi_danh_gia = nguoi_dungs.id WHERE danh_gias.id_san_pham = :id";
       $stmt = $this->conn->prepare($sql);
       $stmt->bindParam(':id', $id);
@@ -226,6 +226,36 @@ class SanPham
       $sql = "DELETE FROM binh_luans WHERE id =:id";
       $stmt = $this->conn->prepare($sql);
       $stmt->bindParam(':id', $idBinhLuan);
+
+      $stmt->execute();
+      return true;
+    } catch (PDOException $e) {
+      echo "Lỗi : " . $e->getMessage();
+    }
+  }
+
+  public function changeStatusReview($id, $trangThai)
+  {
+    try {
+      $sql = "UPDATE danh_gias SET trang_thai = :trang_thai  WHERE id = :id";
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(':trang_thai', $trangThai);
+      $stmt->bindParam(':id', $id);
+
+      $stmt->execute();
+      return true;
+    } catch (PDOException $e) {
+      echo "Lỗi : " . $e->getMessage();
+    }
+  }
+
+  public function changeStatusComment($id, $trangThai)
+  {
+    try {
+      $sql = "UPDATE binh_luans SET trang_thai = :trang_thai  WHERE id = :id";
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(':trang_thai', $trangThai);
+      $stmt->bindParam(':id', $id);
 
       $stmt->execute();
       return true;
