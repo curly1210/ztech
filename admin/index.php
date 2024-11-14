@@ -107,5 +107,6 @@ match ($act) {
     //Quản lý đơn hàng
     'don-hangs'                        => (new DonHangController())->index(),
     'thay-doi-trang-thai-don-hang'     => (new DonHangController())->changeStatusOrder(),
-    'cap-nhat-trang-thai-thanh-toan'   => (new DonHangController())->changeStatusPayment()
+    'cap-nhat-trang-thai-thanh-toan'   => (new DonHangController())->changeStatusPayment(),
+    'chi-tiet-don-hang'                => (new DonHangController())->showDetail(),
 };

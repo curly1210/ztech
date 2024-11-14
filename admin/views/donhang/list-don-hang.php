@@ -126,7 +126,7 @@
                                 </td>
                                 <td>
                                   <div class="d-flex justify-content-center align-items-center hstack gap-3 flex-wrap">
-                                    <a href="?act=chi-tiet-don-hang&id=<?= $donHang["id"] ?>" class="btn btn-sm btn-light">Chi tiết</a>
+                                    <a href="?act=chi-tiet-don-hang&id=<?= $donHang["id_don_hang"] ?>" class="btn btn-sm btn-light">Chi tiết</a>
                                   </div>
                                 </td>
 

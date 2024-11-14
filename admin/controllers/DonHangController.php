@@ -34,6 +34,28 @@ class DonHangController
       echo "Cập nhật trạng thái đơn hàng thành công!";
     }
   }
+  public function showDetail()
+  {
+    $id = $_GET['id'];
+
+    $donHang = $this->modelDonHang->getDetail($id);
+
+    $sanPhamDonHang  = $this->modelDonHang->getListProducts($id);
+    // print_r($sanPhamDonHang);
+    $tongTien = 0;
+    foreach ($sanPhamDonHang as $sanPham) {
+      $total = $sanPham['so_luong'] * $sanPham['gia_ban'];
+      $tongTien += $total;
+      $this->modelDonHang->updateTotal($sanPham['id_chi_tiet_don_hang'], $total);
+    }
+    $thanhToan = $tongTien + $donHang['tien_ship'] - $donHang['giam_gia'];
+    $this->modelDonHang->updateThanhToan($id, $tongTien, $thanhToan);
+    $donHang = $this->modelDonHang->getDetail($id);
+
+    $sanPhamDonHang  = $this->modelDonHang->getListProducts($id);
+    // die();
+    require_once './views/donhang/detail-don-hang.php';
+  }
 
   public function changeStatusPayment()
   {
