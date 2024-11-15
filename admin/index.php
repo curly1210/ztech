@@ -25,6 +25,7 @@ require_once 'controllers/BannerController.php';
 require_once 'controllers/MaKhuyenMaiController.php';
 require_once 'controllers/SanPhamController.php';
 require_once 'controllers/DonHangController.php';
+require_once 'controllers/ThongKEController.php';
 
 // Require toàn bộ file Models
 require_once 'models/DanhMuc.php';
@@ -36,6 +37,7 @@ require_once 'models/Banner.php';
 require_once 'models/MaKhuyenMai.php';
 require_once 'models/SanPham.php';
 require_once 'models/DonHang.php';
+require_once 'models/ThongKe.php';
 
 // Route
 $act = $_GET['act'] ?? '/';
@@ -121,4 +123,6 @@ match ($act) {
     'thay-doi-trang-thai-don-hang'     => (new DonHangController())->changeStatusOrder(),
     'cap-nhat-trang-thai-thanh-toan'   => (new DonHangController())->changeStatusPayment(),
     'chi-tiet-don-hang'                => (new DonHangController())->showDetail(),
+    //Thống kê
+    'thong-ke' => (new ThongKeController())->index()
 };

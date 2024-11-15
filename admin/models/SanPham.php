@@ -18,7 +18,7 @@ class SanPham
   {
     try {
 
-      $sql = "SELECT * FROM san_phams WHERE ten LIKE '%$search%' ";
+      $sql = "SELECT san_phams.id,san_phams.ten,san_phams.gia_ban,san_phams.hang_ton_kho,san_phams.luot_xem, MIN(hinh_anhs.hinh_anh) as `url` FROM hinh_anhs JOIN san_phams on hinh_anhs.id_san_pham = san_phams.id WHERE san_phams.ten LIKE '%$search%' GROUP by hinh_anhs.id_san_pham";
       $stmt = $this->conn->prepare($sql);
       $stmt->execute();
       return $stmt->fetchAll();

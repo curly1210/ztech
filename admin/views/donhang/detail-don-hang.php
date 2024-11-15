@@ -92,7 +92,7 @@
                                                     <?php if ($donHang['trang_thai_thanh_toan'] == "Đã thanh toán") { ?>
                                                         <span class="badge bg-success-subtle text-success fs-11" id="payment-status"><?= $donHang['trang_thai_thanh_toan'] ?></span>
                                                     <?php } else { ?>
-                                                        <span class="badge bg-warning-subtle text-secondary fs-11" id="payment-status"><?= $donHang['trang_thai_thanh_toan'] ?></span>
+                                                        <span class="badge bg-warning-subtle text-danger fs-11" id="payment-status"><?= $donHang['trang_thai_thanh_toan'] ?></span>
                                                     <?php } ?>
                                                 </div>
                                                 <!--end col-->
