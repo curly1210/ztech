@@ -219,4 +219,34 @@ class SanPhamController
       header("Location: ?act=chi-tiet-san-pham&id=$idSanPham");
     }
   }
+
+  public function changeStatusReview()
+  {
+    if ($_SERVER['REQUEST_METHOD'] == "POST") {
+      $idDanhGia = $_POST['reviewId'];
+      $newStatus = $_POST['review_status'];
+      $this->modelSanPham->changeStatusReview($idDanhGia, $newStatus);
+
+      if ($newStatus == 2) {
+        echo "Hiển thị đánh giá thành công!";
+      } else {
+        echo "Ẩn đánh giá thành công!";
+      }
+    }
+  }
+
+  public function changeStatusComment()
+  {
+    if ($_SERVER['REQUEST_METHOD'] == "POST") {
+      $idComment = $_POST['commentId'];
+      $newStatus = $_POST['comment_status'];
+      $this->modelSanPham->changeStatusComment($idComment, $newStatus);
+
+      if ($newStatus == 2) {
+        echo "Hiển thị đánh giá thành công!";
+      } else {
+        echo "Ẩn đánh giá thành công!";
+      }
+    }
+  }
 }
