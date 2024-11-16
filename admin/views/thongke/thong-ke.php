@@ -331,27 +331,30 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
         <script>
+            console.log('sdsdasdas');
+            let data = <?php echo $json; ?>;
+            console.log(data);
+
             new Morris.Line({
                 // ID of the element in which to draw the chart.
                 element: 'myfirstchart',
                 // Chart data records -- each entry in this array corresponds to a point on
                 // the chart.
                 data: [{
-                        year: '2008',
-                        doanhThu: 20,
-                        donHang: 2,
+                        year: 2024,
+                        doanhThu: 12,
+                        donHang: 3,
                     },
                     {
-                        year: '2021',
-                        doanhThu: 10,
-                        donHang: 20,
+                        year: 2004,
+                        doanhThu: 122,
+                        donHang: 3,
                     },
                     {
-                        year: '2024',
-                        doanhThu: 30,
-                        donHang: 40,
+                        year: 1024,
+                        doanhThu: 12,
+                        donHang: 3,
                     },
-
                 ],
                 // The name of the data record attribute that contains x-values.
                 xkey: 'year',
