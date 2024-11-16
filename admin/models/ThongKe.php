@@ -210,7 +210,7 @@ class ThongKe
     public function getAllDonHangs()
     {
         try {
-            $sql = "SELECT COUNT(don_hangs.id) as so_don_hang, SUM(don_hangs.tong_tien) as tong_tien, date(don_hangs.ngay_dat_hang) as ngay_dat FROM don_hangs JOIN trang_thai_don_hangs on don_hangs.id_trang_thai_don_hang = trang_thai_don_hangs.id
+            $sql = "SELECT date(don_hangs.ngay_dat_hang) as ngay_dat, COUNT(don_hangs.id) as so_don_hang, SUM(don_hangs.tong_tien) as tong_tien FROM don_hangs JOIN trang_thai_don_hangs on don_hangs.id_trang_thai_don_hang = trang_thai_don_hangs.id
             WHERE trang_thai_don_hangs.ten LIKE 'Giao hàng thành công'
             GROUP by DATE(don_hangs.ngay_dat_hang)";
             $stmt = $this->conn->prepare($sql);

@@ -340,29 +340,14 @@
                 element: 'myfirstchart',
                 // Chart data records -- each entry in this array corresponds to a point on
                 // the chart.
-                data: [{
-                        year: 2024,
-                        doanhThu: 12,
-                        donHang: 3,
-                    },
-                    {
-                        year: 2004,
-                        doanhThu: 122,
-                        donHang: 3,
-                    },
-                    {
-                        year: 1024,
-                        doanhThu: 12,
-                        donHang: 3,
-                    },
-                ],
+                data: data,
                 // The name of the data record attribute that contains x-values.
-                xkey: 'year',
+                xkey: 'ngay_dat',
                 // A list of names of data record attributes that contain y-values.
-                ykeys: ["doanhThu", "donHang"],
+                ykeys: ["so_don_hang", "tong_tien"],
                 // Labels for the ykeys -- will be displayed when you hover over the
                 // chart.
-                labels: ["Doanh Thu", "Đơn Hàng"]
+                labels: ["Đơn Hàng", "Doanh Thu"]
             });
         </script>
 
