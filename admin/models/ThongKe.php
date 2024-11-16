@@ -133,4 +133,91 @@ class ThongKe
             echo "Lỗi : " . $e->getMessage();
         }
     }
+
+    //biểu đồ thống kê
+    public function getAllThongKe()
+    {
+        try {
+            $sql = "SELECT *  FROM thong_kes";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        } catch (PDOException $e) {
+            echo "Lỗi : " . $e->getMessage();
+        }
+    }
+    public function insertThongKe($ngayThongKe, $tongDoanhThu, $soDonHang)
+    {
+        try {
+            $sql = "INSERT INTO thong_kes (tong_doanh_thu,so_don_hang,ngay_thong_ke) VALUES (:tong_doanh_thu,:so_don_hang,:ngay_thong_ke)";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':ngay_thong_ke', $ngayThongKe);
+            $stmt->bindParam(':tong_doanh_thu', $tongDoanhThu);
+            $stmt->bindParam(':so_don_hang', $soDonHang);
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            echo "Lỗi : " . $e->getMessage();
+        }
+    }
+    public function updateThongKe($id, $tongDoanhThu, $soDonHang)
+    {
+        try {
+            $sql = "UPDATE thong_kes SET  tong_doanh_thu = :tong_doanh_thu, so_don_hang = :so_don_hang WHERE id = :id";
+            $stmt = $this->conn->prepare($sql);
+
+            $stmt->bindParam(':tong_doanh_thu', $tongDoanhThu);
+            $stmt->bindParam(':so_don_hang', $soDonHang);
+            $stmt->bindParam(':id', $id);
+
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            echo "Lỗi : " . $e->getMessage();
+        }
+    }
+    public function getOrderByDateTime($ngayThongKe)
+    {
+        try {
+            $sql = "SELECT COUNT(*) AS SoLuongDonHang FROM don_hangs  
+            JOIN trang_thai_don_hangs ON trang_thai_don_hangs.id = don_hangs.id_trang_thai_don_hang  
+            WHERE trang_thai_don_hangs.ten = 'Giao hàng thành công' AND don_hangs.ngay_dat_hang= :ngayThongKe ";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':ngayThongKe', $ngayThongKe);
+
+            $stmt->execute();
+            return $stmt->fetch();
+        } catch (PDOException $e) {
+            echo "Lỗi : " . $e->getMessage();
+        }
+    }
+    public function getTotalRevenueByDateTime($ngayThongKe)
+    {
+        try {
+            $sql = "SELECT SUM(don_hangs.thanh_toan) AS TongDoanhThu FROM don_hangs 
+            JOIN trang_thai_don_hangs ON trang_thai_don_hangs.id = don_hangs.id_trang_thai_don_hang 
+            WHERE trang_thai_don_hangs.ten = 'Giao hàng thành công'  AND don_hangs.ngay_dat_hang= :ngayThongKe 
+            ";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':ngayThongKe', $ngayThongKe);
+
+            $stmt->execute();
+            return $stmt->fetch();
+        } catch (PDOException $e) {
+            echo "Lỗi : " . $e->getMessage();
+        }
+    }
+    public function getAllDonHangs()
+    {
+        try {
+            $sql = "SELECT *,don_hangs.id as id_don_hang FROM don_hangs JOIN nguoi_dungs 
+      on don_hangs.id_nguoi_dung = nguoi_dungs.id JOIN trang_thai_don_hangs
+      on don_hangs.id_trang_thai_don_hang = trang_thai_don_hangs.id WHERE trang_thai_don_hangs.ten = 'Giao hàng thành công'";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        } catch (PDOException $e) {
+            echo "Lỗi : " . $e->getMessage();
+        }
+    }
 }

@@ -16,7 +16,7 @@
     <?php
     require_once "views/layouts/libs_css.php";
     ?>
-
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
 </head>
 
 <body>
@@ -141,7 +141,7 @@
                                     <div class="col-xl-12">
                                         <div class="card crm-widget">
                                             <div class="cart-header ">
-                                                <h4 class="card-title mb-3 ms-2 mt-2 flex-grow-1">Thống kê đơn hàng</h4>
+                                                <h4 class="card-title mb-3 ms-3 mt-2 flex-grow-1">Thống kê đơn hàng</h4>
                                             </div>
                                             <div class="card-body p-0 ">
                                                 <div class="row row-cols-md-3 row-cols-1">
@@ -262,6 +262,16 @@
                                     </div><!-- end col -->
                                 </div><!-- end row -->
 
+
+                            </div>
+                            <div class="card mt-2 p-3">
+
+                                <h4 class="card-title mb-3 ms-2 mt-2 flex-grow-1">Biểu đồ doanh thu</h4>
+
+                                <div class="card-body">
+                                    <div id="myfirstchart" style="height: 250px;"></div>
+                                </div>
+
                             </div><!-- end row -->
 
                         </div><!-- end col -->
@@ -317,6 +327,42 @@
         </div>
 
         <!-- JAVASCRIPT -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+        <script>
+            new Morris.Line({
+                // ID of the element in which to draw the chart.
+                element: 'myfirstchart',
+                // Chart data records -- each entry in this array corresponds to a point on
+                // the chart.
+                data: [{
+                        year: '2008',
+                        doanhThu: 20,
+                        donHang: 2,
+                    },
+                    {
+                        year: '2021',
+                        doanhThu: 10,
+                        donHang: 20,
+                    },
+                    {
+                        year: '2024',
+                        doanhThu: 30,
+                        donHang: 40,
+                    },
+
+                ],
+                // The name of the data record attribute that contains x-values.
+                xkey: 'year',
+                // A list of names of data record attributes that contain y-values.
+                ykeys: ["doanhThu", "donHang"],
+                // Labels for the ykeys -- will be displayed when you hover over the
+                // chart.
+                labels: ["Doanh Thu", "Đơn Hàng"]
+            });
+        </script>
+
         <?php
         require_once "views/layouts/libs_js.php";
         ?>
