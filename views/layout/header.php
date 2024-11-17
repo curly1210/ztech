@@ -6,7 +6,7 @@
       <div class="primary-nav">
         <!--====== Main Logo ======-->
 
-        <a class="main-logo" href="index.html"> <img src="images/logo/logo-1.png" alt="" /></a>
+        <a class="main-logo" href="index.php"> <img src="images/logo/logo-1.png" alt="" /></a>
         <!--====== End - Main Logo ======-->
 
         <!--====== Search Form ======-->
@@ -29,33 +29,37 @@
 
             <!--====== List ======-->
             <ul class="ah-list ah-list--design1 ah-list--link-color-secondary">
-              <li class="has-dropdown" data-tooltip="tooltip" data-placement="left" title="Account">
+              <li class="has-dropdown" data-tooltip="tooltip" data-placement="left" title="<?= isset($_SESSION['user']) ? 'Hello, ' . $_SESSION['user']['ho_ten'] . '!' : 'Account' ?>">
                 <a><i class="far fa-user-circle"></i></a>
 
                 <!--====== Dropdown ======-->
 
                 <span class="js-menu-toggle"></span>
                 <ul style="width: 120px">
-                  <li>
-                    <a href="dashboard.html"><i class="fas fa-user-circle u-s-m-r-6"></i>
+                  <?php if (isset($_SESSION['user'])) { ?>
+                    <li>
+                      <a href="dashboard.html"><i class="fas fa-user-circle u-s-m-r-6"></i>
+                        <span>Tài khoản</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="?act=dang-xuat"><i class="fas fa-lock-open u-s-m-r-6"></i>
 
-                      <span>Account</span></a>
-                  </li>
-                  <li>
-                    <a href="signup.html"><i class="fas fa-user-plus u-s-m-r-6"></i>
+                        <span>Đăng xuất</span></a>
+                    </li>
+                  <?php } else { ?>
+                    <li>
+                      <a href="?act=form-dang-ky"><i class="fas fa-user-plus u-s-m-r-6"></i>
+                        <span>Đăng ký</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="?act=form-dang-nhap"><i class="fas fa-lock u-s-m-r-6"></i>
 
-                      <span>Signup</span></a>
-                  </li>
-                  <li>
-                    <a href="?act=form-dang-nhap"><i class="fas fa-lock u-s-m-r-6"></i>
+                        <span>Đăng nhập</span></a>
+                    </li>
+                  <?php } ?>
 
-                      <span>Signin</span></a>
-                  </li>
-                  <li>
-                    <a href="?act=dang-xuat"><i class="fas fa-lock-open u-s-m-r-6"></i>
-
-                      <span>Signout</span></a>
-                  </li>
                 </ul>
                 <!--====== End - Dropdown ======-->
               </li>

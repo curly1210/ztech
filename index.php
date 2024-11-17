@@ -29,4 +29,6 @@ match ($act) {
     'form-dang-nhap' => (new NguoiDungController())->formLogin(),
     'dang-nhap'      => (new NguoiDungController())->login(),
     'dang-xuat'      => (new NguoiDungController())->logout(),
+    'form-dang-ky'   => (new NguoiDungController())->formSignUp(),
+    'dang-ky'        => (new NguoiDungController())->signUp(),
 };

@@ -96,13 +96,6 @@ class NguoiDungController
         echo json_encode($errors);
         // var_dump($errors);
       }
-
-
-
-      // $data = compact('hoTen', 'email', 'matKhau', 'reMatKhau', 'dien_thoai', 'gioi_tinh');
-
-      // var_dump($data);
-      // echo $hoTen;
     }
   }
 
