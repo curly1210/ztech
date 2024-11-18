@@ -1118,7 +1118,7 @@
                 <a href="index.html"><i class="fas fa-home u-c-brand"></i></a>
               </li>
               <li>
-                <a data-modal="modal" data-modal-id="#check-login" onclick="return checkLogin(event)" href="wishlist.html"><i class="far fa-heart"></i></a>
+                <a data-modal="modal" data-modal-id="#check-login" onclick="return checkLogin(event,this)" href="?act=list-yeu-thich"><i class="far fa-heart"></i></a>
               </li>
               <li class="has-dropdown">
                 <a class="mini-cart-shop-link"><i class="fas fa-shopping-bag"></i>

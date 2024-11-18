@@ -157,4 +157,13 @@ class NguoiDungController
     header("Location: ?act=/");
     exit();
   }
+
+  public function listLike()
+  {
+    // if (isset($_SESSION['user'])) {
+    //   header("Location: index.php");
+    // }
+
+    require_once './views/nguoidung/yeu-thich.php';
+  }
 }

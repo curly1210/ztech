@@ -10,19 +10,17 @@
  <script src="assets/js/map-init.js"></script>
 
  <script>
-   function checkLogin(event) {
+   function checkLogin(event, element) {
      event.preventDefault();
-     // return false;
-     return fetch('commons/checkSession.php')
+
+     const targetUrl = element.href;
+
+     fetch('commons/checkSession.php')
        .then(response => response.json())
        .then(data => {
          if (data.status) {
-           window.location.href = event.target.href;
-
-         } else {
-
+           window.location.href = targetUrl;
          }
-         // alert('data.status');
        })
        .catch(error => {
          alert('Lỗi rồi;');
