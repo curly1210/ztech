@@ -31,4 +31,5 @@ match ($act) {
     'dang-xuat'      => (new NguoiDungController())->logout(),
     'form-dang-ky'   => (new NguoiDungController())->formSignUp(),
     'dang-ky'        => (new NguoiDungController())->signUp(),
+    // 'list-yeu-thich' => (new NguoiDungController())->listLike(),
 };

@@ -1905,6 +1905,41 @@
         </div>
       </div>
     </div>
+
+    <!-- <div class="modal fade" id="check-login">
+      <div class="modal-dialog modal-dialog-centered" style="width: 320px;">
+        <div class="modal-content modal-radius modal-shadow" style="border-radius: 20px;">
+          <button class="btn dismiss-button fas fa-times" type="button" data-dismiss="modal"></button>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-lg-12 col-md-12">
+                <div class="success u-s-m-b-30">
+                  <div>
+
+                    <h2 style="color:#ff4500">Smember</h2>
+                  </div>
+                  <div>
+                    <img style="width: 50px !important; " src="https://cdn2.cellphones.com.vn/insecure/rs:fill:0:80/q:90/plain/https://cellphones.com.vn/media/wysiwyg/chibi2.png" alt="" />
+                  </div>
+                  <div class="success__info-wrap">
+                    <span class="success__name">Vui lòng đăng nhập tài khoản Smember để xem ưu đãi và thanh toán dễ dàng hơn.
+                    </span>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-6"><a href="?act=form-dang-ky" style="width: 100%;display: flex; justify-content: center; padding: 10px 0; border-radius: 6px;" class="btn btn--e-transparent-brand-b-2" type="submit">Đăng ký</a></div>
+                  <div class="col-lg-6"><a href="?act=form-dang-nhap" style="width: 100%;display: flex; justify-content: center; padding: 10px 0; border-radius: 6px; background-color: #ff4500; color:white;" class="btn btn--e-transparent-brand-b-2" type="submit">Đăng nhập</a></div>
+                </div>
+              </div>
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
     <!--====== End - Add to Cart Modal ======-->
 
     <!--====== Newsletter Subscribe Modal ======-->
@@ -1925,6 +1960,9 @@
     ga("send", "pageview");
   </script>
   <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+
+
+
 
 
   <!-- Javascript -->
