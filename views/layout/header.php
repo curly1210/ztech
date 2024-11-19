@@ -6,7 +6,7 @@
       <div class="primary-nav">
         <!--====== Main Logo ======-->
 
-        <a class="main-logo" href="index.html"> <img src="<?= $noiDungs['logo'] ?>" alt="" width="150" /></a>
+        <a class="main-logo" href="index.php"> <img src="<?= $noiDungs['logo'] ?>" alt="" width="150" /></a>
         <!--====== End - Main Logo ======-->
 
         <!--====== Search Form ======-->
@@ -29,33 +29,37 @@
 
             <!--====== List ======-->
             <ul class="ah-list ah-list--design1 ah-list--link-color-secondary">
-              <li class="has-dropdown" data-tooltip="tooltip" data-placement="left" title="Account">
+              <li class="has-dropdown" data-tooltip="tooltip" data-placement="left" title="<?= isset($_SESSION['user']) ? 'Hello, ' . $_SESSION['user']['ho_ten'] . '!' : 'Account' ?>">
                 <a><i class="far fa-user-circle"></i></a>
 
                 <!--====== Dropdown ======-->
 
                 <span class="js-menu-toggle"></span>
                 <ul style="width: 120px">
-                  <li>
-                    <a href="dashboard.html"><i class="fas fa-user-circle u-s-m-r-6"></i>
+                  <?php if (isset($_SESSION['user'])) { ?>
+                    <li>
+                      <a href="dashboard.html"><i class="fas fa-user-circle u-s-m-r-6"></i>
+                        <span>Tài khoản</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="?act=dang-xuat"><i class="fas fa-lock-open u-s-m-r-6"></i>
 
-                      <span>Account</span></a>
-                  </li>
-                  <li>
-                    <a href="signup.html"><i class="fas fa-user-plus u-s-m-r-6"></i>
+                        <span>Đăng xuất</span></a>
+                    </li>
+                  <?php } else { ?>
+                    <li>
+                      <a href="?act=form-dang-ky"><i class="fas fa-user-plus u-s-m-r-6"></i>
+                        <span>Đăng ký</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="?act=form-dang-nhap"><i class="fas fa-lock u-s-m-r-6"></i>
 
-                      <span>Signup</span></a>
-                  </li>
-                  <li>
-                    <a href="?act=form-dang-nhap"><i class="fas fa-lock u-s-m-r-6"></i>
+                        <span>Đăng nhập</span></a>
+                    </li>
+                  <?php } ?>
 
-                      <span>Signin</span></a>
-                  </li>
-                  <li>
-                    <a href="?act=dang-xuat"><i class="fas fa-lock-open u-s-m-r-6"></i>
-
-                      <span>Signout</span></a>
-                  </li>
                 </ul>
                 <!--====== End - Dropdown ======-->
               </li>
@@ -456,7 +460,7 @@
                 <a href="index.html"><i class="fas fa-home u-c-brand"></i></a>
               </li>
               <li>
-                <a href="wishlist.html"><i class="far fa-heart"></i></a>
+                <a data-modal="modal" data-modal-id="#check-login" onclick="return checkLogin(event,this)" href="?act=list-yeu-thich"><i class="far fa-heart"></i></a>
               </li>
               <li class="has-dropdown">
                 <a class="mini-cart-shop-link"><i class="fas fa-shopping-bag"></i>
@@ -584,3 +588,38 @@
   </nav>
   <!--====== End - Nav 2 ======-->
 </header>
+
+<div class="modal fade" id="check-login">
+  <div class="modal-dialog modal-dialog-centered" style="width: 320px;">
+    <div class="modal-content modal-radius modal-shadow" style="border-radius: 20px;">
+      <button class="btn dismiss-button fas fa-times" type="button" data-dismiss="modal"></button>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-12 col-md-12">
+            <div class="success u-s-m-b-30">
+              <div>
+
+                <h2 style="color:#ff4500">Smember</h2>
+              </div>
+              <div>
+                <img style="width: 50px !important; " src="https://cdn2.cellphones.com.vn/insecure/rs:fill:0:80/q:90/plain/https://cellphones.com.vn/media/wysiwyg/chibi2.png" alt="" />
+              </div>
+              <div class="success__info-wrap">
+                <span class="success__name">Vui lòng đăng nhập tài khoản Smember để xem ưu đãi và thanh toán dễ dàng hơn.
+                </span>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-6"><a href="?act=form-dang-ky" style="width: 100%;display: flex; justify-content: center; padding: 10px 0; border-radius: 6px;" class="btn btn--e-transparent-brand-b-2" type="submit">Đăng ký</a></div>
+              <div class="col-lg-6"><a href="?act=form-dang-nhap" style="width: 100%;display: flex; justify-content: center; padding: 10px 0; border-radius: 6px; background-color: #ff4500; color:white;" class="btn btn--e-transparent-brand-b-2" type="submit">Đăng nhập</a></div>
+            </div>
+          </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -17,6 +17,7 @@ class LienHeController
       $email = $_POST['email'];
       $dienThoai = $_POST['so_dien_thoai'];
       $noiDung = $_POST['noi_dung'];
+      $noiDungs = $this->modelLienHe->getAdressShop();
 
       $errors = [];
       if (empty($hoTen)) {

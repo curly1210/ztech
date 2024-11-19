@@ -27,4 +27,15 @@ class LienHe
       echo "Lỗi : " . $e->getMessage();
     }
   }
+  public function getAdressShop()
+  {
+    try {
+      $sql = "SELECT * FROM noi_dungs";
+      $stmt = $this->conn->prepare($sql);
+      $stmt->execute();
+      return $stmt->fetch();
+    } catch (PDOException $e) {
+      echo "Lỗi : " . $e->getMessage();
+    }
+  }
 }
