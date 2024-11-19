@@ -13,6 +13,7 @@ require_once './controllers/NguoiDungController.php';
 // Require toàn bộ file Models
 require_once './models/LienHe.php';
 require_once './models/NguoiDung.php';
+require_once './models/Home.php';
 
 // Route
 $act = $_GET['act'] ?? '/';

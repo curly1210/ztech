@@ -4,26 +4,26 @@
       <div class="row">
         <div class="col-lg-4 col-md-6">
           <div class="outer-footer__content u-s-m-b-40">
-            <span class="outer-footer__content-title">Contact Us</span>
+            <span class="outer-footer__content-title">Liên hệ với chúng tôi</span>
             <div class="outer-footer__text-wrap">
               <i class="fas fa-home"></i>
 
-              <span>4247 Ashford Drive Virginia VA-20006 USA</span>
+              <span><?= $noiDungs['dia_chi'] ?></span>
             </div>
             <div class="outer-footer__text-wrap">
               <i class="fas fa-phone-volume"></i>
 
-              <span>(+0) 900 901 904</span>
+              <span><?= $noiDungs['so_dien_thoai'] ?></span>
             </div>
             <div class="outer-footer__text-wrap">
               <i class="far fa-envelope"></i>
 
-              <span>contact@domain.com</span>
+              <span><?= $noiDungs['email'] ?></span>
             </div>
             <div class="outer-footer__social">
               <ul>
                 <li>
-                  <a class="s-fb--color-hover" href="#"><i class="fab fa-facebook-f"></i></a>
+                  <a class="s-fb--color-hover" href="<?= $noiDungs['link_facebook'] ?>"><i class="fab fa-facebook-f"></i></a>
                 </li>
                 <li>
                   <a class="s-tw--color-hover" href="#"><i class="fab fa-twitter"></i></a>
@@ -32,7 +32,7 @@
                   <a class="s-youtube--color-hover" href="#"><i class="fab fa-youtube"></i></a>
                 </li>
                 <li>
-                  <a class="s-insta--color-hover" href="#"><i class="fab fa-instagram"></i></a>
+                  <a class="s-insta--color-hover" href="<?= $noiDungs['link_instagram'] ?>"><i class="fab fa-instagram"></i></a>
                 </li>
                 <li>
                   <a class="s-gplus--color-hover" href="#"><i class="fab fa-google-plus-g"></i></a>
@@ -45,23 +45,23 @@
           <div class="row">
             <div class="col-lg-6 col-md-6">
               <div class="outer-footer__content u-s-m-b-40">
-                <span class="outer-footer__content-title">Information</span>
+                <span class="outer-footer__content-title">Thông tin</span>
                 <div class="outer-footer__list-wrap">
                   <ul>
                     <li>
-                      <a href="cart.html">Cart</a>
+                      <a href="cart.html">Giỏ hàng</a>
                     </li>
                     <li>
-                      <a href="dashboard.html">Account</a>
+                      <a href="dashboard.html">Tài khoản</a>
                     </li>
                     <li>
-                      <a href="shop-side-version-2.html">Manufacturer</a>
+                      <a href="shop-side-version-2.html">Nhà cung cấp</a>
                     </li>
                     <li>
-                      <a href="dash-payment-option.html">Finance</a>
+                      <a href="dash-payment-option.html">Tài chính</a>
                     </li>
                     <li>
-                      <a href="shop-side-version-2.html">Shop</a>
+                      <a href="shop-side-version-2.html">Cửa hàng</a>
                     </li>
                   </ul>
                 </div>
@@ -70,22 +70,22 @@
             <div class="col-lg-6 col-md-6">
               <div class="outer-footer__content u-s-m-b-40">
                 <div class="outer-footer__list-wrap">
-                  <span class="outer-footer__content-title">Our Company</span>
+                  <span class="outer-footer__content-title">Về doanh nghiệp </span>
                   <ul>
                     <li>
-                      <a href="about.html">About us</a>
+                      <a href="about.html">Về chúng tôi</a>
                     </li>
                     <li>
-                      <a href="contact.html">Contact Us</a>
+                      <a href="contact.html">liên hệ với chúng tôi</a>
                     </li>
                     <li>
                       <a href="index.html">Sitemap</a>
                     </li>
                     <li>
-                      <a href="dash-my-order.html">Delivery</a>
+                      <a href="dash-my-order.html">Vận chuyển</a>
                     </li>
                     <li>
-                      <a href="shop-side-version-2.html">Store</a>
+                      <a href="shop-side-version-2.html">Kho</a>
                     </li>
                   </ul>
                 </div>
@@ -95,19 +95,19 @@
         </div>
         <div class="col-lg-4 col-md-12">
           <div class="outer-footer__content">
-            <span class="outer-footer__content-title">Join our Newsletter</span>
+            <span class="outer-footer__content-title">Theo dõi chúng tôi</span>
             <form class="newsletter">
               <div class="u-s-m-b-15">
                 <div class="radio-box newsletter__radio">
                   <input type="radio" id="male" name="gender" />
                   <div class="radio-box__state radio-box__state--primary">
-                    <label class="radio-box__label" for="male">Male</label>
+                    <label class="radio-box__label" for="male">Nam</label>
                   </div>
                 </div>
                 <div class="radio-box newsletter__radio">
                   <input type="radio" id="female" name="gender" />
                   <div class="radio-box__state radio-box__state--primary">
-                    <label class="radio-box__label" for="female">Female</label>
+                    <label class="radio-box__label" for="female">Nữ</label>
                   </div>
                 </div>
               </div>
@@ -116,10 +116,10 @@
 
                 <input class="input-text input-text--only-white" type="text" id="newsletter" placeholder="Enter your Email" />
 
-                <button class="btn btn--e-brand newsletter__btn" type="submit">SUBSCRIBE</button>
+                <button class="btn btn--e-brand newsletter__btn" type="submit">Đăng ký</button>
               </div>
 
-              <span class="newsletter__text">Subscribe to the mailing list to receive updates on promotions, new arrivals, discount and coupons.</span>
+              <span class="newsletter__text">Hãy đăng ký để nhận thông tin cập nhật về chương trình khuyến mãi, hàng mới, giảm giá và phiếu giảm giá.</span>
             </form>
           </div>
         </div>

@@ -115,13 +115,15 @@
                                                     <p class="text-muted mb-1" id="billing-address-line-1">Email: <?= $donHang['email'] ?></p>
                                                     <p class="text-muted mb-1"><span>Số điện thoại: </span><span id="billing-phone-no"><?= $donHang['dien_thoai'] ?></span></p>
 
+
                                                 </div>
                                                 <!--end col-->
                                                 <div class="col-6">
-                                                    <h6 class="text-muted text-uppercase fw-semibold mb-3">Địa chỉ giao hàng</h6>
-                                                    <p class="fw-medium mb-2" id="shipping-name"><?= $donHang['dia_chi'] ?></p>
-                                                    <p class="text-muted mb-1" id="shipping-address-line-1">Người nhận: <?= $donHang['ten_nguoi_nhan'] ?></p>
+                                                    <h6 class="text-muted text-uppercase fw-semibold mb-3">Thông tin người nhận</h6>
+                                                    <p class="fw-medium mb-2" id="shipping-name"><?= $donHang['ten_nguoi_nhan'] ?> </p>
+                                                    <p class="text-muted mb-1" id="shipping-address-line-1">Địa chỉ: <?= $donHang['dia_chi'] ?> </p>
                                                     <p class="text-muted mb-1"><span>Số điện thoại: </span><span id="shipping-phone-no"><?= $donHang['so_dien_thoai'] ?></span></p>
+                                                    <p class="text-muted mb-1"><span>Email: </span><span id="shipping-phone-no"><?= $donHang['email_nguoi_nhan'] ?></span></p>
                                                 </div>
                                                 <!--end col-->
                                             </div>
