@@ -1001,15 +1001,7 @@
     </div>
   </div>
   <!--====== End - Add to Cart Modal ======-->
-  <a class="s-option__link btn--e-brand-shadow" href="checkout.html">PROCEED TO CHECKOUT</a>
-  </div>
-  </div>
-  </div>
-  </div>
-  </div>
-  </div>
-  </div>
-  </div>
+
 
   <!-- <div class="modal fade" id="check-login">
       <div class="modal-dialog modal-dialog-centered" style="width: 320px;">

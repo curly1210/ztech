@@ -1,5 +1,5 @@
 <?php
-class LienHe
+class Base
 {
   public $conn;
   public function __construct()
@@ -11,22 +11,19 @@ class LienHe
   {
     $this->conn = null;
   }
-  public function create($hoTen, $email, $dienThoai, $noiDung)
+
+  public function getAllDanhMuc()
   {
     try {
-      $sql = "INSERT INTO lien_hes (ho_ten,so_dien_thoai,email,noi_dung) 
-      VALUES (:ho_ten,:so_dien_thoai,:email,:noi_dung)";
+      $sql = "SELECT * FROM danh_mucs WHERE danh_mucs.trang_thai = 2";
       $stmt = $this->conn->prepare($sql);
-      $stmt->bindParam(':ho_ten', $hoTen);
-      $stmt->bindParam(':so_dien_thoai', $dienThoai);
-      $stmt->bindParam(':email', $email);
-      $stmt->bindParam(':noi_dung', $noiDung);
       $stmt->execute();
-      return true;
+      return $stmt->fetchAll();
     } catch (PDOException $e) {
       echo "Lỗi : " . $e->getMessage();
     }
   }
+
   public function getAdressShop()
   {
     try {

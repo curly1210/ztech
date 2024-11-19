@@ -12,7 +12,10 @@ class NguoiDungController
     if (isset($_SESSION['user'])) {
       header("Location: index.php");
     }
+
+    $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
     $noiDungs = $this->modelNguoiDung->getAdressShop();
+
     require_once './views/nguoidung/dang-nhap.php';
   }
 
@@ -74,7 +77,10 @@ class NguoiDungController
     if (isset($_SESSION['user'])) {
       header("Location: index.php");
     }
+
+    $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
     $noiDungs = $this->modelNguoiDung->getAdressShop();
+
     require_once './views/nguoidung/dang-ky.php';
   }
 
