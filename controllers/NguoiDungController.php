@@ -173,4 +173,50 @@ class NguoiDungController
     $noiDungs = $this->modelNguoiDung->getAdressShop();
     require_once './views/nguoidung/yeu-thich.php';
   }
+
+  public function sendContact()
+  {
+    if ($_SERVER["REQUEST_METHOD"] ==  'POST') {
+      $hoTen = $_POST['ten'];
+      $email = $_POST['email'];
+      $dienThoai = $_POST['dienThoai'];
+      $noiDung = $_POST['noiDung'];
+
+      $errors = [];
+      if (empty($hoTen)) {
+        $errors['ho_ten'] = "Vui lòng điền họ tên";
+      }
+      if (empty($email)) {
+        $errors['email'] = "Vui lòng điền email";
+      }
+      if (empty($dienThoai)) {
+        $errors['dien_thoai'] = "Vui lòng điền điện thoại";
+      }
+      if (empty($noiDung)) {
+        $errors['noi_dung'] = "Vui lòng điền nội dung";
+      }
+
+      if (empty($errors)) {
+        // $matKhau = md5($matKhau);
+        $this->modelNguoiDung->sendContact($hoTen, $email, $dienThoai, $noiDung);
+        $errors['check'] = 0;
+        echo json_encode($errors);
+      } else {
+        $errors['check'] = 1;
+        echo json_encode($errors);
+        // var_dump($errors);
+      }
+
+      // var_dump($errors);
+      // if (empty($errors)) {
+      //   unset($_SESSION['errors']);
+      //   $this->modelLienHe->create($hoTen, $email, $dienThoai, $noiDung);
+      //   echo '<script>';
+      //   echo 'alert("Gửi thành công");';
+      //   echo '</script>';
+      // } else {
+      //   $_SESSION['errors'] = $errors;
+      // }
+    }
+  }
 }

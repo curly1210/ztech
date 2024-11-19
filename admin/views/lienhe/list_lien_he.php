@@ -122,7 +122,7 @@
                                       <input type="hidden" name="id_lien_he" value="<?= $lienHe['id'] ?>">
                                       <button type="submit" class="link-danger" style="border: none; background:none"><i class="ri-delete-bin-5-line"></i></button>
                                     </form>
-                                    <input type="checkbox" class="form-check-input" id="customSwitchsizemd">
+                                    <!-- <input type="checkbox" class="form-check-input" id="customSwitchsizemd"> -->
                                   </div>
                                 </td>
                               </tr>

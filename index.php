@@ -33,4 +33,5 @@ match ($act) {
     'form-dang-ky'   => (new NguoiDungController())->formSignUp(),
     'dang-ky'        => (new NguoiDungController())->signUp(),
     'list-yeu-thich' => (new NguoiDungController())->listLike(),
+    'gui-lien-he'    => (new NguoiDungController())->sendContact(),
 };

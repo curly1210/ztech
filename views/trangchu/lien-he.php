@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <link href="images/favicon.png" rel="shortcut icon">
-  <title>Ludus - Electronics, Apparel, Computers, Books, DVDs & more</title>
+  <title>Liên hệ | TechZ</title>
 
   <!--====== Google Font ======-->
   <?php require_once "views/layout/lib_css.php" ?>
@@ -44,11 +44,11 @@
                 <ul class="breadcrumb__list">
                   <li class="has-separator">
 
-                    <a href="index.html">Home</a>
+                    <a href="index.html">Trang chủ</a>
                   </li>
                   <li class="is-marked">
 
-                    <a href="contact.html">Contact</a>
+                    <a href="contact.html">Liên hệ</a>
                   </li>
                 </ul>
               </div>
@@ -68,7 +68,9 @@
             <div class="row">
               <div class="col-lg-12">
                 <div class="g-map">
-                  <div id="map"></div>
+                  <div id="map">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d168508.91147525262!2d105.56022279910523!3d21.05044189483664!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x313455305afd834b%3A0x17268e09af37081e!2sT%C3%B2a%20nh%C3%A0%20FPT%20Polytechnic.!5e0!3m2!1svi!2s!4v1732028466431!5m2!1svi!2s" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                  </div>
                 </div>
               </div>
             </div>
@@ -91,11 +93,9 @@
                   <div class="contact-o__wrap">
                     <div class="contact-o__icon"><i class="fas fa-phone-volume"></i></div>
 
-                    <span class="contact-o__info-text-1">LET'S HAVE A CALL</span>
+                    <span class="contact-o__info-text-1">HÃY GỌI CHO CHÚNG TÔI</span>
+                    <span class="contact-o__info-text-2"><?= $noiDungs['so_dien_thoai'] ?></span>
 
-                    <span class="contact-o__info-text-2">(+0) 900 901 904</span>
-
-                    <span class="contact-o__info-text-2">(+0) 900 901 902</span>
                   </div>
                 </div>
               </div>
@@ -104,11 +104,10 @@
                   <div class="contact-o__wrap">
                     <div class="contact-o__icon"><i class="fas fa-map-marker-alt"></i></div>
 
-                    <span class="contact-o__info-text-1">OUR LOCATION</span>
+                    <span class="contact-o__info-text-1">ĐỊA CHỈ CỦA CHÚNG TÔI</span>
 
-                    <span class="contact-o__info-text-2">4247 Ashford Drive VA-20006</span>
+                    <span class="contact-o__info-text-2"><?= $noiDungs['dia_chi'] ?></span>
 
-                    <span class="contact-o__info-text-2">Virginia US</span>
                   </div>
                 </div>
               </div>
@@ -117,11 +116,11 @@
                   <div class="contact-o__wrap">
                     <div class="contact-o__icon"><i class="far fa-clock"></i></div>
 
-                    <span class="contact-o__info-text-1">WORK TIME</span>
+                    <span class="contact-o__info-text-1">THỜI GIAN LÀM VIỆC</span>
 
-                    <span class="contact-o__info-text-2">5 Days a Week</span>
+                    <span class="contact-o__info-text-2">6 Ngày trong tuần</span>
 
-                    <span class="contact-o__info-text-2">From 9 AM to 7 PM</span>
+                    <span class="contact-o__info-text-2">Từ 8h - 17h</span>
                   </div>
                 </div>
               </div>
@@ -143,34 +142,36 @@
               <div class="col-lg-12">
                 <div class="contact-area u-h-100">
                   <div class="contact-area__heading">
-                    <h2>Get In Touch</h2>
+                    <h2>Liên hệ</h2>
                   </div>
-                  <form class="contact-f" method="post" action="index.html">
+                  <form id="formContact" class="contact-f" method="post">
                     <div class="row">
                       <div class="col-lg-6 col-md-6 u-h-100">
-                        <div class="u-s-m-b-30">
-
+                        <div class="u-s-m-b-10" style="position: relative;;">
                           <label for="c-name"></label>
-
-                          <input class="input-text input-text--border-radius input-text--primary-style" type="text" id="c-name" placeholder="Name (Required)" required>
+                          <input name="ten" class="input-text input-text--border-radius input-text--primary-style" type="text" id="c-name" placeholder="Họ tên">
+                          <div id="err_ten" style="color: red; font-size: small; height: 20px;"></div>
                         </div>
-                        <div class="u-s-m-b-30">
 
+                        <div class="u-s-m-b-10">
                           <label for="c-email"></label>
-
-                          <input class="input-text input-text--border-radius input-text--primary-style" type="text" id="c-email" placeholder="Email (Required)" required>
+                          <input name="email" class="input-text input-text--border-radius input-text--primary-style" type="text" id="c-email" placeholder="E-Mail">
+                          <div id="err_email" style="color: red; font-size: small; height: 20px;"></div>
                         </div>
-                        <div class="u-s-m-b-30">
 
+                        <div class="u-s-m-b-10">
                           <label for="c-subject"></label>
-
-                          <input class="input-text input-text--border-radius input-text--primary-style" type="text" id="c-subject" placeholder="Subject (Required)" required>
+                          <input name="dienThoai" class="input-text input-text--border-radius input-text--primary-style" type="text" id="c-subject" placeholder="Số điện thoại">
+                          <div id="err_dienThoai" style="color: red; font-size: small; height: 20px;"></div>
                         </div>
                       </div>
+
                       <div class="col-lg-6 col-md-6 u-h-100">
                         <div class="u-s-m-b-30">
 
-                          <label for="c-message"></label><textarea class="text-area text-area--border-radius text-area--primary-style" id="c-message" placeholder="Compose a Message (Required)" required></textarea>
+                          <label for="c-message"></label>
+                          <textarea name="noiDung" style="height: 180px;" class="text-area text-area--border-radius text-area--primary-style" id="c-message" placeholder="Nội dung"></textarea>
+                          <div id="err_noiDung" style="color: red; font-size: small; height: 20px;"></div>
                         </div>
                       </div>
                       <div class="col-lg-12">
@@ -207,13 +208,74 @@
     ga('create', 'UA-XXXXX-Y', 'auto');
     ga('send', 'pageview')
   </script>
+
+
   <script src="https://www.google-analytics.com/analytics.js" async defer></script>
 
   <!--====== Google Map ======-->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-MO9uPLS-ApTqYs0FpYdVG8cFwdq6apw"></script>
+  <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-MO9uPLS-ApTqYs0FpYdVG8cFwdq6apw"></script> -->
 
   <!--====== Vendor Js ======-->
   <?php require_once "views/layout/lib_js.php"  ?>
+
+
+  <script>
+    $(document).ready(function() {
+      $("#formContact").submit(function(event) {
+        event.preventDefault(); // Ngăn chặn form nạp lại trang
+
+        $.ajax({
+          url: "?act=gui-lien-he",
+          type: "POST",
+          data: $(this).serialize(), // Lấy dữ liệu form
+          success: function(response) {
+            response = JSON.parse(response);
+
+            const err_ten = document.getElementById("err_ten");
+            const err_email = document.getElementById("err_email");
+            const err_dienThoai = document.getElementById("err_dienThoai");
+            const err_noiDung = document.getElementById("err_noiDung");
+
+            err_ten.innerHTML = "";
+            err_email.innerHTML = "";
+            err_dienThoai.innerHTML = "";
+            err_noiDung.innerHTML = "";
+
+            if (response['check'] == 1) {
+              if ("ho_ten" in response) {
+                err_ten.innerHTML = response["ho_ten"];
+                // err_hoTen.style = "display:block";
+              }
+
+              if ("email" in response) {
+                err_email.innerHTML = response["email"];
+                // err_email.style = "display:block";
+              }
+
+              if ("dien_thoai" in response) {
+                err_dienThoai.innerHTML = response["dien_thoai"];
+              }
+
+              if ("noi_dung" in response) {
+                err_noiDung.innerHTML = response["noi_dung"];
+              }
+            } else {
+              setTimeout(() => {
+                alert("Gửi thông tin thành công!");
+                // window.location = "?act=/";
+                window.location.reload();
+              }, 100);
+            }
+
+
+          },
+          error: function(xhr, status, error) {
+            console.error("Error:", error);
+          }
+        });
+      });
+    });
+  </script>
 
   <!--====== Noscript ======-->
   <noscript>
