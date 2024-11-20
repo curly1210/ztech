@@ -23,8 +23,9 @@ $act = $_GET['act'] ?? '/';
 
 match ($act) {
     // Trang chủ
-    '/' => (new HomeController())->index(),
-    'lien-he' => (new HomeController())->contactPage(),
+    '/'             => (new HomeController())->index(),
+    'lien-he'       => (new HomeController())->contactPage(),
+    'list-san-pham' => (new HomeController())->listProduct(),
 
     //Người dùng
     'form-dang-nhap' => (new NguoiDungController())->formLogin(),

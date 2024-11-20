@@ -176,7 +176,7 @@
                       </div>
                       <div class="col-lg-12">
 
-                        <button class="btn btn--e-brand-b-2" type="submit">Send Message</button>
+                        <button class="btn btn--e-brand-b-2" type="submit">Gửi thông tin</button>
                       </div>
                     </div>
                   </form>
