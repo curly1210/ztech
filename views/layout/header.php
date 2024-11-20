@@ -448,7 +448,10 @@
         <div class="menu-init" id="navigation3">
           <!-- <button class="btn btn--icon toggle-button toggle-button--secondary fas fa-shopping-bag toggle-button-shop" type="button"></button> -->
 
+<<<<<<< HEAD
           <!-- <span class="total-item-round">2</span> -->
+=======
+>>>>>>> 760170bd7bfe7f4fb0c989e9bfc0dc903c364cd2
 
           <!--====== Menu ======-->
           <div class="ah-lg-mode">

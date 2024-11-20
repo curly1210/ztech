@@ -76,7 +76,7 @@
                       <a href="about.html">Về chúng tôi</a>
                     </li>
                     <li>
-                      <a href="contact.html">liên hệ với chúng tôi</a>
+                      <a href="?act=lien-he">Liên hệ với chúng tôi</a>
                     </li>
                     <li>
                       <a href="index.html">Sitemap</a>

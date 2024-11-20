@@ -195,9 +195,16 @@
                 </div>
                 <div class="filter__grid-wrapper u-s-m-t-30">
                   <div class="row"></div>
-                  <?php foreach ($danhMucs as $danhMuc):
+
+                  <?php
+
+                  foreach ($danhMucs as $danhMuc):
+
                     foreach ($sanPhams as $sanPham):
+
                       if ($sanPham['danh_muc_id'] == $danhMuc['id']):
+
+
                   ?>
                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 u-s-m-b-30 filter__item <?= str_replace(" ", "-", $danhMuc['ten'])  ?>">
                           <div class="product-o product-o--hover-on product-o--radius">
@@ -224,7 +231,7 @@
                             <span class="product-o__category"> <a href="shop-side-version-2.html"><?= $danhMuc['ten'] ?></a></span>
 
                             <span class="product-o__name"> <a href="product-detail.html"><?= $sanPham['ten'] ?></a></span>
-                            <div class="product-o__rating gl-rating-style">
+                            <div class="product-o__rating gl-rating-style ">
                               <?php if ($sanPham['so_sao'] != null):
                                 for ($i = 1; $i <= round($sanPham['so_sao']); $i++): ?>
                                   <i class="fas fa-star"></i>
@@ -233,13 +240,17 @@
                                   <i class="far fa-star"></i>
                                 <?php endfor; ?>
                                 <span class="product-o__review">(<?= $sanPham['so_danh_gia'] ?>)</span>
+                                <?php foreach ($countBuyProducts as $countBuyProduct): ?>
+                                  <span class="product-o__review text-right"> <?= $countBuyProduct['ten_san_pham'] == $sanPham['ten'] ? "Đã bán " . $countBuyProduct['tong_so_luong_ban'] : "" ?></span>
+                                <?php endforeach; ?>
                               <?php else: ?>
-                                <i class="far fa-star"></i>
-                                <i class="far fa-star"></i>
-                                <i class="far fa-star"></i>
-                                <i class="far fa-star"></i>
-                                <i class="far fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
                                 <span class="product-o__review">(0)</span>
+
                               <?php endif; ?>
                             </div>
 
@@ -321,7 +332,7 @@
                       <span class="product-o__category"> <a href="shop-side-version-2.html"><?= $danhMuc['ten'] ?></a></span>
 
                       <span class="product-o__name"> <a href="product-detail.html"><?= $sanPhamMoi['ten'] ?></a></span>
-                      <div class="product-o__rating gl-rating-style">
+                      <div class="product-o__rating gl-rating-style ">
                         <?php if ($sanPhamMoi['so_sao'] != null):
                           for ($i = 1; $i <= round($sanPhamMoi['so_sao']); $i++): ?>
                             <i class="fas fa-star"></i>
@@ -329,14 +340,19 @@
                           <?php for ($i = 1; $i <= 5 - round($sanPhamMoi['so_sao']); $i++): ?>
                             <i class="far fa-star"></i>
                           <?php endfor; ?>
-                          <span class="product-o__review">(<?= $sanPhamMoi['so_danh_gia'] ?>)</span>
+                          <?php foreach ($countBuyProducts as $countBuyProduct): ?>
+                            <span class="product-o__review text-right"> <?= $countBuyProduct['ten_san_pham'] == $sanPhamMoi['ten'] ? "Đã bán " . $countBuyProduct['tong_so_luong_ban'] : "" ?></span>
+                          <?php endforeach; ?>
                         <?php else: ?>
-                          <i class="far fa-star"></i>
-                          <i class="far fa-star"></i>
-                          <i class="far fa-star"></i>
-                          <i class="far fa-star"></i>
-                          <i class="far fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
                           <span class="product-o__review">(0)</span>
+                          <?php foreach ($countBuyProducts as $countBuyProduct): ?>
+                            <span class="product-o__review text-right"> <?= $countBuyProduct['ten_san_pham'] == $sanPhamMoi['ten'] ? "Đã bán " . $countBuyProduct['tong_so_luong_ban'] : "" ?></span>
+                          <?php endforeach; ?>
                         <?php endif; ?>
                       </div>
 
@@ -446,13 +462,23 @@
                               <i class="far fa-star"></i>
                             <?php endfor; ?>
                             <span class="product-o__review">(<?= $sanPhamUaThich['so_danh_gia'] ?>)</span>
+                            <?php foreach ($countBuyProducts as $countBuyProduct): ?>
+                              <span class="product-o__review text-right"> <?= $countBuyProduct['ten_san_pham'] == $sanPhamUaThich['ten'] ? "Đã bán " . $countBuyProduct['tong_so_luong_ban'] : "" ?></span>
+                            <?php endforeach; ?>
                           <?php else: ?>
-                            <i class="far fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <i class="far fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
                             <span class="product-o__review">(0)</span>
+
+                            <span class="product-o__review">
+                              <?php foreach ($countBuyProducts as $countBuyProduct): ?>
+                                <span class="product-o__review text-right"> <?= $countBuyProduct['ten_san_pham'] == $sanPhamUaThich['ten'] ? "Đã bán " . $countBuyProduct['tong_so_luong_ban'] : "" ?></span>
+                              <?php endforeach; ?>
+                            </span>
+
                           <?php endif; ?>
                         </div>
 
@@ -1001,6 +1027,7 @@
     </div>
   </div>
   <!--====== End - Add to Cart Modal ======-->
+
   <!-- <a class="s-option__link btn--e-brand-shadow" href="checkout.html">PROCEED TO CHECKOUT</a> -->
 
 
