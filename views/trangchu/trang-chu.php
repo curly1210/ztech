@@ -659,7 +659,7 @@
                   <div class="bp-mini__thumbnail">
                     <!--====== Image Code ======-->
 
-                    <a class="aspect aspect--bg-grey aspect--1366-768 u-d-block" href="blog-detail.html"> <img class="aspect__img" src="admin/<?= $tinTuc['hinh_anh'] ?>" alt="" /></a>
+                    <a class="aspect aspect--bg-grey aspect--1366-768 u-d-block" href="?act=chi-tiet-tin-tuc&id=<?= $tinTuc['id'] ?>"> <img class="aspect__img" src="admin/<?= $tinTuc['hinh_anh'] ?>" alt="" /></a>
                     <!--====== End - Image Code ======-->
                   </div>
                   <div class="bp-mini__content">
@@ -675,13 +675,13 @@
 
                       <span class="bp-mini__stat">
                         <span class="bp-mini__comment">
-                          <a href="blog-detail.html"><i class="fa-solid fa-eye"></i></i>
+                          <a href="#"><i class="fa-solid fa-eye"></i></i>
 
                             <span><?= $tinTuc['luot_xem'] ?></span></a></span></span>
                     </div>
 
 
-                    <span class="bp-mini__h1"> <a href="blog-detail.html"><?= $tinTuc['tieu_de'] ?></a></span>
+                    <span class="bp-mini__h1"> <a href="?act=chi-tiet-tin-tuc&id=<?= $tinTuc['id'] ?>"><?= $tinTuc['tieu_de'] ?></a></span>
                     <p class="bp-mini__p"><?= $tinTuc['mo_ta_ngan'] ?></p>
 
                   </div>

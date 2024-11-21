@@ -17,20 +17,4 @@ class TinTuc extends Base
             echo "Lỗi : " . $e->getMessage();
         }
     }
-    public function getTinTucById($id)
-    {
-        try {
-            $sql = "SELECT * FROM tin_tucs WHERE id = :id";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(":id", $id);
-            $stmt->execute();
-            return $stmt->fetch();
-        } catch (PDOException $e) {
-            echo "Lỗi : " . $e->getMessage();
-        }
-    }
-    public function __destruct()
-    {
-        $this->conn = null;
-    }
 }
