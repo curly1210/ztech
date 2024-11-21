@@ -160,7 +160,7 @@
                       <ul>
                         <?php foreach ($danhMucs as $index => $danhMuc): ?>
                           <li class="<?= $index == 0 ? "js-active" : "" ?> ">
-                            <a href="shop-side-version-2.html" class="d-block text-center" style="display:flex; align-items: center; gap:10px ; width:100%"><img src="<?= 'admin/' . $danhMuc['hinh_anh'] ?>" alt="" style="object-fit:contain ; width:30px ; height:30px">
+                            <a href="?act=list-san-pham&category=<?= $danhMuc['id'] ?>" class="d-block text-center" style="display:flex; align-items: center; gap:10px ; width:100%"><img src="<?= 'admin/' . $danhMuc['hinh_anh'] ?>" alt="" style="object-fit:contain ; width:30px ; height:30px">
 
                               <span><?= $danhMuc['ten'] ?></span></a>
 
@@ -428,6 +428,7 @@
         <div class="menu-init" id="navigation3">
           <!-- <button class="btn btn--icon toggle-button toggle-button--secondary fas fa-shopping-bag toggle-button-shop" type="button"></button> -->
 
+          <!-- <span class="total-item-round">2</span> -->
 
           <!--====== Menu ======-->
           <div class="ah-lg-mode">
