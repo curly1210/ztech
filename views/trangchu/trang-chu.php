@@ -250,7 +250,9 @@
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                                 <span class="product-o__review">(0)</span>
-
+                                <?php foreach ($countBuyProducts as $countBuyProduct): ?>
+                                  <span class="product-o__review text-right"> <?= $countBuyProduct['ten_san_pham'] == $sanPham['ten'] ? "Đã bán " . $countBuyProduct['tong_so_luong_ban'] : "" ?></span>
+                                <?php endforeach; ?>
                               <?php endif; ?>
                             </div>
 

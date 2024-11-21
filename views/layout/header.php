@@ -408,35 +408,14 @@
                 <!--====== End - Dropdown ======-->
               </li>
               <li class="has-dropdown">
-                <a>BLOG<i class="fas fa-angle-down u-s-m-l-6"></i></a>
+                <a href="?act=tin-tuc">Tin Tức</a>
 
-                <!--====== Dropdown ======-->
-
-                <span class="js-menu-toggle"></span>
-                <ul style="width: 200px">
-                  <li>
-                    <a href="blog-left-sidebar.html">Blog Left Sidebar</a>
-                  </li>
-                  <li>
-                    <a href="blog-right-sidebar.html">Blog Right Sidebar</a>
-                  </li>
-                  <li>
-                    <a href="blog-sidebar-none.html">Blog Sidebar None</a>
-                  </li>
-                  <li>
-                    <a href="blog-masonry.html">Blog Masonry</a>
-                  </li>
-                  <li>
-                    <a href="blog-detail.html">Blog Details</a>
-                  </li>
-                </ul>
-                <!--====== End - Dropdown ======-->
               </li>
               <li>
                 <a href="shop-side-version-2.html">VALUE OF THE DAY</a>
               </li>
               <li>
-                <a href="shop-side-version-2.html">GIFT CARDS</a>
+                <a href="?act=ma-khuyen-mai">Mã khuyến mãi</a>
               </li>
             </ul>
             <!--====== End - List ======-->
@@ -449,10 +428,6 @@
         <div class="menu-init" id="navigation3">
           <!-- <button class="btn btn--icon toggle-button toggle-button--secondary fas fa-shopping-bag toggle-button-shop" type="button"></button> -->
 
-<<<<<<< HEAD
-          <!-- <span class="total-item-round">2</span> -->
-=======
->>>>>>> 760170bd7bfe7f4fb0c989e9bfc0dc903c364cd2
 
           <!--====== Menu ======-->
           <div class="ah-lg-mode">

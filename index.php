@@ -8,11 +8,15 @@ require_once './commons/function.php'; // Hàm hỗ trợ
 // Require toàn bộ file Controllers
 require_once './controllers/HomeController.php';
 require_once './controllers/NguoiDungController.php';
+require_once './controllers/TinTucController.php';
+require_once './controllers/MaKhuyenMaiController.php';
 
 // Require toàn bộ file Models
 require_once './models/Base.php';
 require_once './models/NguoiDung.php';
 require_once './models/Home.php';
+require_once './models/TinTuc.php';
+require_once './models/MaKhuyenMai.php';
 
 
 // Route
@@ -35,4 +39,11 @@ match ($act) {
     'dang-ky'        => (new NguoiDungController())->signUp(),
     'list-yeu-thich' => (new NguoiDungController())->listLike(),
     'gui-lien-he'    => (new NguoiDungController())->sendContact(),
+
+    //Tin Tức
+    'tin-tuc'           => (new TinTucController())->index(),
+    'chi-tiet-tin-tuc'  => (new TinTucController())->viewDetail(),
+
+    //Mã Khuyến Mãi
+    'ma-khuyen-mai'     => (new MaKhuyenMaiController())->index(),
 };
