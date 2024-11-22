@@ -408,14 +408,14 @@
                 <!--====== End - Dropdown ======-->
               </li>
               <li class="has-dropdown">
-                <a href="?act=tin-tuc">Tin Tức</a>
+                <a href="?act=tin-tuc">TIN TỨC</a>
 
               </li>
               <li>
-                <a href="shop-side-version-2.html">VALUE OF THE DAY</a>
+                <a href="?act=lien-he">LIÊN HỆ</a>
               </li>
               <li>
-                <a href="?act=ma-khuyen-mai">Mã khuyến mãi</a>
+                <a href="?act=ma-khuyen-mai">MÃ KHUYẾN MÃI</a>
               </li>
             </ul>
             <!--====== End - List ======-->
@@ -572,7 +572,7 @@
 <div class="modal fade" id="check-login">
   <div class="modal-dialog modal-dialog-centered" style="width: 320px;">
     <div class="modal-content modal-radius modal-shadow" style="border-radius: 20px;">
-      <button class="btn dismiss-button fas fa-times" type="button" data-dismiss="modal"></button>
+      <button id="closeModal" class="btn dismiss-button fas fa-times" type="button" data-dismiss="modal"></button>
       <div class="modal-body">
         <div class="row">
           <div class="col-lg-12 col-md-12">

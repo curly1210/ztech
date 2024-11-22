@@ -219,4 +219,31 @@ class NguoiDungController
       // }
     }
   }
+
+  public function sendComment()
+  {
+    if ($_SERVER["REQUEST_METHOD"] ==  'POST') {
+      $binhLuan = $_POST['binh_luan'];
+      $idNguoiDung = $_POST['id_nguoi_dung'];
+      $idSanPham = $_POST['id_san_pham'];
+
+      $errors = [];
+      if (empty($binhLuan)) {
+        $errors['binh_luan'] = "Vui lòng điền bình luận";
+      }
+
+      if (empty($errors)) {
+
+        $this->modelNguoiDung->sendComment($binhLuan, $idNguoiDung, $idSanPham);
+      }
+      // echo "<script>
+      // alert('Thông báo trước khi chuyển trang');
+      // window.location.href = '?act=chi-tiet-san-pham&id=$idSanPham';  // Chuyển trang sau khi alert
+      //  </script>";
+
+      $_SESSION["message"] = "Bình luận thành công!";
+      header("Location: ?act=chi-tiet-san-pham&id=$idSanPham");
+      exit();
+    }
+  }
 }

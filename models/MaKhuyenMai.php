@@ -6,6 +6,8 @@ class MaKhuyenMai extends Base
     {
         $this->conn = connectDB();
     }
+
+
     public function getAllMaKhuyenMai()
     {
         try {

@@ -72,4 +72,20 @@ class NguoiDung extends Base
       echo "Lỗi : " . $e->getMessage();
     }
   }
+
+  public function sendComment($binhLuan, $idNguoiDung, $idSanPham)
+  {
+    try {
+      $sql = "INSERT INTO binh_luans (noi_dung,id_nguoi_dung,id_san_pham) 
+      VALUES (:binh_luan,:id_nguoi_dung,:id_san_pham)";
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(':binh_luan', $binhLuan);
+      $stmt->bindParam(':id_nguoi_dung', $idNguoiDung);
+      $stmt->bindParam(':id_san_pham', $idSanPham);
+      $stmt->execute();
+      return true;
+    } catch (PDOException $e) {
+      echo "Lỗi : " . $e->getMessage();
+    }
+  }
 }
