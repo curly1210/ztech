@@ -72,4 +72,59 @@ class NguoiDung extends Base
       echo "Lỗi : " . $e->getMessage();
     }
   }
+  public function getProfile($id)
+  {
+    try {
+      $sql = "SELECT * FROM nguoi_dungs WHERE id = :id";
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(":id", $id);
+      $stmt->execute();
+      return $stmt->fetch();
+    } catch (PDOException $e) {
+      echo "Lỗi : " . $e->getMessage();
+    }
+  }
+  public function updateProfile($id, $hoTen, $email, $diaChi, $dienThoai, $gioiTinh, $ngaySinh)
+  {
+    try {
+      $sql = "UPDATE nguoi_dungs SET ho_ten=:ho_ten, email=:email, dia_chi=:dia_chi, dien_thoai=:dien_thoai , gioi_tinh=:gioi_tinh, nam_sinh=:nam_sinh  WHERE id = :id";
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(":id", $id);
+      $stmt->bindParam(":ho_ten", $hoTen);
+      $stmt->bindParam(":email", $email);
+      $stmt->bindParam(":dia_chi", $diaChi);
+      $stmt->bindParam(":dien_thoai", $dienThoai);
+      $stmt->bindParam(":gioi_tinh", $gioiTinh);
+      $stmt->bindParam(":nam_sinh", $ngaySinh);
+      $stmt->execute();
+      return $stmt->fetch();
+    } catch (PDOException $e) {
+      echo "Lỗi : " . $e->getMessage();
+    }
+  }
+
+  public function updatePassword($id, $matKhau)
+  {
+    try {
+      $sql = "UPDATE nguoi_dungs SET mat_khau=:mat_khau  WHERE id = :id";
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(":id", $id);
+      $stmt->bindParam(":mat_khau", $matKhau);
+      $stmt->execute();
+      return true;
+    } catch (PDOException $e) {
+      echo "Lỗi : " . $e->getMessage();
+    }
+  }
+  public function getAllUsers()
+  {
+    try {
+      $sql = "SELECT * FROM nguoi_dungs ";
+      $stmt = $this->conn->prepare($sql);
+      $stmt->execute();
+      return $stmt->fetchAll();
+    } catch (PDOException $e) {
+      echo "Lỗi : " . $e->getMessage();
+    }
+  }
 }

@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link href="images/favicon.png" rel="shortcut icon">
-    <title>Ludus - Electronics, Apparel, Computers, Books, DVDs & more</title>
+    <title>Ludus - Mã khuyến mãi</title>
 
     <?php require_once "views/layout/lib_css.php" ?>
 </head>

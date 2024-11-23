@@ -32,13 +32,19 @@ match ($act) {
     'list-san-pham' => (new HomeController())->listProduct(),
 
     //Người dùng
-    'form-dang-nhap' => (new NguoiDungController())->formLogin(),
-    'dang-nhap'      => (new NguoiDungController())->login(),
-    'dang-xuat'      => (new NguoiDungController())->logout(),
-    'form-dang-ky'   => (new NguoiDungController())->formSignUp(),
-    'dang-ky'        => (new NguoiDungController())->signUp(),
-    'list-yeu-thich' => (new NguoiDungController())->listLike(),
-    'gui-lien-he'    => (new NguoiDungController())->sendContact(),
+    'form-dang-nhap'          => (new NguoiDungController())->formLogin(),
+    'dang-nhap'               => (new NguoiDungController())->login(),
+    'dang-xuat'               => (new NguoiDungController())->logout(),
+    'form-dang-ky'            => (new NguoiDungController())->formSignUp(),
+    'dang-ky'                 => (new NguoiDungController())->signUp(),
+    'list-yeu-thich'          => (new NguoiDungController())->listLike(),
+    'gui-lien-he'             => (new NguoiDungController())->sendContact(),
+    'tai-khoan'               => (new NguoiDungController())->viewAccount(),
+    'cap-nhat-tai-khoan'      => (new NguoiDungController())->editAccount(),
+    'submit-update-tai-khoan' => (new NguoiDungController())->updateAccount(),
+    'doi-mat-khau'            => (new NguoiDungController())->getFormChangePassword(),
+    'submit-update-mat-khau'  => (new NguoiDungController())->updatePassword(),
+
 
     //Tin Tức
     'tin-tuc'           => (new TinTucController())->index(),

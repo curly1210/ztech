@@ -100,13 +100,13 @@
                               <div style="font-size: 14px; margin-bottom: 0;font-weight: 600;">TỪ</div>
 
                               <label for="price-min"></label>
-                              <input style="width: 100px;" value=<?= $min ?> name="min" class="input-text input-text--primary-style" type="number" id="price-min" placeholder="Min">
+                              <input min="0" style="width: 100px;" value=<?= $min ?> name="min" class="input-text input-text--primary-style" type="number" id="price-min" placeholder="Min">
                             </div>
                             <div>
                               <div style="font-size: 14px; margin-bottom: 0;font-weight: 600;">ĐẾN</div>
 
                               <label for="price-max"></label>
-                              <input style="width: 100px;" value=<?= $max ?> name="max" class="input-text input-text--primary-style" type="number" id="price-max" placeholder="Max">
+                              <input min="0" style="width: 100px;" value=<?= $max ?> name="max" class="input-text input-text--primary-style" type="number" id="price-max" placeholder="Max">
                             </div>
 
                           </div>

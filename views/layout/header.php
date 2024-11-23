@@ -39,9 +39,12 @@
                 <ul style="width: 120px">
                   <?php if (isset($_SESSION['user'])) { ?>
                     <li>
-                      <a href="dashboard.html"><i class="fas fa-user-circle u-s-m-r-6"></i>
-                        <span>Tài khoản</span>
-                      </a>
+                      <form action="?act=tai-khoan" method="post" style="text-align: center;">
+                        <input type="hidden" name="id" value="<?= $_SESSION['user']['id'] ?>">
+                        <button style="border:none;background:none;cursor:pointer;font-size:small;font-weight:500"><i class="fas fa-user-circle u-s-m-r-6"></i>
+                          <span>Tài khoản</span></button>
+                      </form>
+
                     </li>
                     <li>
                       <a href="?act=dang-xuat"><i class="fas fa-lock-open u-s-m-r-6"></i>
