@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <link href="images/favicon.png" rel="shortcut icon">
-  <title>Ludus - Electronics, Apparel, Computers, Books, DVDs & more</title>
+  <title>Danh sách sản phẩm | Ztech</title>
 
   <!--====== Google Font ======-->
   <?php require_once "views/layout/lib_css.php" ?>
@@ -181,13 +181,13 @@
                       <?php foreach ($products as $index => $product) {
                         foreach ($danhMucs as $danhMuc) {
                           if ($product['danh_muc_id'] == $danhMuc['id']) { ?>
-                            <div class="col-lg-4 col-md-6 col-sm-6">
+                            <div href="?act=chi-tiet-san-pham" class="col-lg-4 col-md-6 col-sm-6">
                               <div class="product-m">
                                 <div class="product-m__thumb">
 
-                                  <a style="background-color: transparent;" class="aspect aspect--bg-grey aspect--square u-d-block" href="product-detail.html">
+                                  <a style="background-color: transparent;" class="aspect aspect--bg-grey aspect--square u-d-block" href="?act=chi-tiet-san-pham&id=<?= $product['id'] ?>">
 
-                                    <img class="aspect__img" style="padding: 10px 15px;" src="<?= 'admin/' . $product['url'] ?>" alt=""></a>
+                                    <img class="aspect__img" style="padding: 10px 15px;object-fit: contain;" src="<?= 'admin/' . $product['url'] ?>" alt=""></a>
                                   <!-- <div class="product-m__quick-look">
 
                                   <a class="fas fa-search" data-modal="modal" data-modal-id="#quick-look" data-tooltip="tooltip" data-placement="top" title="Quick Look"></a>

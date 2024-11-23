@@ -165,4 +165,79 @@ class Home extends Base
             echo "Lỗi : " . $e->getMessage();
         }
     }
+
+    public function getProductById($id)
+    {
+        try {
+
+            $sql = "SELECT * FROM san_phams WHERE id = :id  ";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+            return $stmt->fetch();
+        } catch (PDOException $e) {
+            echo "Lỗi : " . $e->getMessage();
+        }
+    }
+
+    public function getCommentByProduct($id)
+    {
+        try {
+
+            $sql = "SELECT * FROM binh_luans JOIN nguoi_dungs on binh_luans.id_nguoi_dung = nguoi_dungs.id
+             WHERE id_san_pham = :id  and binh_luans.trang_thai = 2";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        } catch (PDOException $e) {
+            echo "Lỗi : " . $e->getMessage();
+        }
+    }
+
+    public function getReviewByProduct($id)
+    {
+        try {
+
+            $sql = "SELECT * FROM danh_gias JOIN nguoi_dungs ON danh_gias.id_nguoi_danh_gia = nguoi_dungs.id
+             WHERE id_san_pham = :id  ";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        } catch (PDOException $e) {
+            echo "Lỗi : " . $e->getMessage();
+        }
+    }
+
+    public function getProductByCategory($id)
+    {
+        try {
+            $sql = "SELECT san_phams.*, MIN(hinh_anhs.hinh_anh) AS url 
+            FROM hinh_anhs JOIN san_phams ON hinh_anhs.id_san_pham = san_phams.id 
+            WHERE danh_muc_id = :id and san_phams.trang_thai = 2 
+            GROUP BY hinh_anhs.id_san_pham LIMIT 5";
+
+            // $sql = "SELECT * FROM san_phams WHERE danh_muc_id = :id  LIMIT 5";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        } catch (PDOException $e) {
+            echo "Lỗi : " . $e->getMessage();
+        }
+    }
+
+    public function getImagesByProduct($id)
+    {
+        try {
+            $sql = "SELECT * FROM hinh_anhs WHERE id_san_pham = :id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        } catch (PDOException $e) {
+            echo "Lỗi : " . $e->getMessage();
+        }
+    }
 }

@@ -27,11 +27,20 @@ $act = $_GET['act'] ?? '/';
 
 match ($act) {
     // Trang chủ
-    '/'             => (new HomeController())->index(),
-    'lien-he'       => (new HomeController())->contactPage(),
-    'list-san-pham' => (new HomeController())->listProduct(),
+    '/'                 => (new HomeController())->index(),
+    'lien-he'           => (new HomeController())->contactPage(),
+    'list-san-pham'     => (new HomeController())->listProduct(),
+    'chi-tiet-san-pham' => (new HomeController())->detailProduct(),
 
     //Người dùng
+    'form-dang-nhap' => (new NguoiDungController())->formLogin(),
+    'dang-nhap'      => (new NguoiDungController())->login(),
+    'dang-xuat'      => (new NguoiDungController())->logout(),
+    'form-dang-ky'   => (new NguoiDungController())->formSignUp(),
+    'dang-ky'        => (new NguoiDungController())->signUp(),
+    'list-yeu-thich' => (new NguoiDungController())->listLike(),
+    'gui-lien-he'    => (new NguoiDungController())->sendContact(),
+    'gui-binh-luan'  => (new NguoiDungController())->sendComment(),
     'form-dang-nhap'          => (new NguoiDungController())->formLogin(),
     'dang-nhap'               => (new NguoiDungController())->login(),
     'dang-xuat'               => (new NguoiDungController())->logout(),
