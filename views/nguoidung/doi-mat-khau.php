@@ -85,7 +85,7 @@
 
                                                                 <label class="gl-label" for="reg-fname">Mật khẩu</label>
 
-                                                                <input class="input-text input-text--primary-style" name="mat_khau_hien_tai" type="text" id="reg-fname" placeholder="Nhập mật khẩu hiện tại">
+                                                                <input class="input-text input-text--primary-style" name="mat_khau_hien_tai" type="password" id="reg-fname" placeholder="Nhập mật khẩu hiện tại">
                                                                 <span style="color:red ; font-size:13px; margin:5px"><?= !empty($_SESSION['error']['mat_khau_hien_tai']) ? $_SESSION['error']['mat_khau_hien_tai'] : "" ?></span>
                                                             </div>
 
@@ -96,7 +96,7 @@
 
                                                                 <label class="gl-label" for="reg-femail">Mật khẩu mới</label>
 
-                                                                <input class="input-text input-text--primary-style" type="text" name="mat_khau_moi" id="reg-femail" placeholder="Nhập mật khẩu mới">
+                                                                <input class="input-text input-text--primary-style" type="password" name="mat_khau_moi" id="reg-femail" placeholder="Nhập mật khẩu mới">
                                                                 <span style="color:red ; font-size:13px; margin:5px"><?= !empty($_SESSION['error']['mat_khau_moi']) ? $_SESSION['error']['mat_khau_moi'] : "" ?></span>
                                                             </div>
 

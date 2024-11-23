@@ -38,7 +38,7 @@ class NguoiDung extends Base
   {
     try {
 
-      $sql = "INSERT INTO nguoi_dungs (ho_ten,gioi_tinh,nam_sinh,email,mat_khau,dien_thoai,dia_chi_nguoi_dung) 
+      $sql = "INSERT INTO nguoi_dungs (ho_ten,gioi_tinh,nam_sinh,email,mat_khau,dien_thoai,dia_chi) 
       VALUES (:hoTen,:gioiTinh,:namSinh,:email,:matKhau,:dienThoai,:diaChi)";
       $stmt = $this->conn->prepare($sql);
       $stmt->bindParam(':hoTen', $hoTen);

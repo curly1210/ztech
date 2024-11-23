@@ -116,7 +116,7 @@
                                                                 <!--====== Date of Birth Select-Box ======-->
                                                                 <input type="text" style="display: none;" name="ngay_sinh_not_update" value="<?= $nguoiDung['nam_sinh'] ?>">
                                                                 <label class="gl-label" for="ngay-sinh">Ngày sinh</label>
-                                                                <input type="date" id="ngay-sinh" name="ngay_sinh" class="input-text input-text--primary-style">
+                                                                <input type="date" id="ngay-sinh" name="ngay_sinh" value="<?= $nguoiDung['nam_sinh'] ?>" class="input-text input-text--primary-style">
                                                                 <!--====== End - Date of Birth Select-Box ======-->
                                                             </div>
                                                             <div class="u-s-m-b-30">

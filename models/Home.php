@@ -20,11 +20,12 @@ class Home extends Base
     {
         try {
 
-            $sql = "SELECT san_phams.*, danh_gias.sao, COUNT(danh_gias.sao) AS so_danh_gia, AVG(danh_gias.sao) AS so_sao, MIN(hinh_anhs.hinh_anh) AS url 
-            FROM hinh_anhs JOIN san_phams ON hinh_anhs.id_san_pham = san_phams.id 
+            $sql = "SELECT san_phams.*, COUNT(DISTINCT danh_gias.id) AS so_danh_gia, AVG(danh_gias.sao) AS so_sao, MIN(hinh_anhs.hinh_anh) AS url 
+            FROM san_phams 
+            LEFT JOIN hinh_anhs ON hinh_anhs.id_san_pham = san_phams.id 
             LEFT JOIN danh_gias ON danh_gias.id_san_pham = san_phams.id 
             WHERE san_phams.trang_thai = 2 
-            GROUP BY san_phams.id, san_phams.ten, san_phams.gia_ban, san_phams.trang_thai, danh_gias.sao, hinh_anhs.id_san_pham LIMIT 16";
+            GROUP BY san_phams.id LIMIT 16";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll();
