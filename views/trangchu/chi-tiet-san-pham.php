@@ -378,7 +378,7 @@
 
                       <span class="product-o__category"> <a href="shop-side-version-2.html"><?= $tenDanhMuc ?></a></span>
 
-                      <span class="product-o__name"> <a href="product-detail.html"><?= $row['ten'] ?></a></span>
+                      <span class="product-o__name"> <a href="?act=chi-tiet-san-pham&id=<?= $row['id'] ?>"><?= $row['ten'] ?></a></span>
                       <div class="product-o__rating gl-rating-style">
                         <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
 

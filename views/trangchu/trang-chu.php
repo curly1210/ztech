@@ -209,7 +209,7 @@
                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 u-s-m-b-30 filter__item <?= str_replace(" ", "-", $danhMuc['ten'])  ?>">
                           <div class="product-o product-o--hover-on product-o--radius">
                             <div class="product-o__wrap">
-                              <a class="aspect aspect--bg-grey aspect--square u-d-block" href="product-detail.html"> <img class="aspect__img " style="height: 100%; object-fit:contain" src="<?= 'admin/' . $sanPham['url'] ?>" alt="" /></a>
+                              <a class="aspect aspect--bg-grey aspect--square u-d-block" href="?act=chi-tiet-san-pham&id=<?= $sanPham['id'] ?>"> <img class="aspect__img " style="height: 100%; object-fit:contain" src="<?= 'admin/' . $sanPham['url'] ?>" alt="" /></a>
                               <div class="product-o__action-wrap">
                                 <ul class="product-o__action-list">
                                   <li>
@@ -230,7 +230,7 @@
 
                             <span class="product-o__category"> <a href="shop-side-version-2.html"><?= $danhMuc['ten'] ?></a></span>
 
-                            <span class="product-o__name"> <a href="product-detail.html"><?= $sanPham['ten'] ?></a></span>
+                            <span class="product-o__name"> <a href="?act=chi-tiet-san-pham&id=<?= $sanPham['id'] ?>"><?= $sanPham['ten'] ?></a></span>
                             <div class="product-o__rating gl-rating-style ">
                               <?php if ($sanPham['so_sao'] != null):
                                 for ($i = 1; $i <= round($sanPham['so_sao']); $i++): ?>
@@ -333,7 +333,7 @@
 
                       <span class="product-o__category"> <a href="shop-side-version-2.html"><?= $danhMuc['ten'] ?></a></span>
 
-                      <span class="product-o__name"> <a href="product-detail.html"><?= $sanPhamMoi['ten'] ?></a></span>
+                      <span class="product-o__name"> <a href="?act=chi-tiet-san-pham&id=<?= $sanPhamMoi['id'] ?>"><?= $sanPhamMoi['ten'] ?></a></span>
                       <div class="product-o__rating gl-rating-style ">
                         <?php if ($sanPhamMoi['so_sao'] != null):
                           for ($i = 1; $i <= round($sanPhamMoi['so_sao']); $i++): ?>
@@ -433,7 +433,7 @@
                     <div class="u-s-m-b-30">
                       <div class="product-o product-o--hover-on">
                         <div class="product-o__wrap">
-                          <a class="aspect aspect--bg-grey aspect--square u-d-block" href="product-detail.html"> <img class="aspect__img" style="height: 100%; object-fit:contain" src="<?= 'admin/' . $sanPhamUaThich['url'] ?>" alt="" /></a>
+                          <a class="aspect aspect--bg-grey aspect--square u-d-block" href="?act=chi-tiet-san-pham&id=<?= $sanPhamUaThich['id'] ?>"> <img class="aspect__img" style="height: 100%; object-fit:contain" src="<?= 'admin/' . $sanPhamUaThich['url'] ?>" alt="" /></a>
                           <div class="product-o__action-wrap">
                             <ul class="product-o__action-list">
                               <li>
@@ -452,9 +452,9 @@
                           </div>
                         </div>
 
-                        <span class="product-o__category"> <a href="shop-side-version-2.html"><?= $danhMuc['ten'] ?></a></span>
+                        <span class="product-o__category"> <a href="#"><?= $danhMuc['ten'] ?></a></span>
 
-                        <span class="product-o__name"> <a href="product-detail.html"><?= $sanPhamUaThich['ten'] ?></a></span>
+                        <span class="product-o__name"> <a href="?act=chi-tiet-san-pham&id=<?= $sanPhamUaThich['id'] ?>"><?= $sanPhamUaThich['ten'] ?></a></span>
                         <div class="product-o__rating gl-rating-style">
                           <?php if ($sanPhamUaThich['so_sao'] != null):
                             for ($i = 1; $i <= round($sanPhamUaThich['so_sao']); $i++): ?>

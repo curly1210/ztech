@@ -41,6 +41,7 @@ match ($act) {
     'list-yeu-thich' => (new NguoiDungController())->listLike(),
     'gui-lien-he'    => (new NguoiDungController())->sendContact(),
     'gui-binh-luan'  => (new NguoiDungController())->sendComment(),
+
     'form-dang-nhap'          => (new NguoiDungController())->formLogin(),
     'dang-nhap'               => (new NguoiDungController())->login(),
     'dang-xuat'               => (new NguoiDungController())->logout(),
