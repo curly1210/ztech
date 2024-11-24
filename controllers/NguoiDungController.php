@@ -370,4 +370,48 @@ class NguoiDungController
       exit();
     }
   }
+
+  public function addToCart()
+  {
+
+
+
+    if ($_SERVER["REQUEST_METHOD"] ==  'POST') {
+      $json = [];
+
+
+      if (isset($_SESSION['user'])) {
+        $json['check_login'] = true;
+        $user = $_SESSION['user'];
+        $idProduct = $_POST['id'];
+        $so_luong = $_POST['quantity'] ?? 1;
+        $sanPham = $this->modelNguoiDung->getProductById($idProduct);
+        $sanPhamTrongGioHang =  $this->modelNguoiDung->checkProductInCart($user['id'], $idProduct);
+
+        $so_luong_trong_gio = $sanPhamTrongGioHang ? $sanPhamTrongGioHang['so_luong'] : 0;
+
+        if ($so_luong + $so_luong_trong_gio - $sanPham['hang_ton_kho'] <= 0) {
+          if ($sanPhamTrongGioHang) {
+            $this->modelNguoiDung->updateQuantityInCart($user['id'], $idProduct, $so_luong + $so_luong_trong_gio);
+          } else {
+            $this->modelNguoiDung->insertQuantityInCart($user['id'], $idProduct, $so_luong);
+          }
+          $json['message'] = "Thêm vào giỏ hàng thành công!";
+        } else {
+          if (!$sanPhamTrongGioHang && $sanPham['hang_ton_kho'] == 0) {
+            $json['message'] = "Sản phẩm đã hết hàng!";
+          } else if ($sanPhamTrongGioHang) {
+            $json['message'] = "Sản phẩm đã có trong giỏ hàng.\nSố lượng đặt vượt quá hàng trong kho.";
+          } else {
+            $json['message'] = "Số lượng đặt vượt quá hàng trong kho.";
+          }
+        }
+
+        echo json_encode($json);
+      } else {
+        $json['check_login'] = false;
+        echo json_encode($json);
+      }
+    }
+  }
 }

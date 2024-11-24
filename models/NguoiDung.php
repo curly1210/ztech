@@ -143,4 +143,53 @@ class NguoiDung extends Base
       echo "Lỗi : " . $e->getMessage();
     }
   }
+
+  public function checkProductInCart($idNguoiDung, $idSanPham)
+  {
+    try {
+      $sql = "SELECT * FROM gio_hangs WHERE id_nguoi_dung=:id_nguoi_dung 
+                                      AND id_san_pham=:id_san_pham ";
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(":id_nguoi_dung", $idNguoiDung);
+      $stmt->bindParam(":id_san_pham", $idSanPham);
+
+      $stmt->execute();
+      return $stmt->fetch();
+    } catch (PDOException $e) {
+      echo "Lỗi : " . $e->getMessage();
+    }
+  }
+
+  public function updateQuantityInCart($idNguoiDung, $idSanPham, $soLuong)
+  {
+    try {
+      $sql = "UPDATE gio_hangs SET so_luong=:so_luong WHERE id_nguoi_dung =:id_nguoi_dung AND id_san_pham =:id_san_pham";
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(":so_luong", $soLuong);
+      $stmt->bindParam(":id_nguoi_dung", $idNguoiDung);
+      $stmt->bindParam(":id_san_pham", $idSanPham);
+
+      $stmt->execute();
+      return true;
+    } catch (PDOException $e) {
+      echo "Lỗi : " . $e->getMessage();
+    }
+  }
+
+  public function insertQuantityInCart($idNguoiDung, $idSanPham, $soLuong)
+  {
+    try {
+      $sql = "INSERT INTO gio_hangs(so_luong, id_nguoi_dung, id_san_pham) 
+      VALUES (:so_luong,:id_nguoi_dung,:id_san_pham)";
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(":so_luong", $soLuong);
+      $stmt->bindParam(":id_nguoi_dung", $idNguoiDung);
+      $stmt->bindParam(":id_san_pham", $idSanPham);
+
+      $stmt->execute();
+      return true;
+    } catch (PDOException $e) {
+      echo "Lỗi : " . $e->getMessage();
+    }
+  }
 }

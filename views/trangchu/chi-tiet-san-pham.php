@@ -10,6 +10,14 @@
   <link href="images/favicon.png" rel="shortcut icon" />
   <title><?= $sanPham['ten'] ?> | Ztech</title>
 
+  <style>
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  </style>
+
   <!--====== Google Font ======-->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" />
 
@@ -151,14 +159,15 @@
                   </ul>
                 </div>
                 <div class="u-s-m-b-15">
-                  <form class="pd-detail__form">
+                  <form id="formAddToCart" class="pd-detail__form">
                     <div class="pd-detail-inline-2">
                       <div class="u-s-m-b-15">
                         <!--====== Input Counter ======-->
                         <div class="input-counter">
                           <span style="display: inline-block;line-height: 50px;" class="input-counter__minus fas fa-minus"></span>
 
-                          <input class="input-counter__text input-counter--text-primary-style" type="text" value="1" data-min="1" data-max="1000" />
+                          <input name="quantity" class="input-counter__text input-counter--text-primary-style" type="number" value="1" data-min="1" data-max="1000" />
+                          <input name="id" value="<?= $sanPham['id'] ?>" type="hidden">
 
                           <span style="display: inline-block;line-height: 50px;" class="input-counter__plus fas fa-plus"></span>
                         </div>
@@ -363,13 +372,13 @@
                         <div class="product-o__action-wrap">
                           <ul class="product-o__action-list">
                             <li>
-                              <a data-placement="top" title="Quick View"><i class="fas fa-search-plus"></i></a>
+                              <a href="?act=chi-tiet-san-pham&id=<?= $row['id'] ?>" data-tooltip="tooltip" sdata-placement="top" title="Xem chi tiết"><i class="fas fa-search-plus"></i></a>
                             </li>
                             <li>
-                              <a data-modal="modal" data-modal-id="#add-to-cart" data-tooltip="tooltip" data-placement="top" title="Add to Cart"><i class="fas fa-plus-circle"></i></a>
+                              <a class="add-one-to-cart" data-id="<?= $row['id'] ?>" data-tooltip="tooltip" data-placement="top" title="Thêm vào giỏ hàng"><i class="fas fa-plus-circle"></i></a>
                             </li>
                             <li>
-                              <a href="signin.html" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist"><i class="fas fa-heart"></i></a>
+                              <a href="signin.html" data-tooltip="tooltip" data-placement="top" title="Yêu thích"><i class="fas fa-heart"></i></a>
                             </li>
 
                           </ul>
@@ -409,58 +418,12 @@
 
     <!--====== Modal Section ======-->
 
-    <!--====== Quick Look Modal ======-->
 
-    <!--====== End - Quick Look Modal ======-->
-
-    <!--====== Add to Cart Modal ======-->
-    <div class="modal fade" id="add-to-cart">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content modal-radius modal-shadow">
-          <button class="btn dismiss-button fas fa-times" type="button" data-dismiss="modal"></button>
-          <div class="modal-body">
-            <div class="row">
-              <div class="col-lg-6 col-md-12">
-                <div class="success u-s-m-b-30">
-                  <div class="success__text-wrap">
-                    <i class="fas fa-check"></i>
-
-                    <span>Item is added successfully!</span>
-                  </div>
-                  <div class="success__img-wrap">
-                    <img class="u-img-fluid" src="images/product/electronic/product1.jpg" alt="" />
-                  </div>
-                  <div class="success__info-wrap">
-                    <span class="success__name">Beats Bomb Wireless Headphone</span>
-
-                    <span class="success__quantity">Quantity: 1</span>
-
-                    <span class="success__price">$170.00</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6 col-md-12">
-                <div class="s-option">
-                  <span class="s-option__text">1 item (s) in your cart</span>
-                  <div class="s-option__link-box">
-                    <a class="s-option__link btn--e-white-brand-shadow" data-dismiss="modal">CONTINUE SHOPPING</a>
-
-                    <a class="s-option__link btn--e-white-brand-shadow" href="cart.html">VIEW CART</a>
-
-                    <a class="s-option__link btn--e-brand-shadow" href="checkout.html">PROCEED TO CHECKOUT</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
     <!--====== End - Add to Cart Modal ======-->
     <!--====== End - Modal Section ======-->
   </div>
 
-  <div id="myselfModal"></div>
+  <!-- <div id="myselfModal"></div> -->
   <!--====== End - Main App ======-->
 
   <!--====== Google Analytics: change UA-XXXXX-Y to be your site's ID ======-->
@@ -478,17 +441,13 @@
   <!--====== Vendor Js ======-->
   <!-- <?php require_once "views/layout/lib_js.php" ?> -->
 
+  <!-- Xử lý comment -->
   <script>
     const sendCommentEle = document.getElementById('sendComment');
-    const modalCheckLogin = document.getElementById('check-login');
-    const myselftModal = document.getElementById('myselfModal');
-    const closeModal = document.getElementById('closeModal');
-    const bodyEle = document.querySelector('body');
     const commentText = document.getElementById('comment-text');
     const errBinhLuan = document.getElementById('err_binh_luan');
 
     const formCommentEle = document.getElementById("formComment")
-    console.log(formCommentEle);
 
     function checkLoginComment(login) {
       if (login == 1) {
@@ -500,32 +459,66 @@
           return true;
         }
       } else {
-        bodyEle.classList.add('modal-open');
-        modalCheckLogin.classList.add('show');
-        modalCheckLogin.style.visibility = "visible";
-        modalCheckLogin.style.opacity = "1";
-        modalCheckLogin.style.display = "block";
+        openModalCheckLogin();
 
-
-        myselfModal.classList.add('modal-backdrop');
-        myselfModal.classList.add('modal-fade');
-        myselfModal.classList.add('modal-show');
-        myselfModal.style.opacity = 0.5;
         return false;
       }
 
     }
+  </script>
 
-    closeModal.addEventListener('click', even => {
-      bodyEle.classList.remove('modal-open');
-      modalCheckLogin.classList.remove('show');
-      modalCheckLogin.style.display = "none";
-      myselfModal.classList.remove('modal-backdrop');
-      myselfModal.classList.remove('modal-fade');
-      myselfModal.classList.remove('modal-show');
+  <!-- Thêm sản phẩm vào giỏ hàng -->
+  <script>
+    $(document).ready(function() {
+      $('.add-one-to-cart').on('click', function(e) {
+        // e.preventDefault();
 
-      modalCheckLogin.style.visibility = "hidden";
-      modalCheckLogin.style.opacity = "0";
+        const IdProduct = $(this).data('id'); // Lấy ID sản phẩm từ thuộc tính data-id
+
+        $.ajax({
+          url: '?act=them-gio-hang',
+          type: 'POST',
+          data: {
+            id: IdProduct
+          },
+          success: function(response) {
+            response = JSON.parse(response);
+
+            // alert(response['check_login']);
+            if (!response['check_login']) {
+              openModalCheckLogin();
+            } else {
+              alert(response['message']);
+            }
+          },
+          error: function() {
+            alert("Lỗi");
+          }
+        });
+      });
+
+      $("#formAddToCart").submit(function(event) {
+        event.preventDefault();
+        $.ajax({
+          url: '?act=them-gio-hang',
+          type: 'POST',
+          data: $(this).serialize(),
+          success: function(response) {
+            response = JSON.parse(response);
+
+            // alert(response['check_login']);
+            if (!response['check_login']) {
+              openModalCheckLogin();
+            } else {
+              alert(response['message']);
+            }
+          },
+          error: function() {
+            alert("Lỗi");
+          }
+        });
+      });
+
     });
   </script>
 
