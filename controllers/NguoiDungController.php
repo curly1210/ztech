@@ -55,6 +55,8 @@ class NguoiDungController
     if (empty($errors)) {
       $nguoiDung = $this->modelNguoiDung->checkLogin($email, $matKhau);
       $_SESSION['user'] = $nguoiDung[0];
+      // $_SESSION['count_cart'] =  count($this->modelNguoiDung->getAllCart($_SESSION['user']['id']));
+      $_SESSION['count_cart'] =  3;
 
       if ($nguoiDung[0]['admin'] == 0) {
         header("Location: ?act=/");
@@ -392,6 +394,7 @@ class NguoiDungController
             $this->modelNguoiDung->updateQuantityInCart($user['id'], $idProduct, $so_luong + $so_luong_trong_gio);
           } else {
             $this->modelNguoiDung->insertQuantityInCart($user['id'], $idProduct, $so_luong);
+            $_SESSION['count_cart']++;
           }
           $json['message'] = "Thêm vào giỏ hàng thành công!";
         } else {
@@ -466,6 +469,7 @@ class NguoiDungController
 
     $idSanPham =  $_GET['id'];
     $this->modelNguoiDung->deleteCart($idSanPham, $_SESSION['user']['id']);
+    $_SESSION['count_cart']--;
     header("Location: ?act=gio-hangs");
   }
 }

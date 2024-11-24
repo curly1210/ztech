@@ -448,7 +448,10 @@
               <li class="has-dropdown">
                 <a id="list-cart" href="?act=gio-hangs" onclick="return checkLogin(event,this)" class="mini-cart-shop-link"><i class="fas fa-shopping-bag"></i>
 
-                  <span class="total-item-round">2</span>
+                  <?php if (isset($_SESSION['user'])) { ?>
+
+                    <span class="total-item-round"><?= $_SESSION['count_cart'] ?></span>
+                  <?php } ?>
                 </a>
 
 

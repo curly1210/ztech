@@ -106,7 +106,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 u-s-m-b-30">
                   <div style="max-height: 485px" class="table-responsive">
                     <table class="table-p">
-                      <tbody>
+                      <tbody id="cart">
                         <?php foreach ($gioHangs as $product) { ?>
                           <tr data-id="<?= $product['id_san_pham'] ?>">
                             <td>
@@ -198,24 +198,23 @@
                               <table class="f-cart__table">
                                 <tbody>
                                   <tr>
+                                    <td>TỔNG TIỀN</td>
+                                    <td id="tong-tien"><?= number_format($tongTien) . "đ" ?></td>
+                                  </tr>
+                                  <tr>
                                     <td>TIỀN SHIP</td>
                                     <td>30,000đ</td>
                                   </tr>
-
-                                  <tr>
-                                    <td>TỔNG TIỀN</td>
-                                    <td><?= number_format($tongTien) . "đ" ?></td>
-                                  </tr>
                                   <tr>
                                     <td>THÀNH TIỀN</td>
-                                    <td><?= number_format($tongTien + 30000) . "đ" ?></td>
+                                    <td id="thanh-tien"><?= number_format($tongTien + 30000) . "đ" ?></td>
                                   </tr>
                                 </tbody>
                               </table>
                             </div>
                             <div>
 
-                              <button class="btn btn--e-brand-b-2" type="submit"> PROCEED TO CHECKOUT</button>
+                              <button class="btn btn--e-brand-b-2" type="submit">TIẾN HÀNH ĐẶT HÀNG</button>
                             </div>
                           </div>
                         </div>
@@ -265,6 +264,10 @@
   <script>
     $(document).ready(function() {
 
+      $('.quantity').on('keydown', function(event) {
+        event.preventDefault(); // Ngăn mọi thao tác nhập
+      });
+
       // Tăng số lượng
       $('.increase').click(function() {
         let row = $(this).closest('tr');
@@ -284,6 +287,7 @@
           success: function(response) {
             if (response) {
               updateSubtotal(row);
+              updateTotal();
             } else {
               alert("Vượt quá số lượng trong kho");
               quantityInput.val(quantity - 1);
@@ -312,11 +316,8 @@
           }, // Lấy dữ liệu form
           success: function(response) {
             updateSubtotal(row);
-            // if (response) {
-            // } else {
-            //   alert("Vượt quá số lượng trong kho");
-            //   quantityInput.val(quantity - 1);
-            // }
+            updateTotal();
+
           },
           error: function(error) {
             console.error("Error:", error);
@@ -326,16 +327,24 @@
       });
 
       function updateSubtotal(row) {
-        let invalidString = $(row).find('.price').text();
-
-        let cleanedString = invalidString.replace(/,/g, '').replace(/[^\d.-]/g, '');
-        let price = parseInt(cleanedString); // Chỉ giữ lại các số, dấu âm (-), và dấu thập phân (.)
+        let price = $(row).find('.price').text();
+        price = parseInt(formatStringToNumber(price)); // Chỉ giữ lại các số, dấu âm (-), và dấu thập phân (.)
         let quantity = parseInt($(row).find('.quantity').val());
         let subTotal = price * quantity;
 
-        // alert(subTotal);
-        // alert(quantity);
+
         $(row).find('.subTotal').text(subTotal.toLocaleString('en-US') + 'đ');
+      }
+
+      function updateTotal() {
+        let total = 0;
+        $('#cart tr').each(function() {
+          total += parseInt(formatStringToNumber($(this).find('.subTotal').text()));
+        });
+
+        // alert(total);
+        $('#tong-tien').text(total.toLocaleString('en-US') + 'đ');
+        $('#thanh-tien').text((total + 30000).toLocaleString('en-US') + 'đ');
       }
 
 

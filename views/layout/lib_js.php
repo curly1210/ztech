@@ -66,3 +66,10 @@
      return false;
    }
  </script>
+
+ <script>
+   const formatStringToNumber = (invalidString) => {
+     return cleanedString = invalidString.replace(/,/g, '').replace(/[^\d.-]/g, '');
+
+   }
+ </script>
