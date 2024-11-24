@@ -248,7 +248,7 @@ class NguoiDungController
   }
   public function viewAccount()
   {
-    $id = $_POST['id'] ?? $_SESSION['id'];
+    $id = $_SESSION['user']['id'];
     $nguoiDung = $this->modelNguoiDung->getProfile($id);
     $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
     $noiDungs = $this->modelNguoiDung->getAdressShop();
@@ -272,6 +272,8 @@ class NguoiDungController
     $dienThoai = $_POST['so_dien_thoai'];
     $gioiTinh = $_POST['gioi_tinh'];
     $ngaySinh = $_POST['ngay_sinh'] == ""  ? $_POST['ngay_sinh_not_update'] : $_POST['ngay_sinh'];
+    $nguoiDungs = $this->modelNguoiDung->getAllUsers();
+    $profile = $this->modelNguoiDung->getProfile($id);
 
     $error = [];
     if (empty($hoTen)) {
@@ -281,6 +283,12 @@ class NguoiDungController
       $error['email'] = "Email không được để trống";
     } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
       $error['email'] = "Email không đúng định dạng";
+    } else {
+      foreach ($nguoiDungs as $nguoiDung) {
+        if ($nguoiDung['email'] == $email && $nguoiDung['email'] != $profile['email']) {
+          $error['email'] = "Email đã tồn tại";
+        }
+      }
     }
     if (empty($diaChi)) {
       $error['dia_chi'] = "Địa chỉ không được để trống";
@@ -289,6 +297,12 @@ class NguoiDungController
       $error['dien_thoai'] = "Số điện thoại không được để trống";
     } else if (strlen($dienThoai) > 10) {
       $error['dien_thoai'] = "Số điện thoại chỉ gồm 10 số";
+    } else {
+      foreach ($nguoiDungs as $nguoiDung) {
+        if ($nguoiDung['dien_thoai'] == $dienThoai && $nguoiDung['dien_thoai'] != $profile['dien_thoai']) {
+          $error['dien_thoai'] = "Số điện thoại đã tồn tại";
+        }
+      }
     }
 
     if (empty($error)) {
@@ -307,7 +321,7 @@ class NguoiDungController
   }
   public function getFormChangePassword()
   {
-    $id = $_POST['id'] ?? $_SESSION['id'];
+    $id = $_SESSION['id']  ?? $_POST['id'];
     $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
     $noiDungs = $this->modelNguoiDung->getAdressShop();
     require_once('./views/nguoidung/doi-mat-khau.php');
@@ -320,12 +334,18 @@ class NguoiDungController
 
     $matKhauHienTai = $_POST['mat_khau_hien_tai'];
     $matKhauMoi = $_POST['mat_khau_moi'];
+    $matKhauXacNhan = $_POST['mat_khau_xac_nhan'];
 
     $error = [];
     if (empty($matKhauHienTai)) {
       $error['mat_khau_hien_tai'] = "Chưa nhập mật khẩu hiện tại";
     } else if ($matKhauHienTai != $profile['mat_khau']) {
       $error['mat_khau_hien_tai'] = "Nhập sai mật khẩu";
+    }
+    if (empty($matKhauXacNhan)) {
+      $error['mat_khau_xac_nhan'] = "Chưa nhập mật khẩu xác nhận";
+    } else if ($matKhauHienTai != $matKhauXacNhan) {
+      $error['mat_khau_xac_nhan'] = "Mật khẩu xác nhận không trùng khớp";
     }
     if (empty($matKhauMoi)) {
       $error['mat_khau_moi'] = "Chưa nhập mật khẩu mới";

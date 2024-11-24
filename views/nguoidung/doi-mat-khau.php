@@ -79,7 +79,7 @@
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     <form action="?act=submit-update-mat-khau" method="post" class="dash-edit-p">
-                                                        <input type=" hidden" name="id" style="display: none;" value="<?= $id ?? $_SESSION['id'] ?>">
+                                                        <input type=" hidden" name="id" style="display: none;" value="<?= $id  ?>">
                                                         <div class="gl-inline">
                                                             <div class="u-s-m-b-30">
 
@@ -87,6 +87,16 @@
 
                                                                 <input class="input-text input-text--primary-style" name="mat_khau_hien_tai" type="password" id="reg-fname" placeholder="Nhập mật khẩu hiện tại">
                                                                 <span style="color:red ; font-size:13px; margin:5px"><?= !empty($_SESSION['error']['mat_khau_hien_tai']) ? $_SESSION['error']['mat_khau_hien_tai'] : "" ?></span>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="gl-inline">
+                                                            <div class="u-s-m-b-30">
+
+                                                                <label class="gl-label" for="reg-fpass">Xác nhận mật khẩu</label>
+
+                                                                <input class="input-text input-text--primary-style" name="mat_khau_xac_nhan" type="password" id="reg-fpass" placeholder="Nhập lại mật khẩu">
+                                                                <span style="color:red ; font-size:13px; margin:5px"><?= !empty($_SESSION['error']['mat_khau_xac_nhan']) ? $_SESSION['error']['mat_khau_xac_nhan'] : "" ?></span>
                                                             </div>
 
                                                         </div>

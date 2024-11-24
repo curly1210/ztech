@@ -75,6 +75,19 @@ class MaKhuyenMai
             echo "Lỗi : " . $e->getMessage();
         }
     }
+    public function updateStatus($id, $trangThai)
+    {
+        try {
+            $sql = "UPDATE ma_khuyen_mais SET trang_thai= :trang_thai WHERE id = :id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(":id", $id);
+            $stmt->bindParam(":trang_thai", $trangThai);
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            echo "Lỗi : " . $e->getMessage();
+        }
+    }
     public function __destruct()
     {
         $this->conn = null;

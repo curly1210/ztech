@@ -86,50 +86,57 @@
                                         <tbody>
 
                                             <!--====== Row ======-->
-                                            <?php foreach ($maKhuyenMais as $index => $maKhuyenMai): ?>
-                                                <tr>
-                                                    <td>
-                                                        <div class="table-p__box">
-                                                            <div class="table-p__img-wrap">
 
-                                                                <img class="u-img-fluid" src="images/voucher/voucher.jpg" alt="">
+                                            <?php if (!empty($maKhuyenMais)) {
+                                                foreach ($maKhuyenMais as $index => $maKhuyenMai): ?>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="table-p__box">
+                                                                <div class="table-p__img-wrap">
+
+                                                                    <img class="u-img-fluid" src="images/voucher/voucher.jpg" alt="">
+                                                                </div>
+                                                                <div class="table-p__info">
+
+                                                                    <span class="table-p__name">
+
+                                                                        <a><?= $maKhuyenMai['ten'] ?></a></span>
+
+                                                                    <span class="table-p__category">
+
+                                                                        <p>Số lượng: <?= $maKhuyenMai['so_luong'] ?> </p>
+                                                                    </span>
+                                                                    <ul class="table-p__variant-list">
+                                                                        <li>
+
+                                                                            <span>Ngày bắt đầu: <?= date("d-m-Y", strtotime($maKhuyenMai['ngay_bat_dau']))  ?></span>
+
+                                                                        </li>
+                                                                        <li>
+
+                                                                            <span>Ngày kết thúc: <?= date("d-m-Y", strtotime($maKhuyenMai['ngay_ket_thuc'])) ?></span>
+
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
                                                             </div>
-                                                            <div class="table-p__info">
+                                                        </td>
 
-                                                                <span class="table-p__name">
-
-                                                                    <a><?= $maKhuyenMai['ten'] ?></a></span>
-
-                                                                <span class="table-p__category">
-
-                                                                    <p>Số lượng: <?= $maKhuyenMai['so_luong'] ?> </p>
-                                                                </span>
-                                                                <ul class="table-p__variant-list">
-                                                                    <li>
-
-                                                                        <span>Ngày bắt đầu: <?= date("d-m-Y", strtotime($maKhuyenMai['ngay_bat_dau']))  ?></span>
-
-                                                                    </li>
-                                                                    <li>
-
-                                                                        <span>Ngày kết thúc: <?= date("d-m-Y", strtotime($maKhuyenMai['ngay_ket_thuc'])) ?></span>
-
-                                                                    </li>
-                                                                </ul>
+                                                        <td>
+                                                            <div class="table-p__del-wrap">
+                                                                <form action="">
+                                                                    <input type="text" class="copyText" value="<?= $maKhuyenMai['ten'] ?>" style="display: none;">
+                                                                </form>
+                                                                <a class="table-p__delete-link" onclick="copyToClipboard(<?= $index ?>)"><i style="font-size:25px;" class="fa-solid fa-copy"></i></a>
                                                             </div>
-                                                        </div>
-                                                    </td>
+                                                        </td>
+                                                    </tr>
+                                            <?php endforeach;
+                                            } else {
+                                                echo ("<h5>Không có mã nào</h5>");
+                                            }
 
-                                                    <td>
-                                                        <div class="table-p__del-wrap">
-                                                            <form action="">
-                                                                <input type="text" class="copyText" value="<?= $maKhuyenMai['ten'] ?>" style="display: none;">
-                                                            </form>
-                                                            <a class="table-p__delete-link" onclick="copyToClipboard(<?= $index ?>)"><i style="font-size:25px;" class="fa-solid fa-copy"></i></a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            <?php endforeach; ?>
+                                            ?>
                                             <!--====== End - Row ======-->
 
                                         </tbody>
