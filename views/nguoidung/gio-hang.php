@@ -104,11 +104,11 @@
             <div class="container">
               <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 u-s-m-b-30">
-                  <div style="height: 485px" class="table-responsive">
+                  <div style="max-height: 485px" class="table-responsive">
                     <table class="table-p">
                       <tbody>
                         <?php foreach ($gioHangs as $product) { ?>
-                          <tr>
+                          <tr data-id="<?= $product['id_san_pham'] ?>">
                             <td>
                               <div class="table-p__box">
                                 <div class="table-p__img-wrap">
@@ -118,28 +118,18 @@
                                 <div class="table-p__info">
 
                                   <span class="table-p__name">
-
-                                    <a href="product-detail.html"><?= $product['ten_san_pham'] ?></a></span>
+                                    <a href="product-detail.html"><?= $product['ten_san_pham'] ?></a>
+                                  </span>
 
                                   <span class="table-p__category">
+                                    <a href="shop-side-version-2.html"><?= $product['ten_danh_muc'] ?></a>
+                                  </span>
 
-                                    <a href="shop-side-version-2.html"><?= $product['ten_danh_muc'] ?></a></span>
-                                  <!-- <ul class="table-p__variant-list">
-                                    <li>
-
-                                      <span>Size: 22</span>
-                                    </li>
-                                    <li>
-
-                                      <span>Color: Red</span>
-                                    </li>
-                                  </ul> -->
                                 </div>
                               </div>
                             </td>
                             <td>
-
-                              <span class="table-p__price"><?= number_format($product['gia']) . "đ" ?></span>
+                              <span class="table-p__price price"><?= number_format($product['gia']) . "đ" ?></span>
                             </td>
                             <td>
                               <div class="table-p__input-counter-wrap">
@@ -147,18 +137,18 @@
                                 <!--====== Input Counter ======-->
                                 <div class="input-counter">
 
-                                  <span style="display: inline-block;line-height: 50px;" class="input-counter__minus fas fa-minus"></span>
+                                  <span style="display: inline-block;line-height: 50px;" class="input-counter__minus fas fa-minus decrease"></span>
 
-                                  <input class="input-counter__text input-counter--text-primary-style" type="text" value="<?= $product['so_luong'] ?>" data-min="1" data-max="1000">
+                                  <input class="input-counter__text input-counter--text-primary-style quantity" type="text" value="<?= $product['so_luong'] ?>" data-min="1" data-max="1000">
 
-                                  <span style="display: inline-block;line-height: 50px;" class="input-counter__plus fas fa-plus"></span>
+                                  <span style="display: inline-block;line-height: 50px;" class="input-counter__plus fas fa-plus increase"></span>
                                 </div>
                                 <!--====== End - Input Counter ======-->
                               </div>
                             </td>
                             <td>
 
-                              <span class="table-p__price"><?= number_format($product['gia'] * $product['so_luong']) . "đ" ?></span>
+                              <span class="table-p__price subTotal"><?= number_format($product['gia'] * $product['so_luong']) . "đ" ?></span>
                             </td>
                             <td>
                               <div class="table-p__del-wrap">
@@ -208,20 +198,17 @@
                               <table class="f-cart__table">
                                 <tbody>
                                   <tr>
-                                    <td>SHIPPING</td>
-                                    <td>$4.00</td>
+                                    <td>TIỀN SHIP</td>
+                                    <td>30,000đ</td>
+                                  </tr>
+
+                                  <tr>
+                                    <td>TỔNG TIỀN</td>
+                                    <td><?= number_format($tongTien) . "đ" ?></td>
                                   </tr>
                                   <tr>
-                                    <td>TAX</td>
-                                    <td>$0.00</td>
-                                  </tr>
-                                  <tr>
-                                    <td>SUBTOTAL</td>
-                                    <td>$379.00</td>
-                                  </tr>
-                                  <tr>
-                                    <td>GRAND TOTAL</td>
-                                    <td>$379.00</td>
+                                    <td>THÀNH TIỀN</td>
+                                    <td><?= number_format($tongTien + 30000) . "đ" ?></td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -274,6 +261,88 @@
 
   <!--====== Vendor Js ======-->
   <?php require_once "views/layout/lib_js.php" ?>
+
+  <script>
+    $(document).ready(function() {
+
+      // Tăng số lượng
+      $('.increase').click(function() {
+        let row = $(this).closest('tr');
+        let quantityInput = $(row).find('.quantity');
+        let quantity = parseInt(quantityInput.val());
+        let idProduct = $(row).data('id');
+        // alert(quantityInput.val());
+        // alert($(row).data('id'));
+
+        $.ajax({
+          url: "?act=check-quantity-cart",
+          type: "POST",
+          data: {
+            quantity: quantity,
+            idProduct: idProduct
+          }, // Lấy dữ liệu form
+          success: function(response) {
+            if (response) {
+              updateSubtotal(row);
+            } else {
+              alert("Vượt quá số lượng trong kho");
+              quantityInput.val(quantity - 1);
+            }
+          },
+          error: function(error) {
+            console.error("Error:", error);
+          }
+        });
+        // quantityInput.val(parseInt(quantityInput.val()) + 1);
+        // updateSubtotal(row);
+      });
+
+      $('.decrease').click(function() {
+        let row = $(this).closest('tr');
+        let quantityInput = $(row).find('.quantity');
+        let quantity = parseInt(quantityInput.val());
+        let idProduct = $(row).data('id');
+
+        $.ajax({
+          url: "?act=check-quantity-cart",
+          type: "POST",
+          data: {
+            quantity: quantity,
+            idProduct: idProduct
+          }, // Lấy dữ liệu form
+          success: function(response) {
+            updateSubtotal(row);
+            // if (response) {
+            // } else {
+            //   alert("Vượt quá số lượng trong kho");
+            //   quantityInput.val(quantity - 1);
+            // }
+          },
+          error: function(error) {
+            console.error("Error:", error);
+          }
+        });
+        // updateSubtotal(row);
+      });
+
+      function updateSubtotal(row) {
+        let invalidString = $(row).find('.price').text();
+
+        let cleanedString = invalidString.replace(/,/g, '').replace(/[^\d.-]/g, '');
+        let price = parseInt(cleanedString); // Chỉ giữ lại các số, dấu âm (-), và dấu thập phân (.)
+        let quantity = parseInt($(row).find('.quantity').val());
+        let subTotal = price * quantity;
+
+        // alert(subTotal);
+        // alert(quantity);
+        $(row).find('.subTotal').text(subTotal.toLocaleString('en-US') + 'đ');
+      }
+
+
+
+
+    });
+  </script>
 
   <!--====== Noscript ======-->
   <noscript>

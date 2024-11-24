@@ -373,9 +373,6 @@ class NguoiDungController
 
   public function addToCart()
   {
-
-
-
     if ($_SERVER["REQUEST_METHOD"] ==  'POST') {
       $json = [];
 
@@ -415,6 +412,27 @@ class NguoiDungController
     }
   }
 
+  public function checkQuantity()
+  {
+    if (!isset($_SESSION['user'])) {
+      header("Location: index.php");
+    }
+
+    $user = $_SESSION['user'];
+    $idProduct = $_POST['idProduct'];
+    $so_luong = $_POST['quantity'];
+
+    $sanPham = $this->modelNguoiDung->getProductById($idProduct);
+
+    if ($so_luong <= $sanPham['hang_ton_kho']) {
+      $this->modelNguoiDung->updateQuantityInCart($user['id'], $idProduct, $so_luong);
+      echo true;
+    } else {
+      echo false;
+    }
+  }
+
+
   public function listCart()
   {
     if (!isset($_SESSION['user'])) {
@@ -425,6 +443,15 @@ class NguoiDungController
     $nguoiDung = $_SESSION['user'];
 
     $gioHangs = $this->modelNguoiDung->getAllCart($nguoiDung['id']);
+
+    $tongTien = 0;
+
+    if (count($gioHangs) != 0) {
+      foreach ($gioHangs as $product) {
+        $tongTien += ($product['gia'] * $product['so_luong']);
+      }
+    }
+    // var_dump($tongTien);
 
     // var_dump($gioHangs);
 

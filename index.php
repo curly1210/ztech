@@ -59,6 +59,7 @@ match ($act) {
     'them-gio-hang'           => (new NguoiDungController())->addToCart(),
     'gio-hangs'               => (new NguoiDungController())->listCart(),
     'xoa-gio-hang'            => (new NguoiDungController())->deleteCart(),
+    'check-quantity-cart'     => (new NguoiDungController())->checkQuantity(),
 
 
     //Tin Tức
