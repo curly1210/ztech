@@ -12,27 +12,6 @@
  <script src="https://kit.fontawesome.com/7fbbf93a04.js" crossorigin="anonymous"></script>
 
  <script>
-   function checkLogin(event, element) {
-     event.preventDefault();
-
-     const targetUrl = element.href;
-
-     fetch('commons/checkSession.php')
-       .then(response => response.json())
-       .then(data => {
-         if (data.status) {
-           window.location.href = targetUrl;
-         }
-       })
-       .catch(error => {
-         alert('Lỗi rồi;');
-       });
-
-     return false;
-   }
- </script>
-
- <script>
    const modalCheckLogin = document.getElementById('check-login');
    const myselftModal = document.getElementById('myselfModal');
    const closeModal = document.getElementById('closeModal');
@@ -63,4 +42,27 @@
      // modalCheckLogin.style.visibility = "hidden";
      // modalCheckLogin.style.opacity = "0";
    });
+ </script>
+
+ <script>
+   function checkLogin(event, element) {
+     event.preventDefault();
+
+     const targetUrl = element.href;
+
+     fetch('commons/checkSession.php')
+       .then(response => response.json())
+       .then(data => {
+         if (data.status) {
+           window.location.href = targetUrl;
+         } else {
+           openModalCheckLogin();
+         }
+       })
+       .catch(error => {
+         alert('Lỗi rồi;');
+       });
+
+     return false;
+   }
  </script>

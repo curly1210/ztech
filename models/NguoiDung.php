@@ -192,4 +192,42 @@ class NguoiDung extends Base
       echo "Lỗi : " . $e->getMessage();
     }
   }
+
+  public function getAllCart($idNguoiDung)
+  {
+    try {
+
+      $sql = "SELECT min(hinh_anhs.hinh_anh) as url_anh, san_phams.gia_khuyen_mai as gia 
+              ,san_phams.ten as ten_san_pham, danh_mucs.ten as ten_danh_muc, gio_hangs.so_luong as so_luong, san_phams.id as id_san_pham
+              FROM gio_hangs JOIN san_phams ON gio_hangs.id_san_pham = san_phams.id 
+              JOIN hinh_anhs on san_phams.id = hinh_anhs.id_san_pham 
+              JOIN danh_mucs on san_phams.danh_muc_id =danh_mucs.id
+              WHERE gio_hangs.id_nguoi_dung = :id_nguoi_dung
+              GROUP BY hinh_anhs.id_san_pham, gio_hangs.id";
+
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(':id_nguoi_dung', $idNguoiDung);
+      $stmt->execute();
+
+      return $stmt->fetchAll();
+    } catch (PDOException $e) {
+      echo "Lỗi : " . $e->getMessage();
+    }
+  }
+
+  public function deleteCart($idSanPham, $idNguoiDung)
+  {
+    try {
+      $sql = "DELETE FROM gio_hangs WHERE gio_hangs.id_nguoi_dung = :id_nguoi_dung and gio_hangs.id_san_pham = :id_san_pham";
+      $stmt = $this->conn->prepare($sql);
+
+      $stmt->bindParam(":id_nguoi_dung", $idNguoiDung);
+      $stmt->bindParam(":id_san_pham", $idSanPham);
+
+      $stmt->execute();
+      return true;
+    } catch (PDOException $e) {
+      echo "Lỗi : " . $e->getMessage();
+    }
+  }
 }

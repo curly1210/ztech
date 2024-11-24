@@ -394,4 +394,31 @@ class NguoiDungController
       }
     }
   }
+
+  public function listCart()
+  {
+    if (!isset($_SESSION['user'])) {
+      header("Location: index.php");
+    }
+    $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
+    $noiDungs = $this->modelNguoiDung->getAdressShop();
+    $nguoiDung = $_SESSION['user'];
+
+    $gioHangs = $this->modelNguoiDung->getAllCart($nguoiDung['id']);
+
+    // var_dump($gioHangs);
+
+    require_once './views/nguoidung/gio-hang.php';
+  }
+
+  public function deleteCart()
+  {
+    if (!isset($_SESSION['user'])) {
+      header("Location: index.php");
+    }
+
+    $idSanPham =  $_GET['id'];
+    $this->modelNguoiDung->deleteCart($idSanPham, $_SESSION['user']['id']);
+    header("Location: ?act=gio-hangs");
+  }
 }
