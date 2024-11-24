@@ -10,6 +10,26 @@ class MaKhuyenmaiController
     {
         $search = $_GET["ten_ma"] ??  '';
         $maKhuyenMais = $this->modelMaKhuyenMai->getAll($search);
+        $currentTime = date("Y-m-d");
+
+        foreach ($maKhuyenMais as $maKhuyenMai) {
+            $ngayBatDau = $maKhuyenMai['ngay_bat_dau'];
+            $ngayKetThuc = $maKhuyenMai['ngay_ket_thuc'];
+
+            if (date("Y-m-d", strtotime($currentTime)) > date("Y-m-d", strtotime($ngayKetThuc))) {
+
+                $this->modelMaKhuyenMai->updateStatus($maKhuyenMai['id'], 1);
+            } else if (date("Y-m-d", strtotime($currentTime)) < date("Y-m-d", strtotime($ngayBatDau))) {
+
+                $this->modelMaKhuyenMai->updateStatus($maKhuyenMai['id'], 2);
+            } else if (date("Y-m-d", strtotime($currentTime)) >= date("Y-m-d", strtotime($ngayBatDau)) && date("Y-m-d", strtotime($currentTime)) <= date("Y-m-d", strtotime($ngayKetThuc))) {
+
+                $this->modelMaKhuyenMai->updateStatus($maKhuyenMai['id'], 3);
+            }
+        }
+
+        $maKhuyenMais = $this->modelMaKhuyenMai->getAll($search);
+
         require_once('./views/makhuyenmai/list-ma-khuyen-mai.php');
     }
     public function create()
