@@ -187,7 +187,7 @@
                       <div class="o-summary__section u-s-m-b-30">
                         <div class="msg" style="box-shadow: none">
                           <span class="msg__text">Bạn có voucher? <a class="gl-link" href="#have-coupon" data-toggle="collapse" aria-expanded="true">Click vào đây để nhập code</a></span>
-                          <div class="collapse show" id="have-coupon" data-parent="#checkout-msg-group" style="">
+                          <div class="collapse" id="have-coupon" data-parent="#checkout-msg-group" style="">
                             <div class="c-f u-s-m-b-16">
                               <span class="gl-text u-s-m-b-16">Nhập mã phiếu giảm giá nếu bạn có.</span>
                               <div class="c-f__form">
