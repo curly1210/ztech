@@ -72,4 +72,8 @@ match ($act) {
 
     //Mã Khuyến Mãi
     'ma-khuyen-mai'     => (new MaKhuyenMaiController())->index(),
+
+    //Đơn hàng
+    'don-hang'          => (new NguoiDungController())->viewMyOrder(),
+    'quan-ly-don-hang'  => (new NguoiDungController())->viewManageOrder(),
 };

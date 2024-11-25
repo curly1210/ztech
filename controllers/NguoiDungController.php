@@ -626,4 +626,19 @@ class NguoiDungController
 
     require_once './views/nguoidung/dat-hang-thanh-cong.php';
   }
+  public function viewMyOrder()
+  {
+    $id = $_POST['id'];
+
+    $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
+    $donHangs = $this->modelNguoiDung->getMyOrder($id);
+    $noiDungs = $this->modelNguoiDung->getAdressShop();
+    require_once('./views/nguoidung/don-hang.php');
+  }
+  public function viewManageOrder()
+  {
+    $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
+    $noiDungs = $this->modelNguoiDung->getAdressShop();
+    require_once('./views/nguoidung/manage-don-hang.php');
+  }
 }

@@ -351,4 +351,16 @@ class NguoiDung extends Base
       echo "Lỗi : " . $e->getMessage();
     }
   }
+  public function getMyOrder($id)
+  {
+    try {
+      $sql = "SELECT don_hangs.*,nguoi_dungs.id FROM don_hangs JOIN nguoi_dungs ON nguoi_dungs.id = don_hangs.id_nguoi_dung WHERE nguoi_dungs.id= :id";
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(":id", $id);
+      $stmt->execute();
+      return $stmt->fetchAll();
+    } catch (PDOException $e) {
+      echo "Lỗi:" . $e->getMessage();
+    }
+  }
 }

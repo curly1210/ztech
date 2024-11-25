@@ -76,11 +76,27 @@
                                         <div class="dash__pad-1">
 
                                             <span class="dash__text u-s-m-b-16">Xin Chào : <?= $nguoiDung['ho_ten'] ?> </span>
-                                            <ul class="dash__f-list">
+                                            <ul class="dash__f-list ">
 
                                                 <li>
 
-                                                    <a class="#" href="#">Thông tin tài khoản</a>
+                                                    <form action="?act=tai-khoan" method="post">
+                                                        <input type="hidden" name="id" value="<?= $_SESSION['user']['id'] ?>">
+                                                        <button style="border:none;background:none;cursor:pointer;font-size:small;font-weight:500;padding:0">
+                                                            <span>Thông tin tài khoản</span></button>
+                                                    </form>
+                                                </li>
+
+                                            </ul>
+                                            <ul class="dash__f-list">
+
+                                                <li>
+                                                    <form action="?act=don-hang" method="POST">
+                                                        <input type="hidden" name="id" value="<?= $_SESSION['user']['id'] ?>">
+                                                        <button style="border:none;background:none;cursor:pointer;font-size:small;font-weight:500;padding:0">
+                                                            <span>Danh sách đơn hàng</span></button>
+                                                    </form>
+
                                                 </li>
 
                                             </ul>

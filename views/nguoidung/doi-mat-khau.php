@@ -129,7 +129,7 @@
             </div>
             <!--====== End - Section 2 ======-->
         </div>
-
+        <?php unset($_SESSION['error']) ?>
         <!--====== Main Footer ======-->
         <?php require_once "views/layout/footer.php" ?>
 
