@@ -104,8 +104,17 @@
             <div class="container">
               <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 u-s-m-b-30">
-                  <div style="max-height: 485px" class="table-responsive">
+                  <div style="max-height: 550px" class="table-responsive">
                     <table class="table-p">
+                      <thead>
+                        <tr style="color: black;">
+                          <th style="padding: 20px;">Sản phẩm</th>
+                          <th style="padding: 20px;">Đơn giá</th>
+                          <th style="padding: 20px;">Số lượng</th>
+                          <th style="padding: 20px;">Thành tiền</th>
+                          <th style="padding: 20px;">Xóa</th>
+                        </tr>
+                      </thead>
                       <tbody id="cart">
                         <?php foreach ($gioHangs as $product) { ?>
                           <tr data-id="<?= $product['id_san_pham'] ?>">
@@ -185,7 +194,7 @@
               <div class="container">
                 <div class="row">
                   <div class="col-lg-12 col-md-12 col-sm-12 u-s-m-b-30">
-                    <form class="f-cart">
+                    <div class="f-cart">
                       <div class="row">
                         <div class="col-lg-4 col-md-6 u-s-m-b-30">
                         </div>
@@ -202,7 +211,7 @@
                                     <td id="tong-tien"><?= number_format($tongTien) . "đ" ?></td>
                                   </tr>
                                   <tr>
-                                    <td>TIỀN SHIP</td>
+                                    <td>TIỀN SHIP </td>
                                     <td>30,000đ</td>
                                   </tr>
                                   <tr>
@@ -212,14 +221,14 @@
                                 </tbody>
                               </table>
                             </div>
-                            <div>
+                            <div style="display: flex;justify-content: center ;">
 
-                              <button class="btn btn--e-brand-b-2" type="submit">TIẾN HÀNH ĐẶT HÀNG</button>
+                              <a href="?act=form-thanh-toan" style="text-align: center;" class="btn btn--e-brand-b-2">TIẾN HÀNH ĐẶT HÀNG</a>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </form>
+                    </div>
                   </div>
                 </div>
               </div>

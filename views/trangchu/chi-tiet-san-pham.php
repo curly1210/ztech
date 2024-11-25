@@ -167,10 +167,10 @@
                           <span style="display: inline-block;line-height: 50px;" class="input-counter__minus fas fa-minus"></span>
 
                           <input name="quantity" class="input-counter__text input-counter--text-primary-style" type="number" value="1" data-min="1" data-max="1000" />
-                          <input name="id" value="<?= $sanPham['id'] ?>" type="hidden">
 
                           <span style="display: inline-block;line-height: 50px;" class="input-counter__plus fas fa-plus"></span>
                         </div>
+                        <input name="id" value="<?= $sanPham['id'] ?>" type="hidden">
                         <!--====== End - Input Counter ======-->
                       </div>
                       <div class="u-s-m-b-15">
@@ -504,6 +504,8 @@
           type: 'POST',
           data: $(this).serialize(),
           success: function(response) {
+            // alert(response);
+
             response = JSON.parse(response);
 
             // alert(response['check_login']);
@@ -538,15 +540,6 @@
       </div>
     </div>
   </noscript>
-
-  <?php if (isset($_SESSION["message"])) {
-    $message = $_SESSION["message"];
-    echo "<script type=\"text/javascript\">        
-              setTimeout(function() {alert('$message');},200);  
-      </script>";
-    unset($_SESSION['message']);
-  }
-  ?>
 
 
 </body>

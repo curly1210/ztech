@@ -80,4 +80,13 @@ class Base
       echo "Lỗi : " . $e->getMessage();
     }
   }
+
+  public function getLastIdCreate()
+  {
+    try {
+      return $this->conn->lastInsertId();
+    } catch (PDOException $e) {
+      echo "Lỗi : " . $e->getMessage();
+    }
+  }
 }

@@ -55,8 +55,9 @@ class NguoiDungController
     if (empty($errors)) {
       $nguoiDung = $this->modelNguoiDung->checkLogin($email, $matKhau);
       $_SESSION['user'] = $nguoiDung[0];
-      // $_SESSION['count_cart'] =  count($this->modelNguoiDung->getAllCart($_SESSION['user']['id']));
-      $_SESSION['count_cart'] =  3;
+      $_SESSION['count_cart'] =  count($this->modelNguoiDung->getAllCart($_SESSION['user']['id']));
+      // $_SESSION['count_cart'] =  3;
+      $_SESSION["message"] = "Đăng nhập thành công.";
 
       if ($nguoiDung[0]['admin'] == 0) {
         header("Location: ?act=/");
@@ -388,6 +389,7 @@ class NguoiDungController
         $sanPhamTrongGioHang =  $this->modelNguoiDung->checkProductInCart($user['id'], $idProduct);
 
         $so_luong_trong_gio = $sanPhamTrongGioHang ? $sanPhamTrongGioHang['so_luong'] : 0;
+        // $json['message'] = $idProduct;
 
         if ($so_luong + $so_luong_trong_gio - $sanPham['hang_ton_kho'] <= 0) {
           if ($sanPhamTrongGioHang) {
@@ -471,5 +473,157 @@ class NguoiDungController
     $this->modelNguoiDung->deleteCart($idSanPham, $_SESSION['user']['id']);
     $_SESSION['count_cart']--;
     header("Location: ?act=gio-hangs");
+  }
+
+  public function formCheckOut()
+  {
+    if (!isset($_SESSION['user'])) {
+      header("Location: index.php");
+    }
+
+    $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
+    $noiDungs = $this->modelNguoiDung->getAdressShop();
+    $nguoiDung = $_SESSION['user'];
+
+    $gioHangs = $this->modelNguoiDung->getAllCart($nguoiDung['id']);
+
+    $tongTien = 0;
+
+    if (count($gioHangs) != 0) {
+      foreach ($gioHangs as $product) {
+        $tongTien += ($product['gia'] * $product['so_luong']);
+      }
+    }
+
+    require_once './views/nguoidung/thanh-toan.php';
+  }
+
+  public function checkCoupon()
+  {
+    if (!isset($_SESSION['user'])) {
+      header("Location: index.php");
+    }
+
+    $idKhuyenMai = $_POST['id'];
+    // echo $idKhuyenMai;
+    $json = [];
+    if (empty($idKhuyenMai)) {
+      $json['check'] = 0;
+      $json['message'] = "Vui lòng nhập mã khuyến mãi";
+    } else {
+      $checkCoupon = $this->modelNguoiDung->getCoupon($idKhuyenMai);
+      if (!$checkCoupon) {
+        $json['check'] = 1;
+        $json['message'] = "Mã khuyến mãi không hợp lệ";
+      } else {
+        $json['check'] = 2;
+        $json['message'] = "Áp dụng mã thành công";
+        $json['gia'] = $checkCoupon['gia'];
+      }
+    }
+
+    echo json_encode($json);
+  }
+
+  public function checkOut()
+  {
+    if (!isset($_SESSION['user'])) {
+      header("Location: index.php");
+    }
+
+    if ($_SERVER["REQUEST_METHOD"] ==  'POST') {
+      $errors = [];
+
+      $ho_ten = $_POST['ho_ten'];
+      $email = $_POST['email'];
+      $so_dien_thoai = $_POST['so_dien_thoai'];
+      $dia_chi = $_POST['dia_chi'];
+      $ghi_chu = $_POST['ghi_chu'] ?? '';
+      $ma_khuyen_mai = $_POST['ma_khuyen_mai'] ?? '';
+      $phuong_thuc = $_POST['phuong_thuc'] ?? '';
+
+      // echo $phuong_thuc;
+      if (empty($ho_ten)) {
+        $errors['ho_ten'] = "Vui lòng nhập họ tên";
+      }
+      if (empty($email)) {
+        $errors['email'] = "Vui lòng nhập email";
+      }
+      if (empty($so_dien_thoai)) {
+        $errors['so_dien_thoai'] = "Vui lòng nhập số điện thoại";
+      }
+      if (empty($dia_chi)) {
+        $errors['dia_chi'] = "Vui lòng nhập địa chỉ";
+      }
+      if (empty($phuong_thuc)) {
+        $errors['phuong_thuc'] = "Vui lòng chọn phương thức";
+      }
+
+      if (empty($errors)) {
+        $errors['check'] = 0;
+        if (!empty($ma_khuyen_mai)) {
+          $ma_khuyen_mai = $this->modelNguoiDung->getCoupon($ma_khuyen_mai);
+          if ($ma_khuyen_mai) {
+            $this->modelNguoiDung->updateCoupon($ma_khuyen_mai['id'], $ma_khuyen_mai['so_luong'] - 1);
+            $ma_khuyen_mai = $ma_khuyen_mai ? $ma_khuyen_mai['id'] : '';
+          }
+        }
+
+        // Giỏ hàng
+        $gioHangs = $this->modelNguoiDung->getAllCart($_SESSION['user']['id']);
+
+        // Kiểm tra số lượng mua có hợp lệ không
+        foreach ($gioHangs as $product) {
+          $checkSanPham = $this->modelNguoiDung->getProductById($product['id_san_pham']);
+          if ($product['so_luong'] > $checkSanPham['hang_ton_kho']) {
+            $errors['check_quantity'] = 1;
+            echo json_encode($errors);
+            exit();
+          }
+        }
+
+        // Update hàng tồn kho của sản phẩm
+        foreach ($gioHangs as $product) {
+          $sanPham = $this->modelNguoiDung->getProductById($product['id_san_pham']);
+          $so_luong_moi = $sanPham['hang_ton_kho'] - $product['so_luong'];
+          $this->modelNguoiDung->updateQuantityProduct($product['id_san_pham'], $so_luong_moi);
+        }
+
+        // Tạo địa chỉ nhận hàng
+        $this->modelNguoiDung->createAddressDelivery($ho_ten, $so_dien_thoai, $email, $dia_chi);
+        $idDiaChiNhanHang = $this->modelNguoiDung->getLastIdCreate();
+
+        // Tạo chi tiết đơn hàng
+        $this->modelNguoiDung->createOrder($_SESSION['user']['id'], $idDiaChiNhanHang, $phuong_thuc, $ma_khuyen_mai);
+        $idDonHang = $this->modelNguoiDung->getLastIdCreate();
+
+        // Tạo chi tiết đơn hàng
+        foreach ($gioHangs as $product) {
+          $this->modelNguoiDung->createOrderDetail($product['so_luong'], $product['gia'], $product['id_san_pham'], $idDonHang);
+        }
+
+        // Xóa giỏ hàng, sau khi đặt hàng thành công
+        $this->modelNguoiDung->deleteAllCart($_SESSION['user']['id']);
+
+        $_SESSION['count_cart'] = 0;
+
+        echo json_encode($errors);
+      } else {
+        $errors['check'] = 1;
+        echo json_encode($errors);
+      }
+    }
+  }
+
+  public function orderSuccess()
+  {
+    if (!isset($_SESSION['user'])) {
+      header("Location: index.php");
+    }
+
+    $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
+    $noiDungs = $this->modelNguoiDung->getAdressShop();
+
+    require_once './views/nguoidung/dat-hang-thanh-cong.php';
   }
 }
