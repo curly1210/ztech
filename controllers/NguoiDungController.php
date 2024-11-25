@@ -593,8 +593,8 @@ class NguoiDungController
         $this->modelNguoiDung->createAddressDelivery($ho_ten, $so_dien_thoai, $email, $dia_chi);
         $idDiaChiNhanHang = $this->modelNguoiDung->getLastIdCreate();
 
-        // Tạo chi tiết đơn hàng
-        $this->modelNguoiDung->createOrder($_SESSION['user']['id'], $idDiaChiNhanHang, $phuong_thuc, $ma_khuyen_mai);
+        // Tạo đơn hàng
+        $this->modelNguoiDung->createOrder($_SESSION['user']['id'], $idDiaChiNhanHang, $phuong_thuc, $ma_khuyen_mai, $ghi_chu);
         $idDonHang = $this->modelNguoiDung->getLastIdCreate();
 
         // Tạo chi tiết đơn hàng
