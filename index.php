@@ -57,6 +57,13 @@ match ($act) {
 
     // Giỏ hàng, Thanh Toán
     'them-gio-hang'           => (new NguoiDungController())->addToCart(),
+    'gio-hangs'               => (new NguoiDungController())->listCart(),
+    'xoa-gio-hang'            => (new NguoiDungController())->deleteCart(),
+    'check-quantity-cart'     => (new NguoiDungController())->checkQuantity(),
+    'form-thanh-toan'         => (new NguoiDungController())->formCheckOut(),
+    'check-coupon'            => (new NguoiDungController())->checkCoupon(),
+    'thanh-toan'              => (new NguoiDungController())->checkOut(),
+    'dat-hang-thanh-cong'     => (new NguoiDungController())->orderSuccess(),
 
 
     //Tin Tức

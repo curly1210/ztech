@@ -156,3 +156,13 @@
 </footer>
 
 <div id="myselfModal"></div>
+
+
+<?php if (isset($_SESSION["message"])) {
+  $message = $_SESSION["message"];
+  echo "<script type=\"text/javascript\">        
+              setTimeout(function() {alert('$message');},200);  
+      </script>";
+  unset($_SESSION['message']);
+}
+?>

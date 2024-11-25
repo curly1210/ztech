@@ -166,6 +166,8 @@
     </div>
     <!--====== End - Main App ======-->
 
+    <?php unset($_SESSION['error']) ?>
+
 
     <!--====== Google Analytics: change UA-XXXXX-Y to be your site's ID ======-->
     <script>
