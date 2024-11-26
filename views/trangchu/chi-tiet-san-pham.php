@@ -16,6 +16,15 @@
       -webkit-appearance: none;
       margin: 0;
     }
+
+    .like-product {
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .like-product:hover {
+      color: red;
+    }
   </style>
 
   <!--====== Google Font ======-->
@@ -123,7 +132,9 @@
                 </div>
                 <div class="u-s-m-b-15">
                   <div class="pd-detail__inline">
-                    <span class="pd-detail__click-wrap"><i class="far fa-heart u-s-m-r-6"></i>
+                    <span class="pd-detail__click-wrap">
+                      <i data-id="<?= $sanPham['id'] ?>" class="fa-solid fa-heart like-product u-s-m-r-6"></i>
+                      <!-- <i class="far fa-heart u-s-m-r-6"></i> -->
 
                       <a href="#">Yêu thích sản phẩm</a>
 
@@ -470,6 +481,7 @@
   <!-- Thêm sản phẩm vào giỏ hàng -->
   <script>
     $(document).ready(function() {
+      // Thêm 1 sản phẩm ở danh sách sản phẩm ở mục liên quan
       $('.add-one-to-cart').on('click', function(e) {
         // e.preventDefault();
 
@@ -497,6 +509,7 @@
         });
       });
 
+      // Thêm nhiều sản phẩm
       $("#formAddToCart").submit(function(event) {
         event.preventDefault();
         $.ajax({
@@ -520,6 +533,44 @@
           }
         });
       });
+
+      // Yêu thích sản phẩm
+      $('.like-product').on('click', function(e) {
+        // event.preventDefault();
+        const idProduct = $(this).data('id');
+        $.ajax({
+          url: '?act=yeu-thich-san-pham',
+          type: 'POST',
+          data: {
+            idProduct: idProduct
+          },
+          success: function(response) {
+
+            response = JSON.parse(response);
+
+            if (!response['check_login']) {
+              openModalCheckLogin();
+            } else {
+              if (response['status_like']) {
+                console.log($(this));
+                // alert($(this));
+
+                // $(this).attr("style", "color: red; ");
+                alert("Yêu thích sản phẩm thành công.");
+              } else {
+                console.log($(this));
+                // $(this).attr("style", "color: green; ");
+                alert("Bỏ yêu thích sản phẩm thành công.");
+
+              }
+            }
+          },
+          error: function() {
+            alert("Lỗi");
+          }
+        });
+      });
+
 
     });
   </script>

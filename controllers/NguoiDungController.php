@@ -769,4 +769,29 @@ class NguoiDungController
       exit();
     }
   }
+
+  public function likeProduct()
+  {
+    $json = [];
+    if (isset($_SESSION['user'])) {
+      $idProduct = $_POST['idProduct'];
+      $json['check_login'] = true;
+      $user = $_SESSION['user'];
+      $checkYeuThich = $this->modelNguoiDung->checkLikeProduct($user['id'], $idProduct);
+
+      if ($checkYeuThich) {
+        $this->modelNguoiDung->unlikeProduct($user['id'], $idProduct);
+        $json['status_like'] = 0;
+      } else {
+        $this->modelNguoiDung->likeProduct($user['id'], $idProduct);
+        $json['status_like'] = 1;
+      }
+      // $json['message'] = "test";
+      echo json_encode($json);
+    } else {
+      $json['check_login'] = false;
+      // $json['message'] = "test";
+      echo json_encode($json);
+    }
+  }
 }

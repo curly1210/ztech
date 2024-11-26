@@ -380,7 +380,7 @@ class NguoiDung extends Base
     JOIN trang_thai_don_hangs ON trang_thai_don_hangs.id = don_hangs.id_trang_thai_don_hang
     JOIN san_pham_dau_tien ON san_pham_dau_tien.id_don_hang = don_hangs.id
   WHERE 
-    san_pham_dau_tien.row_num = 1 AND nguoi_dungs.id= :id;";
+    san_pham_dau_tien.row_num = 1 AND nguoi_dungs.id= :id ORDER BY don_hangs.ngay_dat_hang DESC;";
       $stmt = $this->conn->prepare($sql);
       $stmt->bindParam(":id", $id);
       $stmt->execute();
@@ -442,6 +442,56 @@ class NguoiDung extends Base
       return $stmt->fetchAll();
     } catch (PDOException $e) {
       echo "Lỗi: " . $e->getMessage();
+    }
+  }
+
+  public function checkLikeProduct($idNguoiDung, $idSanPham)
+  {
+    try {
+      $sql = "SELECT * FROM san_pham_yeu_thichs WHERE id_nguoi_dung = :id_nguoi_dung 
+                                                  AND id_san_pham = :id_san_pham ";
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(":id_nguoi_dung", $idNguoiDung);
+      $stmt->bindParam(":id_san_pham", $idSanPham);
+
+      $stmt->execute();
+      return $stmt->fetch();
+    } catch (PDOException $e) {
+      echo "Lỗi : " . $e->getMessage();
+    }
+  }
+
+  public function likeProduct($idNguoiDung, $idSanPham)
+  {
+    try {
+
+      $sql = "INSERT INTO san_pham_yeu_thichs(id_nguoi_dung, id_san_pham) 
+      VALUES (:id_nguoi_dung, :id_san_pham)";
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(":id_nguoi_dung", $idNguoiDung);
+      $stmt->bindParam(":id_san_pham", $idSanPham);
+
+      $stmt->execute();
+      return true;
+    } catch (PDOException $e) {
+      echo "Lỗi : " . $e->getMessage();
+    }
+  }
+
+  public function unlikeProduct($idNguoiDung, $idSanPham)
+  {
+    try {
+
+      $sql = "DELETE FROM san_pham_yeu_thichs WHERE id_nguoi_dung = :id_nguoi_dung
+                                                   and id_san_pham = :id_san_pham";
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(":id_nguoi_dung", $idNguoiDung);
+      $stmt->bindParam(":id_san_pham", $idSanPham);
+
+      $stmt->execute();
+      return true;
+    } catch (PDOException $e) {
+      echo "Lỗi : " . $e->getMessage();
     }
   }
 }

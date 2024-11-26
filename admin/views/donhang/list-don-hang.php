@@ -118,7 +118,7 @@
                                   </div>
                                 </td>
                                 <td class="text-center">
-                                  <select onchange="changeStatusOrder(<?= $donHang['id_don_hang'] ?>,this)" data-current-status="<?= $donHang['id_trang_thai_don_hang'] ?>" style="color: <?= $donHang['ma_mau'] ?>" class="form-select">
+                                  <select onchange="changeStatusOrder('<?= $donHang['id_don_hang'] ?>',this)" data-current-status="<?= $donHang['id_trang_thai_don_hang'] ?>" style="color: <?= $donHang['ma_mau'] ?>" class="form-select">
                                     <?php foreach ($trangThaiDonHangs as $row) {
                                       if (($row['ten'] == "Đã hủy" || $row['ten'] == "Giao hàng thất bại") && $donHang['id_trang_thai_don_hang'] == $row['id']) { ?>
                                         <!-- <option value="">cuong</option> -->
@@ -233,7 +233,7 @@
     function changeStatusOrder(orderId, selectElement) {
       let trangThaiDonHangs = <?php echo $json_trangThaiDonHangs; ?>;
       let idsStatus = trangThaiDonHangs.map(trangThaiDonHang => trangThaiDonHang.id)
-      console.log(idsStatus);
+      // console.log(idsStatus);
 
       // Lấy trạng thái hiện tại và trạng thái mới
       // alert(1);
@@ -257,6 +257,7 @@
             status: newStatus
           },
           success: function(response) {
+            // alert(response);
             // Cập nhật trạng thái hiện tại trong select
             $(selectElement).data('current-status', newStatus);
             $(selectElement).css('color', newColor);
