@@ -119,9 +119,15 @@
                                 </td>
                                 <td class="text-center">
                                   <select onchange="changeStatusOrder(<?= $donHang['id_don_hang'] ?>,this)" data-current-status="<?= $donHang['id_trang_thai_don_hang'] ?>" style="color: <?= $donHang['ma_mau'] ?>" class="form-select">
-                                    <?php foreach ($trangThaiDonHangs as $row) { ?>
-                                      <option style="color: <?= $row['ma_mau'] ?>;" value="<?= $row['id'] ?>" <?= $donHang['id_trang_thai_don_hang'] == $row['id'] ? 'selected' : '' ?>><?= $row['ten'] ?></option>
-                                    <?php } ?>
+                                    <?php foreach ($trangThaiDonHangs as $row) {
+                                      if (($row['ten'] == "Đã hủy" || $row['ten'] == "Giao hàng thất bại") && $donHang['id_trang_thai_don_hang'] == $row['id']) { ?>
+                                        <!-- <option value="">cuong</option> -->
+                                        <option style="color: <?= $row['ma_mau'] ?>;" value="<?= $row['id'] ?>" <?= $donHang['id_trang_thai_don_hang'] == $row['id'] ? 'selected' : '' ?>><?= $row['ten'] ?></option>
+                                      <?php break;
+                                      } else { ?>
+                                        <option style="color: <?= $row['ma_mau'] ?>;" value="<?= $row['id'] ?>" <?= $donHang['id_trang_thai_don_hang'] == $row['id'] ? 'selected' : '' ?>><?= $row['ten'] ?></option>
+                                    <?php }
+                                    } ?>
                                   </select>
                                 </td>
                                 <td>
@@ -256,6 +262,8 @@
             $(selectElement).css('color', newColor);
             // $(selectElement).attr('style', `color: ${newColor};`);
             alert(response); // Thông báo thành công
+            location.reload();
+
           },
           error: function(error) {
             console.error("Error:", error);

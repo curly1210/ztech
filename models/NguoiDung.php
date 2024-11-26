@@ -283,7 +283,7 @@ class NguoiDung extends Base
     try {
       $tienShip = 30000;
       $maKhuyenMai = empty($maKhuyenMai) ? NULL : $maKhuyenMai;
-      $ghi_chu = empty($ghi_chu) ? NILL : $ghi_chu;
+      $ghi_chu = empty($ghi_chu) ? NULL : $ghi_chu;
       // $maKhuyenMai = 3;
 
       $sql = "INSERT INTO don_hangs(tien_ship, phuong_thuc_thanh_toan, ghi_chu, id_dia_chi_nhan_hang, id_nguoi_dung, id_ma_khuyen_mai) 
