@@ -391,6 +391,7 @@ class NguoiDung extends Base
   }
   public function getOrderDetail($id)
   {
+    // var_dump($id);
     try {
       $sql = "SELECT * ,trang_thai_don_hangs.ma_mau ,trang_thai_don_hangs.ten as ten_trang_thai_don_hang , ma_khuyen_mais.gia as giam_gia, ma_khuyen_mais.ten as ten_ma_khuyen_mai , chi_tiet_don_hangs.id as id_chi_tiet_don_hang,
       chi_tiet_don_hangs.gia as gia_chi_tiet_don_hang , nguoi_dungs.dia_chi as dia_chi_nguoi_dat , dia_chi_nhan_hangs.dia_chi as dia_chi_nguoi_nhan
@@ -399,10 +400,10 @@ class NguoiDung extends Base
       JOIN dia_chi_nhan_hangs on dia_chi_nhan_hangs.id = don_hangs.id_dia_chi_nhan_hang
       JOIN chi_tiet_don_hangs on chi_tiet_don_hangs.id_don_hang=don_hangs.id
       JOIN trang_thai_don_hangs on trang_thai_don_hangs.id = don_hangs.id_trang_thai_don_hang 
-      JOIN ma_khuyen_mais on ma_khuyen_mais.id = don_hangs.id_ma_khuyen_mai
-      WHERE don_hangs.id  = :id";
+      LEFT JOIN ma_khuyen_mais on ma_khuyen_mais.id = don_hangs.id_ma_khuyen_mai
+      WHERE don_hangs.id  LIKE :id";
       $stmt = $this->conn->prepare($sql);
-      $stmt->bindParam(":id", $id);
+      $stmt->bindParam(":id", $id, PDO::PARAM_STR);
       $stmt->execute();
       return $stmt->fetch();
     } catch (PDOException $e) {
@@ -433,7 +434,7 @@ class NguoiDung extends Base
   public function changeStatusOrder($id)
   {
     try {
-      $sql = "UPDATE don_hangs SET don_hangs.id_trang_thai_don_hang=12 WHERE id= :id";
+      $sql = "UPDATE don_hangs SET don_hangs.id_trang_thai_don_hang=7 WHERE id= :id";
 
       $stmt = $this->conn->prepare($sql);
       $stmt->bindParam(":id", $id);

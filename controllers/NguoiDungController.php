@@ -260,153 +260,173 @@ class NguoiDungController
   }
   public function viewAccount()
   {
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-      $_SESSION['id'] = $_POST['id'];
-      $nguoiDung = $this->modelNguoiDung->getProfile($_SESSION['id']);
-      $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
-      $noiDungs = $this->modelNguoiDung->getAdressShop();
+    if (isset($_POST['id'])) {
+      if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $_SESSION['id'] = $_POST['id'];
+        $nguoiDung = $this->modelNguoiDung->getProfile($_SESSION['id']);
+        $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
+        $noiDungs = $this->modelNguoiDung->getAdressShop();
 
-      require_once './views/nguoidung/tai-khoan.php';
-      exit();
+        require_once './views/nguoidung/tai-khoan.php';
+        exit();
+      } else {
+
+        $nguoiDung = $this->modelNguoiDung->getProfile($_SESSION['id']);
+        $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
+        $noiDungs = $this->modelNguoiDung->getAdressShop();
+        require_once './views/nguoidung/tai-khoan.php';
+        exit();
+      }
     } else {
-
-      $nguoiDung = $this->modelNguoiDung->getProfile($_SESSION['id']);
-      $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
-      $noiDungs = $this->modelNguoiDung->getAdressShop();
-      require_once './views/nguoidung/tai-khoan.php';
-      exit();
+      header("location: ?act=/");
     }
   }
   public function editAccount()
   {
-    if ($_SERVER["REQUEST_METHOD"] ==  'POST') {
-      $_SESSION['id'] = $_POST['id'];
-      $nguoiDung = $this->modelNguoiDung->getProfile($_SESSION['id']);
-      $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
-      $noiDungs = $this->modelNguoiDung->getAdressShop();
-      require_once './views/nguoidung/edit-tai-khoan.php';
-      exit();
+    if ($_POST['id']) {
+      if ($_SERVER["REQUEST_METHOD"] ==  'POST') {
+        $_SESSION['id'] = $_POST['id'];
+        $nguoiDung = $this->modelNguoiDung->getProfile($_SESSION['id']);
+        $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
+        $noiDungs = $this->modelNguoiDung->getAdressShop();
+        require_once './views/nguoidung/edit-tai-khoan.php';
+        exit();
+      } else {
+        $nguoiDung = $this->modelNguoiDung->getProfile($_SESSION['id']);
+        $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
+        $noiDungs = $this->modelNguoiDung->getAdressShop();
+        require_once './views/nguoidung/edit-tai-khoan.php';
+        exit();
+      }
     } else {
-      $nguoiDung = $this->modelNguoiDung->getProfile($_SESSION['id']);
-      $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
-      $noiDungs = $this->modelNguoiDung->getAdressShop();
-      require_once './views/nguoidung/edit-tai-khoan.php';
-      exit();
+      header("location: ?act=/");
     }
   }
   public function updateAccount()
   {
-    $id = $_POST['id'];
-    $hoTen = $_POST['ho_ten'];
-    $email = $_POST['email'];
-    $diaChi = $_POST['dia_chi'];
-    $dienThoai = $_POST['so_dien_thoai'];
-    $gioiTinh = $_POST['gioi_tinh'];
-    $ngaySinh = $_POST['ngay_sinh'] == ""  ? $_POST['ngay_sinh_not_update'] : $_POST['ngay_sinh'];
-    $nguoiDungs = $this->modelNguoiDung->getAllUsers();
-    $profile = $this->modelNguoiDung->getProfile($id);
+    if (isset($_POST['id'])) {
+      $id = $_POST['id'];
+      $hoTen = $_POST['ho_ten'];
+      $email = $_POST['email'];
+      $diaChi = $_POST['dia_chi'];
+      $dienThoai = $_POST['so_dien_thoai'];
+      $gioiTinh = $_POST['gioi_tinh'];
+      $ngaySinh = $_POST['ngay_sinh'] == ""  ? $_POST['ngay_sinh_not_update'] : $_POST['ngay_sinh'];
+      $nguoiDungs = $this->modelNguoiDung->getAllUsers();
+      $profile = $this->modelNguoiDung->getProfile($id);
 
-    $error = [];
-    if (empty($hoTen)) {
-      $error['ho_ten'] = "Họ tên không được để trống";
-    }
-    if (empty($email)) {
-      $error['email'] = "Email không được để trống";
-    } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-      $error['email'] = "Email không đúng định dạng";
-    } else {
-      foreach ($nguoiDungs as $nguoiDung) {
-        if ($nguoiDung['email'] == $email && $nguoiDung['email'] != $profile['email']) {
-          $error['email'] = "Email đã tồn tại";
+      $error = [];
+      if (empty($hoTen)) {
+        $error['ho_ten'] = "Họ tên không được để trống";
+      }
+      if (empty($email)) {
+        $error['email'] = "Email không được để trống";
+      } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error['email'] = "Email không đúng định dạng";
+      } else {
+        foreach ($nguoiDungs as $nguoiDung) {
+          if ($nguoiDung['email'] == $email && $nguoiDung['email'] != $profile['email']) {
+            $error['email'] = "Email đã tồn tại";
+          }
         }
       }
-    }
-    if (empty($diaChi)) {
-      $error['dia_chi'] = "Địa chỉ không được để trống";
-    }
-    if (empty($dienThoai)) {
-      $error['dien_thoai'] = "Số điện thoại không được để trống";
-    } else if (strlen($dienThoai) > 10) {
-      $error['dien_thoai'] = "Số điện thoại chỉ gồm 10 số";
-    } else {
-      foreach ($nguoiDungs as $nguoiDung) {
-        if ($nguoiDung['dien_thoai'] == $dienThoai && $nguoiDung['dien_thoai'] != $profile['dien_thoai']) {
-          $error['dien_thoai'] = "Số điện thoại đã tồn tại";
+      if (empty($diaChi)) {
+        $error['dia_chi'] = "Địa chỉ không được để trống";
+      }
+      if (empty($dienThoai)) {
+        $error['dien_thoai'] = "Số điện thoại không được để trống";
+      } else if (strlen($dienThoai) > 10) {
+        $error['dien_thoai'] = "Số điện thoại chỉ gồm 10 số";
+      } else {
+        foreach ($nguoiDungs as $nguoiDung) {
+          if ($nguoiDung['dien_thoai'] == $dienThoai && $nguoiDung['dien_thoai'] != $profile['dien_thoai']) {
+            $error['dien_thoai'] = "Số điện thoại đã tồn tại";
+          }
         }
       }
-    }
 
-    if (empty($error)) {
-      $this->modelNguoiDung->updateProfile($id, $hoTen, $email, $diaChi, $dienThoai, $gioiTinh, $ngaySinh);
-      $_SESSION['id'] = $id;
+      if (empty($error)) {
+        $this->modelNguoiDung->updateProfile($id, $hoTen, $email, $diaChi, $dienThoai, $gioiTinh, $ngaySinh);
+        $_SESSION['id'] = $id;
 
-      unset($_SESSION['error']);
-      header("Location: ?act=tai-khoan");
-      exit();
+        unset($_SESSION['error']);
+        header("Location: ?act=tai-khoan");
+        exit();
+      } else {
+        $_SESSION['error'] = $error;
+        $_SESSION['id'] = $id;
+        header("Location: ?act=cap-nhat-tai-khoan");
+        exit();
+      }
     } else {
-      $_SESSION['error'] = $error;
-      $_SESSION['id'] = $id;
-      header("Location: ?act=cap-nhat-tai-khoan");
-      exit();
+      header("location: ?act=/");
     }
   }
   public function getFormChangePassword()
   {
-    if ($_SERVER["REQUEST_METHOD"] ==  'POST') {
-      $_SESSION['id']  = $_POST['id'];
-      $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
-      $noiDungs = $this->modelNguoiDung->getAdressShop();
-      require_once('./views/nguoidung/doi-mat-khau.php');
-      exit();
+    if (isset($_POST['id'])) {
+      if ($_SERVER["REQUEST_METHOD"] ==  'POST') {
+        $_SESSION['id']  = $_POST['id'];
+        $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
+        $noiDungs = $this->modelNguoiDung->getAdressShop();
+        require_once('./views/nguoidung/doi-mat-khau.php');
+        exit();
+      } else {
+        $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
+        $noiDungs = $this->modelNguoiDung->getAdressShop();
+        require_once('./views/nguoidung/doi-mat-khau.php');
+        exit();
+      }
     } else {
-      $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
-      $noiDungs = $this->modelNguoiDung->getAdressShop();
-      require_once('./views/nguoidung/doi-mat-khau.php');
-      exit();
+      header("Location: ?act=/");
     }
   }
   public function updatePassword()
   {
-    $id = $_POST['id'];
-    $nguoiDungs = $this->modelNguoiDung->getAllUsers();
-    $profile = $this->modelNguoiDung->getProfile($id);
+    if (isset($_POST['id'])) {
+      $id = $_POST['id'];
+      $nguoiDungs = $this->modelNguoiDung->getAllUsers();
+      $profile = $this->modelNguoiDung->getProfile($id);
 
-    $matKhauHienTai = $_POST['mat_khau_hien_tai'];
-    $matKhauMoi = $_POST['mat_khau_moi'];
-    $matKhauXacNhan = $_POST['mat_khau_xac_nhan'];
+      $matKhauHienTai = $_POST['mat_khau_hien_tai'];
+      $matKhauMoi = $_POST['mat_khau_moi'];
+      $matKhauXacNhan = $_POST['mat_khau_xac_nhan'];
 
-    $error = [];
-    if (empty($matKhauHienTai)) {
-      $error['mat_khau_hien_tai'] = "Chưa nhập mật khẩu hiện tại";
-    } else if ($matKhauHienTai != $profile['mat_khau']) {
-      $error['mat_khau_hien_tai'] = "Nhập sai mật khẩu";
-    }
-    if (empty($matKhauXacNhan)) {
-      $error['mat_khau_xac_nhan'] = "Chưa nhập mật khẩu xác nhận";
-    } else if ($matKhauHienTai != $matKhauXacNhan) {
-      $error['mat_khau_xac_nhan'] = "Mật khẩu xác nhận không trùng khớp";
-    }
-    if (empty($matKhauMoi)) {
-      $error['mat_khau_moi'] = "Chưa nhập mật khẩu mới";
-    } else {
-      foreach ($nguoiDungs as $nguoiDung) {
-        if ($matKhauMoi == $nguoiDung['mat_khau']) {
-          $error['mat_khau_moi'] = "Mật khẩu mới đã tồn tại";
+      $error = [];
+      if (empty($matKhauHienTai)) {
+        $error['mat_khau_hien_tai'] = "Chưa nhập mật khẩu hiện tại";
+      } else if ($matKhauHienTai != $profile['mat_khau']) {
+        $error['mat_khau_hien_tai'] = "Nhập sai mật khẩu";
+      }
+      if (empty($matKhauXacNhan)) {
+        $error['mat_khau_xac_nhan'] = "Chưa nhập mật khẩu xác nhận";
+      } else if ($matKhauHienTai != $matKhauXacNhan) {
+        $error['mat_khau_xac_nhan'] = "Mật khẩu xác nhận không trùng khớp";
+      }
+      if (empty($matKhauMoi)) {
+        $error['mat_khau_moi'] = "Chưa nhập mật khẩu mới";
+      } else {
+        foreach ($nguoiDungs as $nguoiDung) {
+          if ($matKhauMoi == $nguoiDung['mat_khau']) {
+            $error['mat_khau_moi'] = "Mật khẩu mới đã tồn tại";
+          }
         }
       }
-    }
-    if (empty($error)) {
-      $this->modelNguoiDung->updatePassword($id, $matKhauMoi);
-      $_SESSION['id'] = $id;
+      if (empty($error)) {
+        $this->modelNguoiDung->updatePassword($id, $matKhauMoi);
+        $_SESSION['id'] = $id;
 
-      unset($_SESSION['error']);
-      header("Location: ?act=dang-xuat");
-      exit();
+        unset($_SESSION['error']);
+        header("Location: ?act=dang-xuat");
+        exit();
+      } else {
+        $_SESSION['error'] = $error;
+        $_SESSION['id'] = $id;
+        header("Location: ?act=doi-mat-khau");
+        exit();
+      }
     } else {
-      $_SESSION['error'] = $error;
-      $_SESSION['id'] = $id;
-      header("Location: ?act=doi-mat-khau");
-      exit();
+      header('location: ?act=/');
     }
   }
 
@@ -708,19 +728,23 @@ class NguoiDungController
   }
   public function viewMyOrder()
   {
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-      $_SESSION['id'] = $_POST['id'];
-      $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
-      $donHangs = $this->modelNguoiDung->getMyOrder($_SESSION['id']);
-      $noiDungs = $this->modelNguoiDung->getAdressShop();
-      require_once('./views/nguoidung/don-hang.php');
-      exit();
+    if (isset($_POST['id']) || isset($_SESSION['id'])) {
+      if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $_SESSION['id'] = $_POST['id'];
+        $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
+        $donHangs = $this->modelNguoiDung->getMyOrder($_SESSION['id']);
+        $noiDungs = $this->modelNguoiDung->getAdressShop();
+        require_once('./views/nguoidung/don-hang.php');
+        exit();
+      } else {
+        $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
+        $donHangs = $this->modelNguoiDung->getMyOrder($_SESSION['id']);
+        $noiDungs = $this->modelNguoiDung->getAdressShop();
+        require_once('./views/nguoidung/don-hang.php');
+        exit();
+      }
     } else {
-      $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
-      $donHangs = $this->modelNguoiDung->getMyOrder($_SESSION['id']);
-      $noiDungs = $this->modelNguoiDung->getAdressShop();
-      require_once('./views/nguoidung/don-hang.php');
-      exit();
+      header("Location: ?act=/");
     }
   }
   public function viewManageOrder()
@@ -728,7 +752,10 @@ class NguoiDungController
     $id = $_GET['id'];
     $donHang = $this->modelNguoiDung->getOrderDetail($id);
     $products = $this->modelNguoiDung->getProductsOrder($id);
+    // print_r($donHang);
+    // die();
     $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
+
     $noiDungs = $this->modelNguoiDung->getAdressShop();
     require_once('./views/nguoidung/manage-don-hang.php');
   }
@@ -737,7 +764,7 @@ class NguoiDungController
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
       $id = $_POST['id'];
       $this->modelNguoiDung->changeStatusOrder($id);
-
+      $_SESSION['id'] = $_POST['id_nguoi_dung'];
       header('Location: ?act=don-hang');
       exit();
     }

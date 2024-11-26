@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link href="images/favicon.png" rel="shortcut icon">
-    <title>Ludus - Electronics, Apparel, Computers, Books, DVDs & more</title>
+    <title>TechZ - Danh sách đơn hàng</title>
 
     <!--====== Google Font ======-->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet">
@@ -151,7 +151,9 @@
                                                                         <a href="?act=chi-tiet-don-hang&id=<?= $donHang['id'] ?>" style="display:block;color:green;font-size:13px ;margin-right:15px">Chi tiết </a>
                                                                         <?php if ($donHang['id_trang_thai_don_hang'] == 6): ?>
                                                                             <form action="?act=huy-don-hang" onsubmit="return confirm('Bạn có chắc muốn hủy đơn hàng này không ?')" method="post">
+
                                                                                 <input type="hidden" name="id" value="<?= $donHang['id'] ?>">
+                                                                                <input type="hidden" name="id_nguoi_dung" value="<?= $_SESSION['id'] ?>">
                                                                                 <button type="submit" style="background: none; border:none; font-size:13px;color:red ; cursor:pointer">Hủy đơn hàng</button>
                                                                             </form>
                                                                         <?php endif; ?>

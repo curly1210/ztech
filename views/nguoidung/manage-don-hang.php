@@ -133,7 +133,7 @@
                                         <div class="dash__pad-2">
                                             <div class="dash-l-r">
                                                 <div>
-                                                    <div class="manage-o__text-2 u-c-secondary"><?= $donHang['id'] ?></div>
+                                                    <div class="manage-o__text-2 u-c-secondary"><?= $id ?></div>
                                                     <div class="manage-o__text u-c-silver">Được đặt vào: <?= $donHang['ngay_dat_hang'] ?></div>
                                                 </div>
                                                 <div>
