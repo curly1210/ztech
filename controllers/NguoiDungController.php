@@ -675,6 +675,9 @@ class NguoiDungController
           $mail->setFrom('1210.curly@gmail.com', 'TechZ');
           $mail->addAddress($to);
 
+          $mail->CharSet = 'UTF-8';
+
+
           $mail->isHTML(true);
           $mail->Subject = $subject;
           $mail->Body = $message;
