@@ -10,6 +10,47 @@
   <link href="images/favicon.png" rel="shortcut icon" />
   <title>Thanh toán | TechZ</title>
 
+  <style>
+    /* Modal overlay */
+    .modal-load {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      /* Màu nền mờ */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      /* Hiển thị trên cùng */
+      display: none;
+      /* Ẩn mặc định */
+    }
+
+    /* Spinner */
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid rgba(255, 255, 255, 0.2);
+      border-top: 5px solid white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    /* Animation */
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+
   <!--====== Google Font ======-->
   <?php require_once "views/layout/lib_css.php" ?>
 </head>
@@ -294,6 +335,10 @@
     <!--====== End - Shipping Address Add Modal ======-->
     <!--====== End - Modal Section ======-->
   </div>
+
+  <div id="loadingModal" class="modal-load">
+    <div class="spinner"></div>
+  </div>
   <!--====== End - Main App ======-->
 
   <!--====== Google Analytics: change UA-XXXXX-Y to be your site's ID ======-->
@@ -359,6 +404,9 @@
 
       $("#formCheckOut").submit(function(event) {
         event.preventDefault(); // Ngăn chặn form nạp lại trang
+        const modal = document.getElementById("loadingModal");
+        modal.style.display = "flex"; // Hiển thị modal
+        document.body.style.overflow = "hidden"; // Ngăn cuộn trang
 
         $("#err_hoTen").text('');
         $("#err_email").text('');
@@ -372,6 +420,8 @@
           type: "POST",
           data: $(this).serialize(), // Lấy dữ liệu form
           success: function(response) {
+            modal.style.display = "none";
+            document.body.style.overflow = "auto";
             // alert(response);
             response = JSON.parse(response);
 

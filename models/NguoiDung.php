@@ -278,7 +278,7 @@ class NguoiDung extends Base
     }
   }
 
-  public function createOrder($idNguoiDung, $idDiaChiNhanHang, $phuongThucThanhToan, $maKhuyenMai, $ghi_chu)
+  public function createOrder($idDonHang, $idNguoiDung, $idDiaChiNhanHang, $phuongThucThanhToan, $maKhuyenMai, $ghi_chu)
   {
     try {
       $tienShip = 30000;
@@ -286,8 +286,8 @@ class NguoiDung extends Base
       $ghi_chu = empty($ghi_chu) ? NULL : $ghi_chu;
       // $maKhuyenMai = 3;
 
-      $sql = "INSERT INTO don_hangs(tien_ship, phuong_thuc_thanh_toan, ghi_chu, id_dia_chi_nhan_hang, id_nguoi_dung, id_ma_khuyen_mai) 
-      VALUES (:tien_ship, :phuong_thuc, :ghi_chu, :id_dia_chi, :id_nguoi_dung, :id_ma_khuyen_mai)";
+      $sql = "INSERT INTO don_hangs(id,tien_ship, phuong_thuc_thanh_toan, ghi_chu, id_dia_chi_nhan_hang, id_nguoi_dung, id_ma_khuyen_mai) 
+      VALUES (:id,:tien_ship, :phuong_thuc, :ghi_chu, :id_dia_chi, :id_nguoi_dung, :id_ma_khuyen_mai)";
       $stmt = $this->conn->prepare($sql);
       $stmt->bindParam(":tien_ship", $tienShip);
       $stmt->bindParam(":phuong_thuc", $phuongThucThanhToan);
@@ -295,6 +295,7 @@ class NguoiDung extends Base
       $stmt->bindParam(":id_dia_chi", $idDiaChiNhanHang);
       $stmt->bindParam(":id_nguoi_dung", $idNguoiDung);
       $stmt->bindParam(":id_ma_khuyen_mai", $maKhuyenMai);
+      $stmt->bindParam(":id", $idDonHang);
 
       $stmt->execute();
       return true;

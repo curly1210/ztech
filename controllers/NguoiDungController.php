@@ -1,10 +1,19 @@
 <?php
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 class NguoiDungController
 {
+
+
+
   public $modelNguoiDung;
+  public $modelMail;
   public function __construct()
   {
     $this->modelNguoiDung = new NguoiDung();
+    // $this->modelMail = new PHPMailer();
   }
 
   public function formLogin()
@@ -554,6 +563,7 @@ class NguoiDungController
 
   public function checkOut()
   {
+
     if (!isset($_SESSION['user'])) {
       header("Location: index.php");
     }
@@ -588,6 +598,8 @@ class NguoiDungController
 
       if (empty($errors)) {
         $errors['check'] = 0;
+
+        // Check mã khuyến mãi
         if (!empty($ma_khuyen_mai)) {
           $ma_khuyen_mai = $this->modelNguoiDung->getCoupon($ma_khuyen_mai);
           if ($ma_khuyen_mai) {
@@ -621,8 +633,14 @@ class NguoiDungController
         $idDiaChiNhanHang = $this->modelNguoiDung->getLastIdCreate();
 
         // Tạo đơn hàng
-        $this->modelNguoiDung->createOrder($_SESSION['user']['id'], $idDiaChiNhanHang, $phuong_thuc, $ma_khuyen_mai, $ghi_chu);
-        $idDonHang = $this->modelNguoiDung->getLastIdCreate();
+        $prefix = "ORD"; // Tiền tố
+        $timestamp = date("His"); // Lấy thời gian hiện tại (Giờ, Phút, Giây)
+        $randomString = strtoupper(substr(str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 2)); // Tạo 2 ký tự ngẫu nhiên
+        $idDonHang = $prefix . $timestamp . $randomString;
+
+        $this->modelNguoiDung->createOrder($idDonHang, $_SESSION['user']['id'], $idDiaChiNhanHang, $phuong_thuc, $ma_khuyen_mai, $ghi_chu);
+        // $idDonHang = $this->modelNguoiDung->getLastIdCreate();
+        // $errors['test'] = $idDonHang;
 
         // Tạo chi tiết đơn hàng
         foreach ($gioHangs as $product) {
@@ -633,6 +651,38 @@ class NguoiDungController
         $this->modelNguoiDung->deleteAllCart($_SESSION['user']['id']);
 
         $_SESSION['count_cart'] = 0;
+
+        //Gửi mail
+
+
+        $to = $_SESSION['user']['email'];
+        $subject = 'XÁC NHẬN ĐẶT HÀNG THÀNH CÔNG';
+        $message = "Bạn đã đặt hàng thành công\nChúng tôi sẽ liên lạc với bạn trong thời gian sớm nhất.";
+        // $headers = 'From : 1210.curly@gmail.com';
+        $mail = new PHPMailer(true);
+
+
+        try {
+          // $mail->SMTPDebug = 2;                      //Enable verbose debug output
+          $mail->isSMTP();                                            //Send using SMTP
+          $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+          $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+          $mail->Username   = '1210.curly@gmail.com';                     //SMTP username
+          $mail->Password   = 'vkzcosgjfbyoyxvd';                               //SMTP password
+          $mail->SMTPSecure = 'ssl';            //Enable implicit TLS encryption
+          $mail->Port       = 465;
+
+          $mail->setFrom('1210.curly@gmail.com', 'TechZ');
+          $mail->addAddress($to);
+
+          $mail->isHTML(true);
+          $mail->Subject = $subject;
+          $mail->Body = $message;
+          $mail->send();
+          // echo "Mail has been sent successfully!";
+        } catch (Exception $e) {
+          // echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        }
 
         echo json_encode($errors);
       } else {
