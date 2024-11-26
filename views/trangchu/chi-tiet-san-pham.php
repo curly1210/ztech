@@ -133,7 +133,9 @@
                 <div class="u-s-m-b-15">
                   <div class="pd-detail__inline">
                     <span class="pd-detail__click-wrap">
-                      <i data-id="<?= $sanPham['id'] ?>" class="fa-solid fa-heart like-product u-s-m-r-6"></i>
+                      <i data-id="<?= $sanPham['id'] ?>" <?php if (isset($_SESSION['user']) && $checkLike) echo 'style="color:red"' ?> class="fa-solid fa-heart like-product u-s-m-r-6"></i>
+
+
                       <!-- <i class="far fa-heart u-s-m-r-6"></i> -->
 
                       <a href="#">Yêu thích sản phẩm</a>
@@ -388,9 +390,7 @@
                             <li>
                               <a class="add-one-to-cart" data-id="<?= $row['id'] ?>" data-tooltip="tooltip" data-placement="top" title="Thêm vào giỏ hàng"><i class="fas fa-plus-circle"></i></a>
                             </li>
-                            <li>
-                              <a href="signin.html" data-tooltip="tooltip" data-placement="top" title="Yêu thích"><i class="fas fa-heart"></i></a>
-                            </li>
+
 
                           </ul>
                         </div>
@@ -538,6 +538,7 @@
       $('.like-product').on('click', function(e) {
         // event.preventDefault();
         const idProduct = $(this).data('id');
+        let heart = this;
         $.ajax({
           url: '?act=yeu-thich-san-pham',
           type: 'POST',
@@ -552,14 +553,16 @@
               openModalCheckLogin();
             } else {
               if (response['status_like']) {
-                console.log($(this));
+                // console.log($(this));
                 // alert($(this));
 
                 // $(this).attr("style", "color: red; ");
+                heart.style.color = "red";
                 alert("Yêu thích sản phẩm thành công.");
               } else {
-                console.log($(this));
+                // console.log($(this));
                 // $(this).attr("style", "color: green; ");
+                heart.style.color = "";
                 alert("Bỏ yêu thích sản phẩm thành công.");
 
               }

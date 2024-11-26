@@ -179,10 +179,13 @@ class NguoiDungController
 
   public function listLike()
   {
-    // if (isset($_SESSION['user'])) {
-    //   header("Location: index.php");
-    // }
+    if (!isset($_SESSION['user'])) {
+      header("Location: index.php");
+    }
+
+    $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
     $noiDungs = $this->modelNguoiDung->getAdressShop();
+    $listLikeProduct = $this->modelNguoiDung->getListLikeProduct($_SESSION['user']['id']);
     require_once './views/nguoidung/yeu-thich.php';
   }
 
@@ -772,8 +775,8 @@ class NguoiDungController
 
   public function likeProduct()
   {
-    $json = [];
     if (isset($_SESSION['user'])) {
+      $json = [];
       $idProduct = $_POST['idProduct'];
       $json['check_login'] = true;
       $user = $_SESSION['user'];
@@ -792,6 +795,27 @@ class NguoiDungController
       $json['check_login'] = false;
       // $json['message'] = "test";
       echo json_encode($json);
+    }
+  }
+
+  public function deleteLike()
+  {
+    if (isset($_SESSION['user'])) {
+      $idProduct = $_GET['id'];
+      $idUser = $_SESSION['user']['id'];
+
+      $this->modelNguoiDung->unlikeProduct($idUser, $idProduct);
+      header('Location: ?act=list-yeu-thich');
+    }
+  }
+
+  public function deleteAllLike()
+  {
+    if (isset($_SESSION['user'])) {
+      $idUser = $_SESSION['user']['id'];
+
+      $this->modelNguoiDung->deleteListLike($idUser);
+      header('Location: ?act=list-yeu-thich');
     }
   }
 }

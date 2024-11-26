@@ -11,6 +11,17 @@
   <title>TechZ - Trang Chủ</title>
 
   <?php require_once "views/layout/lib_css.php" ?>
+
+  <style>
+    .like-product {
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .like-product:hover {
+      color: red;
+    }
+  </style>
 </head>
 
 <body class="config">
@@ -216,40 +227,55 @@
                                   <li>
                                     <a class="add-one-to-cart" data-id="<?= $sanPham['id'] ?>" data-tooltip="tooltip" data-placement="top" title="Thêm vào giỏ hàng"><i class="fas fa-plus-circle"></i></a>
                                   </li>
-                                  <li>
-                                    <a href="signin.html" data-tooltip="tooltip" data-placement="top" title="Yêu thích"><i class="fas fa-heart"></i></a>
-                                  </li>
+
 
                                 </ul>
                               </div>
                             </div>
 
-                            <span class="product-o__category"> <a href="shop-side-version-2.html"><?= $danhMuc['ten'] ?></a></span>
+                            <span style="display: flex; justify-content: space-between;" class="product-o__category">
+                              <a href="shop-side-version-2.html"><?= $danhMuc['ten'] ?></a>
 
-                            <span class="product-o__name"> <a href="?act=chi-tiet-san-pham&id=<?= $sanPham['id'] ?>"><?= $sanPham['ten'] ?></a></span>
-                            <div class="product-o__rating gl-rating-style ">
-                              <?php if ($sanPham['so_sao'] != null):
-                                for ($i = 1; $i <= round($sanPham['so_sao']); $i++): ?>
+                            </span>
+
+                            <span class="product-o__name">
+                              <a href="?act=chi-tiet-san-pham&id=<?= $sanPham['id'] ?>"><?= $sanPham['ten'] ?></a>
+
+                            </span>
+
+                            <div style="display: flex; justify-content: space-between;">
+                              <div class="product-o__rating gl-rating-style ">
+                                <?php if ($sanPham['so_sao'] != null):
+                                  for ($i = 1; $i <= round($sanPham['so_sao']); $i++): ?>
+                                    <i class="fas fa-star"></i>
+                                  <?php endfor; ?>
+                                  <?php for ($i = 1; $i <= 5 - round($sanPham['so_sao']); $i++): ?>
+                                    <i class="far fa-star"></i>
+                                  <?php endfor; ?>
+                                  <span class="product-o__review">(<?= $sanPham['so_danh_gia'] ?>)</span>
+                                  <?php foreach ($countBuyProducts as $countBuyProduct): ?>
+                                    <span class="product-o__review text-right"> <?= $countBuyProduct['ten_san_pham'] == $sanPham['ten'] ? "Đã bán " . $countBuyProduct['tong_so_luong_ban'] : "" ?></span>
+                                  <?php endforeach; ?>
+                                <?php else: ?>
                                   <i class="fas fa-star"></i>
-                                <?php endfor; ?>
-                                <?php for ($i = 1; $i <= 5 - round($sanPham['so_sao']); $i++): ?>
-                                  <i class="far fa-star"></i>
-                                <?php endfor; ?>
-                                <span class="product-o__review">(<?= $sanPham['so_danh_gia'] ?>)</span>
-                                <?php foreach ($countBuyProducts as $countBuyProduct): ?>
-                                  <span class="product-o__review text-right"> <?= $countBuyProduct['ten_san_pham'] == $sanPham['ten'] ? "Đã bán " . $countBuyProduct['tong_so_luong_ban'] : "" ?></span>
-                                <?php endforeach; ?>
-                              <?php else: ?>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <span class="product-o__review">(0)</span>
-                                <?php foreach ($countBuyProducts as $countBuyProduct): ?>
-                                  <span class="product-o__review text-right"> <?= $countBuyProduct['ten_san_pham'] == $sanPham['ten'] ? "Đã bán " . $countBuyProduct['tong_so_luong_ban'] : "" ?></span>
-                                <?php endforeach; ?>
-                              <?php endif; ?>
+                                  <i class="fas fa-star"></i>
+                                  <i class="fas fa-star"></i>
+                                  <i class="fas fa-star"></i>
+                                  <i class="fas fa-star"></i>
+                                  <span class="product-o__review">(0)</span>
+                                  <?php foreach ($countBuyProducts as $countBuyProduct): ?>
+                                    <span class="product-o__review text-right"> <?= $countBuyProduct['ten_san_pham'] == $sanPham['ten'] ? "Đã bán " . $countBuyProduct['tong_so_luong_ban'] : "" ?></span>
+                                  <?php endforeach; ?>
+                                <?php endif; ?>
+                              </div>
+                              <div>
+                                <?php if ($sanPham['is_favorite']) { ?>
+                                  <i data-id="<?= $sanPham['id'] ?>" style="color: red;" class="fa-solid fa-heart like-product u-s-m-r-6"></i>
+
+                                <?php } else { ?>
+                                  <i data-id="<?= $sanPham['id'] ?>" class="fa-solid fa-heart like-product u-s-m-r-6"></i>
+                                <?php } ?>
+                              </div>
                             </div>
 
                             <span class="product-o__price"><?= number_format($sanPham['gia_khuyen_mai']) . " đ" ?>
@@ -318,9 +344,7 @@
                             <li>
                               <a class="add-one-to-cart" data-id="<?= $sanPhamMoi['id'] ?>" data-tooltip="tooltip" data-placement="top" title="Thêm vào giỏ hàng"><i class="fas fa-plus-circle"></i></a>
                             </li>
-                            <li>
-                              <a href="signin.html" data-tooltip="tooltip" data-placement="top" title="Yêu thích"><i class="fas fa-heart"></i></a>
-                            </li>
+
 
                           </ul>
                         </div>
@@ -437,9 +461,7 @@
                               <li>
                                 <a class="add-one-to-cart" data-id="<?= $sanPhamUaThich['id'] ?>" data-tooltip="tooltip" data-placement="top" title="Thêm vào giỏ hàng"><i class="fas fa-plus-circle"></i></a>
                               </li>
-                              <li>
-                                <a href="signin.html" data-tooltip="tooltip" data-placement="top" title="Yêu thích"><i class="fas fa-heart"></i></a>
-                              </li>
+
                             </ul>
                           </div>
                         </div>
@@ -842,6 +864,46 @@
               openModalCheckLogin();
             } else {
               alert(response['message']);
+            }
+          },
+          error: function() {
+            alert("Lỗi");
+          }
+        });
+      });
+
+      // Yêu thích sản phẩm
+      $('.like-product').on('click', function(e) {
+        // event.preventDefault();
+        const idProduct = $(this).data('id');
+        let heart = this;
+        $.ajax({
+          url: '?act=yeu-thich-san-pham',
+          type: 'POST',
+          data: {
+            idProduct: idProduct
+          },
+          success: function(response) {
+
+            response = JSON.parse(response);
+
+            if (!response['check_login']) {
+              openModalCheckLogin();
+            } else {
+              if (response['status_like']) {
+                // console.log($(this));
+                // alert($(this));
+
+                // $(this).attr("style", "color: red; ");
+                heart.style.color = "red";
+                alert("Yêu thích sản phẩm thành công.");
+              } else {
+                // console.log($(this));
+                // $(this).attr("style", "color: green; ");
+                heart.style.color = "";
+                alert("Bỏ yêu thích sản phẩm thành công.");
+
+              }
             }
           },
           error: function() {

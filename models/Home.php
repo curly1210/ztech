@@ -16,17 +16,25 @@ class Home extends Base
         }
     }
 
-    public function getAllProducts()
+    public function getAllProducts($user)
     {
         try {
-
-            $sql = "SELECT san_phams.*, COUNT(DISTINCT danh_gias.id) AS so_danh_gia, AVG(danh_gias.sao) AS so_sao, MIN(hinh_anhs.hinh_anh) AS url 
+            $idNguoiDung = empty($user) ? NULL : $user['id'];
+            $sql = "SELECT san_phams.*, COUNT(DISTINCT danh_gias.id) AS so_danh_gia, AVG(danh_gias.sao) AS so_sao, MIN(hinh_anhs.hinh_anh) AS url,
+            CASE 
+                WHEN san_pham_yeu_thichs.id_nguoi_dung IS NOT NULL THEN 1 
+                ELSE 0 
+            END AS is_favorite
             FROM san_phams 
             LEFT JOIN hinh_anhs ON hinh_anhs.id_san_pham = san_phams.id 
             LEFT JOIN danh_gias ON danh_gias.id_san_pham = san_phams.id 
+            LEFT JOIN san_pham_yeu_thichs on san_phams.id = san_pham_yeu_thichs.id_san_pham and san_pham_yeu_thichs.id_nguoi_dung = :id_nguoi_dung
             WHERE san_phams.trang_thai = 2 
-            GROUP BY san_phams.id LIMIT 16";
+            GROUP BY san_phams.id LIMIT 8";
+
             $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(":id_nguoi_dung", $idNguoiDung);
+
             $stmt->execute();
             return $stmt->fetchAll();
         } catch (PDOException $e) {
@@ -121,11 +129,17 @@ class Home extends Base
         }
     }
 
-    public function getPaginationListProductFilter($category, $search, $min, $max, $offset, $numsOnPage, $arrange)
+    public function getPaginationListProductFilter($category, $search, $min, $max, $offset, $numsOnPage, $arrange, $user)
     {
         try {
-            $sql = "SELECT san_phams.*, MIN(hinh_anhs.hinh_anh) AS url 
-            FROM hinh_anhs JOIN san_phams ON hinh_anhs.id_san_pham = san_phams.id 
+            $idUser = empty($user) ? NULL : $user['id'];
+
+            $sql = "SELECT danh_mucs.ten as ten_danh_muc, san_phams.*, MIN(hinh_anhs.hinh_anh) AS url , 
+			CASE 
+                WHEN san_pham_yeu_thichs.id_nguoi_dung IS NOT NULL THEN 1 
+                ELSE 0 
+            END AS is_favorite
+            FROM hinh_anhs JOIN san_phams ON hinh_anhs.id_san_pham = san_phams.id JOIN danh_mucs on danh_mucs.id = san_phams.danh_muc_id LEFT JOIN san_pham_yeu_thichs on san_phams.id = san_pham_yeu_thichs.id_san_pham and san_pham_yeu_thichs.id_nguoi_dung = :id_nguoi_dung
             WHERE 1 and san_phams.trang_thai = 2 ";
             // $sql = "SELECT * FROM san_phams url  WHERE 1";
 
@@ -160,6 +174,9 @@ class Home extends Base
             $sql .=  " LIMIT $offset, $numsOnPage";
 
             $stmt = $this->conn->prepare($sql);
+
+            $stmt->bindParam(":id_nguoi_dung", $idUser);
+
             $stmt->execute();
             return $stmt->fetchAll();
         } catch (PDOException $e) {
@@ -241,4 +258,34 @@ class Home extends Base
             echo "Lỗi : " . $e->getMessage();
         }
     }
+
+    public function checkLikeProduct($idNguoiDung, $idSanPham)
+    {
+        try {
+            $sql = "SELECT * FROM san_pham_yeu_thichs WHERE id_nguoi_dung = :id_nguoi_dung 
+                                                  AND id_san_pham = :id_san_pham ";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(":id_nguoi_dung", $idNguoiDung);
+            $stmt->bindParam(":id_san_pham", $idSanPham);
+
+            $stmt->execute();
+            return $stmt->fetch();
+        } catch (PDOException $e) {
+            echo "Lỗi : " . $e->getMessage();
+        }
+    }
+
+    // public function getListLikeProduct($idNguoiDung)
+    // {
+    //     try {
+    //         $sql = "SELECT * FROM san_pham_yeu_thichs WHERE id_nguoi_dung = :id_nguoi_dung";
+    //         $stmt = $this->conn->prepare($sql);
+    //         $stmt->bindParam(":id_nguoi_dung", $idNguoiDung);
+
+    //         $stmt->execute();
+    //         return $stmt->fetchAll();
+    //     } catch (PDOException $e) {
+    //         echo "Lỗi : " . $e->getMessage();
+    //     }
+    // }
 }

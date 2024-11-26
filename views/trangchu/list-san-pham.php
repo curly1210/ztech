@@ -14,10 +14,14 @@
   <?php require_once "views/layout/lib_css.php" ?>
 
   <style>
-    /* .category-list div {
-      background-color: #009444;
+    .like-product {
       cursor: pointer;
-    } */
+      transition: all 0.2s;
+    }
+
+    .like-product:hover {
+      color: red;
+    }
   </style>
 </head>
 
@@ -178,51 +182,54 @@
 
                   <div class="shop-p__collection">
                     <div class="row is-grid-active">
-                      <?php foreach ($products as $index => $product) {
-                        foreach ($danhMucs as $danhMuc) {
-                          if ($product['danh_muc_id'] == $danhMuc['id']) { ?>
-                            <div href="?act=chi-tiet-san-pham" class="col-lg-4 col-md-6 col-sm-6">
-                              <div class="product-m">
-                                <div class="product-m__thumb">
+                      <?php foreach ($products as $index => $product) { ?>
+                        <div href="?act=chi-tiet-san-pham" class="col-lg-4 col-md-6 col-sm-6">
+                          <div class="product-m">
+                            <div class="product-m__thumb">
 
-                                  <a style="background-color: transparent;" class="aspect aspect--bg-grey aspect--square u-d-block" href="?act=chi-tiet-san-pham&id=<?= $product['id'] ?>">
+                              <a style="background-color: transparent;" class="aspect aspect--bg-grey aspect--square u-d-block" href="?act=chi-tiet-san-pham&id=<?= $product['id'] ?>">
 
-                                    <img class="aspect__img" style="padding: 10px 15px;object-fit: contain;" src="<?= 'admin/' . $product['url'] ?>" alt=""></a>
-                                  <!-- <div class="product-m__quick-look">
+                                <img class="aspect__img" style="padding: 10px 15px;object-fit: contain;" src="<?= 'admin/' . $product['url'] ?>" alt=""></a>
+                              <!-- <div class="product-m__quick-look">
 
                                   <a class="fas fa-search" data-modal="modal" data-modal-id="#quick-look" data-tooltip="tooltip" data-placement="top" title="Quick Look"></a>
                                 </div> -->
-                                  <div class="product-m__add-cart">
+                              <div class="product-m__add-cart">
 
-                                    <a class="btn--e-brand add-one-to-cart" data-id="<?= $product['id'] ?>">Thêm vào giỏ hàng</a>
-                                  </div>
-                                </div>
-                                <div class="product-m__content">
-                                  <div class="product-m__category">
-
-                                    <a href="#"><?= $danhMuc['ten'] ?></a>
-                                  </div>
-                                  <div class="product-m__name">
-
-                                    <a href="?act=chi-tiet-san-pham&id=<?= $product['id'] ?>"><?= $product['ten'] ?></a>
-                                  </div>
-                                  <div class="product-m__rating gl-rating-style">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <span class="product-o__review">(0)</span>
-                                  </div>
-                                  <div class="product-m__price"><?= number_format($product['gia_khuyen_mai']) . "đ" ?>
-                                    <span class="product-m__discount"><?= number_format($product['gia_ban']) . "đ" ?></span>
-                                  </div>
-
-                                </div>
+                                <a class="btn--e-brand add-one-to-cart" data-id="<?= $product['id'] ?>">Thêm vào giỏ hàng</a>
                               </div>
                             </div>
-                          <?php } ?>
-                        <?php } ?>
+                            <div class="product-m__content">
+                              <div class="product-m__category">
+
+                                <a href="#"><?= $product['ten_danh_muc'] ?></a>
+                              </div>
+                              <div style="display: flex; justify-content: space-between;" class="product-m__name">
+                                <a href="?act=chi-tiet-san-pham&id=<?= $product['id'] ?>"><?= $product['ten'] ?></a>
+                                <?php if ($product['is_favorite']) { ?>
+                                  <i data-id="<?= $product['id'] ?>" style="color: red;" class="fa-solid fa-heart like-product u-s-m-r-6"></i>
+
+                                <?php } else { ?>
+                                  <i data-id="<?= $product['id'] ?>" class="fa-solid fa-heart like-product u-s-m-r-6"></i>
+                                <?php } ?>
+                              </div>
+                              <div class="product-m__rating gl-rating-style">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span class="product-o__review">(0)</span>
+                              </div>
+
+
+                              <div class="product-m__price"><?= number_format($product['gia_khuyen_mai']) . "đ" ?>
+                                <span class="product-m__discount"><?= number_format($product['gia_ban']) . "đ" ?></span>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
                       <?php } ?>
 
                     </div>
@@ -403,6 +410,46 @@
               openModalCheckLogin();
             } else {
               alert(response['message']);
+            }
+          },
+          error: function() {
+            alert("Lỗi");
+          }
+        });
+      });
+
+      // Yêu thích sản phẩm
+      $('.like-product').on('click', function(e) {
+        // event.preventDefault();
+        const idProduct = $(this).data('id');
+        let heart = this;
+        $.ajax({
+          url: '?act=yeu-thich-san-pham',
+          type: 'POST',
+          data: {
+            idProduct: idProduct
+          },
+          success: function(response) {
+
+            response = JSON.parse(response);
+
+            if (!response['check_login']) {
+              openModalCheckLogin();
+            } else {
+              if (response['status_like']) {
+                // console.log($(this));
+                // alert($(this));
+
+                // $(this).attr("style", "color: red; ");
+                heart.style.color = "red";
+                alert("Yêu thích sản phẩm thành công.");
+              } else {
+                // console.log($(this));
+                // $(this).attr("style", "color: green; ");
+                heart.style.color = "";
+                alert("Bỏ yêu thích sản phẩm thành công.");
+
+              }
             }
           },
           error: function() {

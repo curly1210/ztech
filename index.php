@@ -65,6 +65,8 @@ match ($act) {
     'doi-mat-khau'            => (new NguoiDungController())->getFormChangePassword(),
     'submit-update-mat-khau'  => (new NguoiDungController())->updatePassword(),
     'yeu-thich-san-pham'      => (new NguoiDungController())->likeProduct(),
+    'xoa-yeu-thich'           => (new NguoiDungController())->deleteLike(),
+    'xoa-list-yeu-thich'      => (new NguoiDungController())->deleteAllLike(),
 
     // Giỏ hàng, Thanh Toán
     'them-gio-hang'           => (new NguoiDungController())->addToCart(),

@@ -503,4 +503,37 @@ SELECT
       echo "Lỗi : " . $e->getMessage();
     }
   }
+
+  public function getListLikeProduct($idNguoiDung)
+  {
+    try {
+      $sql = "SELECT MIN(hinh_anhs.hinh_anh) AS url, danh_mucs.ten as ten_danh_muc, san_phams.ten as ten_san_pham, san_phams.gia_ban,san_phams.gia_khuyen_mai, san_phams.id 
+      FROM san_pham_yeu_thichs JOIN san_phams on san_pham_yeu_thichs.id_san_pham = san_phams.id 
+      JOIN hinh_anhs ON san_phams.id = hinh_anhs.id_san_pham JOIN danh_mucs on san_phams.danh_muc_id = danh_mucs.id  
+       WHERE san_pham_yeu_thichs.id_nguoi_dung =:id_nguoi_dung  GROUP BY hinh_anhs.id_san_pham";
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(":id_nguoi_dung", $idNguoiDung);
+
+      $stmt->execute();
+      return $stmt->fetchAll();
+    } catch (PDOException $e) {
+      echo "Lỗi : " . $e->getMessage();
+    }
+  }
+
+  public function deleteListLike($idNguoiDung)
+  {
+    try {
+
+      $sql = "DELETE FROM san_pham_yeu_thichs WHERE id_nguoi_dung = :id_nguoi_dung";
+
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(":id_nguoi_dung", $idNguoiDung);
+
+      $stmt->execute();
+      return true;
+    } catch (PDOException $e) {
+      echo "Lỗi : " . $e->getMessage();
+    }
+  }
 }
