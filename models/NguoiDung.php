@@ -367,8 +367,14 @@ class NguoiDung extends Base
     JOIN san_phams ON san_phams.id = chi_tiet_don_hangs.id_san_pham
     JOIN hinh_anhs ON hinh_anhs.id_san_pham = san_phams.id
 )
-    SELECT 
+SELECT 
     don_hangs.*,
+    (SELECT COUNT(*) 
+     FROM don_hangs 
+     WHERE don_hangs.id_trang_thai_don_hang = 7) AS don_hang_huy,
+    (SELECT COUNT(*) 
+     FROM don_hangs 
+     WHERE don_hangs.id_trang_thai_don_hang IN (6, 8, 9, 10, 11, 12)) AS don_hang_dat,
     nguoi_dungs.id AS id_nguoi_dung,
     trang_thai_don_hangs.ten AS ten_trang_thai,
     trang_thai_don_hangs.ma_mau AS ma_mau,
@@ -380,7 +386,8 @@ class NguoiDung extends Base
     JOIN trang_thai_don_hangs ON trang_thai_don_hangs.id = don_hangs.id_trang_thai_don_hang
     JOIN san_pham_dau_tien ON san_pham_dau_tien.id_don_hang = don_hangs.id
   WHERE 
-    san_pham_dau_tien.row_num = 1 AND nguoi_dungs.id= :id ORDER BY don_hangs.ngay_dat_hang DESC;";
+  
+     san_pham_dau_tien.row_num = 1 AND nguoi_dungs.id= :id ORDER BY don_hangs.ngay_dat_hang DESC;";
       $stmt = $this->conn->prepare($sql);
       $stmt->bindParam(":id", $id);
       $stmt->execute();
@@ -431,6 +438,8 @@ class NguoiDung extends Base
       echo "Lỗi: " . $e->getMessage();
     }
   }
+
+
   public function changeStatusOrder($id)
   {
     try {
