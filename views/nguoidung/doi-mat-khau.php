@@ -79,7 +79,7 @@
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     <form action="?act=submit-update-mat-khau" method="post" class="dash-edit-p">
-                                                        <input type=" hidden" name="id" style="display: none;" value="<?= $id  ?>">
+                                                        <input type=" hidden" name="id" style="display: none;" value="<?= $_SESSION['id'] ?>">
                                                         <div class="gl-inline">
                                                             <div class="u-s-m-b-30">
 

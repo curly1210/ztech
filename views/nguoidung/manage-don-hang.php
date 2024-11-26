@@ -75,7 +75,7 @@
                                     <div class="dash__box dash__box--bg-white dash__box--shadow u-s-m-b-30">
                                         <div class="dash__pad-1">
 
-                                            <span class="dash__text u-s-m-b-16">Xin chào, John Doe</span>
+
                                             <ul class="dash__f-list ">
 
                                                 <li>
@@ -133,13 +133,13 @@
                                         <div class="dash__pad-2">
                                             <div class="dash-l-r">
                                                 <div>
-                                                    <div class="manage-o__text-2 u-c-secondary">-ID đơn hàng-</div>
-                                                    <div class="manage-o__text u-c-silver">Được đặt vào: 26 Oct 2016 09:08:37</div>
+                                                    <div class="manage-o__text-2 u-c-secondary"><?= $donHang['id'] ?></div>
+                                                    <div class="manage-o__text u-c-silver">Được đặt vào: <?= $donHang['ngay_dat_hang'] ?></div>
                                                 </div>
                                                 <div>
                                                     <div class="manage-o__text-2 u-c-silver">Thành tiền:
 
-                                                        <span class="manage-o__text-2 u-c-secondary">$16.00</span>
+                                                        <span class="manage-o__text-2 u-c-secondary"><?= number_format($donHang['thanh_toan']) ?> đ</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -151,35 +151,37 @@
                                                 <div class="manage-o__header u-s-m-b-30">
                                                     <div class="manage-o__icon"><i class="fas fa-box u-s-m-r-5"></i>
 
-                                                        <span class="manage-o__text">Trạng thái đơn:</span>
+                                                        <span class="manage-o__text">Trạng thái đơn: <span style="color:<?= $donHang['ma_mau'] ?>"><?= $donHang['ten_trang_thai_don_hang'] ?></span></span>
                                                     </div>
                                                 </div>
                                                 <div class="dash-l-r">
                                                 </div>
+                                                <?php foreach ($products as $product): ?>
+                                                    <div class="manage-o__description" style="margin-bottom:10px">
+                                                        <div class="description__container">
+                                                            <div class="description__img-wrap">
 
-                                                <div class="manage-o__description">
-                                                    <div class="description__container">
-                                                        <div class="description__img-wrap">
-
-                                                            <img class="u-img-fluid" src="images/product/electronic/product3.jpg" alt="">
+                                                                <img class="u-img-fluid" src="<?= "admin/" . $product['image_url'] ?>" alt="" style="width:100%;height:100%;object-fit:contain">
+                                                            </div>
+                                                            <div class="description-title"><?= $product['ten'] ?></div>
                                                         </div>
-                                                        <div class="description-title">Tên sản phẩm</div>
+                                                        <div class="description__info-wrap">
+                                                            <div>
+
+                                                                <span class="manage-o__text-2 u-c-silver">Số lượng:
+
+                                                                    <span class="manage-o__text-2 u-c-secondary"><?= $product['so_luong'] ?></span></span>
+                                                            </div>
+                                                            <div>
+
+                                                                <span class="manage-o__text-2 u-c-silver">Giá:
+
+                                                                    <span class="manage-o__text-2 u-c-secondary"><?= number_format($product['gia'])   ?> đ</span></span>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="description__info-wrap">
-                                                        <div>
+                                                <?php endforeach; ?>
 
-                                                            <span class="manage-o__text-2 u-c-silver">Số lượng:
-
-                                                                <span class="manage-o__text-2 u-c-secondary">1</span></span>
-                                                        </div>
-                                                        <div>
-
-                                                            <span class="manage-o__text-2 u-c-silver">Giá:
-
-                                                                <span class="manage-o__text-2 u-c-secondary">$16.00</span></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -190,20 +192,23 @@
                                                     <h2 class="dash__h2 u-s-m-b-8">Địa chỉ người đặt</h2>
 
 
-                                                    <span class="dash__text-2">John Doe</span>
-                                                    <span class="dash__text-2">4247 Ashford Drive Virginia - VA-20006 - USA</span>
+                                                    <span class="dash__text-2"><?= $donHang['ho_ten'] ?></span>
+                                                    <span class="dash__text-2"><?= $donHang['dia_chi_nguoi_dat'] ?></span>
 
-                                                    <span class="dash__text-2">(+0) 900901904</span>
+                                                    <span class="dash__text-2"><?= $donHang['dien_thoai'] ?></span>
+                                                    <span class="dash__text-2"><?= $donHang['email'] ?></span>
+
                                                 </div>
                                             </div>
                                             <div class="dash__box dash__box--bg-white dash__box--shadow dash__box--w">
                                                 <div class="dash__pad-3">
                                                     <h2 class="dash__h2 u-s-m-b-8">Địa chỉ người nhận</h2>
-                                                    <span class="dash__text-2">John Doe</span>
+                                                    <span class="dash__text-2"><?= $donHang['ten_nguoi_nhan'] ?></span>
 
-                                                    <span class="dash__text-2">4247 Ashford Drive Virginia - VA-20006 - USA</span>
+                                                    <span class="dash__text-2"><?= $donHang['dia_chi_nguoi_nhan'] ?></span>
 
-                                                    <span class="dash__text-2">(+0) 900901904</span>
+                                                    <span class="dash__text-2"><?= $donHang['so_dien_thoai'] ?></span>
+                                                    <span class="dash__text-2"><?= $donHang['email_nguoi_nhan'] ?></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -213,22 +218,27 @@
                                                     <h2 class="dash__h2 u-s-m-b-8">Hóa đơn</h2>
                                                     <div class="dash-l-r u-s-m-b-8">
                                                         <div class="manage-o__text-2 dash__text-2">Tổng tiền</div>
-                                                        <div class="manage-o__text-2 dash__text-2">$16.00</div>
+                                                        <div class="manage-o__text-2 dash__text-2"><?= number_format($donHang['tong_tien'])  ?> đ</div>
                                                     </div>
                                                     <div class="dash-l-r u-s-m-b-8">
                                                         <div class="manage-o__text-2 dash__text-2">Phí vận chuyển</div>
-                                                        <div class="manage-o__text-2 dash__text-2">$16.00</div>
+                                                        <div class="manage-o__text-2 dash__text-2"><?= number_format($donHang['tien_ship'])  ?> đ</div>
                                                     </div>
-                                                    <div class="dash-l-r u-s-m-b-8">
-                                                        <div class="manage-o__text-2 dash__text-2">Mã giảm giá</div>
-                                                        <div class="manage-o__text-2 dash__text-2">$16.00</div>
-                                                    </div>
+                                                    <?php if ($donHang['id_ma_khuyen_mai'] != null): ?>
+                                                        <div class="dash-l-r u-s-m-b-8">
+                                                            <div class="manage-o__text-2 dash__text-2">Mã giảm giá</div>
+                                                            <div class="manage-o__text-2 dash__text-2">-<?= number_format($donHang['giam_gia'])  ?> đ</div>
+                                                        </div>
+                                                    <?php endif; ?>
                                                     <div class="dash-l-r u-s-m-b-8">
                                                         <div class="manage-o__text-2 u-c-secondary" style="font-weight:bold; font-size:17px">Thành tiền</div>
-                                                        <div class="manage-o__text-2 u-c-secondary" style="font-weight:bold; font-size:17px">$30.00</div>
+                                                        <div class="manage-o__text-2 u-c-secondary" style="font-weight:bold; font-size:17px"><?= number_format($donHang['thanh_toan'])  ?> đ</div>
+                                                    </div>
+                                                    <div style="margin-top: 90px;">
+                                                        <span class="dash__text-2">Phương thức thanh toán: <?= $donHang['phuong_thuc_thanh_toan'] ?></span>
+                                                        <span class="dash__text-2">Trạng thái thanh toán: <?= $donHang['trang_thai_thanh_toan'] ?></span>
                                                     </div>
 
-                                                    <span class="dash__text-2">Phương thức thanh toán:</span>
                                                 </div>
                                             </div>
                                         </div>

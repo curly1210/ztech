@@ -47,7 +47,7 @@ match ($act) {
     'form-dang-ky'            => (new NguoiDungController())->formSignUp(),
     'dang-ky'                 => (new NguoiDungController())->signUp(),
     'list-yeu-thich'          => (new NguoiDungController())->listLike(),
-    'gui-binh-luan'  => (new NguoiDungController())->sendComment(),
+    'gui-binh-luan'           => (new NguoiDungController())->sendComment(),
     'gui-lien-he'             => (new NguoiDungController())->sendContact(),
     'tai-khoan'               => (new NguoiDungController())->viewAccount(),
     'cap-nhat-tai-khoan'      => (new NguoiDungController())->editAccount(),
@@ -75,5 +75,6 @@ match ($act) {
 
     //Đơn hàng
     'don-hang'          => (new NguoiDungController())->viewMyOrder(),
-    'quan-ly-don-hang'  => (new NguoiDungController())->viewManageOrder(),
+    'chi-tiet-don-hang' => (new NguoiDungController())->viewManageOrder(),
+    'huy-don-hang'      => (new NguoiDungController())->cancelOrder(),
 };

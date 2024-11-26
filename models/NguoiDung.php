@@ -354,13 +354,92 @@ class NguoiDung extends Base
   public function getMyOrder($id)
   {
     try {
-      $sql = "SELECT don_hangs.*,nguoi_dungs.id FROM don_hangs JOIN nguoi_dungs ON nguoi_dungs.id = don_hangs.id_nguoi_dung WHERE nguoi_dungs.id= :id";
+      $sql = "WITH san_pham_dau_tien AS (
+    SELECT 
+        don_hangs.id AS id_don_hang,
+        san_phams.ten AS ten_san_pham,
+        hinh_anhs.hinh_anh AS hinh_anh,
+        ROW_NUMBER() OVER (PARTITION BY don_hangs.id ORDER BY san_phams.id ASC) AS row_num
+    FROM 
+        don_hangs
+    JOIN chi_tiet_don_hangs ON chi_tiet_don_hangs.id_don_hang = don_hangs.id
+    JOIN san_phams ON san_phams.id = chi_tiet_don_hangs.id_san_pham
+    JOIN hinh_anhs ON hinh_anhs.id_san_pham = san_phams.id
+)
+    SELECT 
+    don_hangs.*,
+    nguoi_dungs.id AS id_nguoi_dung,
+    trang_thai_don_hangs.ten AS ten_trang_thai,
+    trang_thai_don_hangs.ma_mau AS ma_mau,
+    san_pham_dau_tien.ten_san_pham AS ten_san_pham_dau_tien,
+    san_pham_dau_tien.hinh_anh AS hinh_anh_dau_tien
+    FROM 
+    don_hangs
+    JOIN nguoi_dungs ON nguoi_dungs.id = don_hangs.id_nguoi_dung
+    JOIN trang_thai_don_hangs ON trang_thai_don_hangs.id = don_hangs.id_trang_thai_don_hang
+    JOIN san_pham_dau_tien ON san_pham_dau_tien.id_don_hang = don_hangs.id
+  WHERE 
+    san_pham_dau_tien.row_num = 1 AND nguoi_dungs.id= :id;";
       $stmt = $this->conn->prepare($sql);
       $stmt->bindParam(":id", $id);
       $stmt->execute();
       return $stmt->fetchAll();
     } catch (PDOException $e) {
       echo "Lỗi:" . $e->getMessage();
+    }
+  }
+  public function getOrderDetail($id)
+  {
+    try {
+      $sql = "SELECT * ,trang_thai_don_hangs.ma_mau ,trang_thai_don_hangs.ten as ten_trang_thai_don_hang , ma_khuyen_mais.gia as giam_gia, ma_khuyen_mais.ten as ten_ma_khuyen_mai , chi_tiet_don_hangs.id as id_chi_tiet_don_hang,
+      chi_tiet_don_hangs.gia as gia_chi_tiet_don_hang , nguoi_dungs.dia_chi as dia_chi_nguoi_dat , dia_chi_nhan_hangs.dia_chi as dia_chi_nguoi_nhan
+      FROM don_hangs 
+      JOIN nguoi_dungs on nguoi_dungs.id = don_hangs.id_nguoi_dung
+      JOIN dia_chi_nhan_hangs on dia_chi_nhan_hangs.id = don_hangs.id_dia_chi_nhan_hang
+      JOIN chi_tiet_don_hangs on chi_tiet_don_hangs.id_don_hang=don_hangs.id
+      JOIN trang_thai_don_hangs on trang_thai_don_hangs.id = don_hangs.id_trang_thai_don_hang 
+      JOIN ma_khuyen_mais on ma_khuyen_mais.id = don_hangs.id_ma_khuyen_mai
+      WHERE don_hangs.id  = :id";
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(":id", $id);
+      $stmt->execute();
+      return $stmt->fetch();
+    } catch (PDOException $e) {
+      echo "Lỗi: " . $e->getMessage();
+    }
+  }
+  public function getProductsOrder($id)
+  {
+    try {
+      $sql = "SELECT 
+          chi_tiet_don_hangs.*, san_phams.*,
+          MIN(hinh_anhs.hinh_anh) AS `image_url` , chi_tiet_don_hangs.id as id_chi_tiet_don_hang
+        FROM chi_tiet_don_hangs
+        JOIN san_phams ON san_phams.id = chi_tiet_don_hangs.id_san_pham
+        JOIN don_hangs ON don_hangs.id = chi_tiet_don_hangs.id_don_hang
+        JOIN hinh_anhs ON hinh_anhs.id_san_pham = san_phams.id
+        WHERE chi_tiet_don_hangs.id_don_hang = :id
+        GROUP BY chi_tiet_don_hangs.id";
+
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(":id", $id);
+      $stmt->execute();
+      return $stmt->fetchAll();
+    } catch (PDOException $e) {
+      echo "Lỗi: " . $e->getMessage();
+    }
+  }
+  public function changeStatusOrder($id)
+  {
+    try {
+      $sql = "UPDATE don_hangs SET don_hangs.id_trang_thai_don_hang=12 WHERE id= :id";
+
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(":id", $id);
+      $stmt->execute();
+      return $stmt->fetchAll();
+    } catch (PDOException $e) {
+      echo "Lỗi: " . $e->getMessage();
     }
   }
 }
