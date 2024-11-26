@@ -251,20 +251,39 @@ class NguoiDungController
   }
   public function viewAccount()
   {
-    $id = $_SESSION['user']['id'];
-    $nguoiDung = $this->modelNguoiDung->getProfile($id);
-    $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
-    $noiDungs = $this->modelNguoiDung->getAdressShop();
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+      $_SESSION['id'] = $_POST['id'];
+      $nguoiDung = $this->modelNguoiDung->getProfile($_SESSION['id']);
+      $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
+      $noiDungs = $this->modelNguoiDung->getAdressShop();
 
-    require_once './views/nguoidung/tai-khoan.php';
+      require_once './views/nguoidung/tai-khoan.php';
+      exit();
+    } else {
+
+      $nguoiDung = $this->modelNguoiDung->getProfile($_SESSION['id']);
+      $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
+      $noiDungs = $this->modelNguoiDung->getAdressShop();
+      require_once './views/nguoidung/tai-khoan.php';
+      exit();
+    }
   }
   public function editAccount()
   {
-    $id = $_POST['id'] ?? $_SESSION['id'];
-    $nguoiDung = $this->modelNguoiDung->getProfile($id);
-    $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
-    $noiDungs = $this->modelNguoiDung->getAdressShop();
-    require_once './views/nguoidung/edit-tai-khoan.php';
+    if ($_SERVER["REQUEST_METHOD"] ==  'POST') {
+      $_SESSION['id'] = $_POST['id'];
+      $nguoiDung = $this->modelNguoiDung->getProfile($_SESSION['id']);
+      $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
+      $noiDungs = $this->modelNguoiDung->getAdressShop();
+      require_once './views/nguoidung/edit-tai-khoan.php';
+      exit();
+    } else {
+      $nguoiDung = $this->modelNguoiDung->getProfile($_SESSION['id']);
+      $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
+      $noiDungs = $this->modelNguoiDung->getAdressShop();
+      require_once './views/nguoidung/edit-tai-khoan.php';
+      exit();
+    }
   }
   public function updateAccount()
   {
@@ -324,10 +343,18 @@ class NguoiDungController
   }
   public function getFormChangePassword()
   {
-    $id = $_SESSION['id']  ?? $_POST['id'];
-    $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
-    $noiDungs = $this->modelNguoiDung->getAdressShop();
-    require_once('./views/nguoidung/doi-mat-khau.php');
+    if ($_SERVER["REQUEST_METHOD"] ==  'POST') {
+      $_SESSION['id']  = $_POST['id'];
+      $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
+      $noiDungs = $this->modelNguoiDung->getAdressShop();
+      require_once('./views/nguoidung/doi-mat-khau.php');
+      exit();
+    } else {
+      $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
+      $noiDungs = $this->modelNguoiDung->getAdressShop();
+      require_once('./views/nguoidung/doi-mat-khau.php');
+      exit();
+    }
   }
   public function updatePassword()
   {
@@ -628,17 +655,38 @@ class NguoiDungController
   }
   public function viewMyOrder()
   {
-    $id = $_POST['id'];
-
-    $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
-    $donHangs = $this->modelNguoiDung->getMyOrder($id);
-    $noiDungs = $this->modelNguoiDung->getAdressShop();
-    require_once('./views/nguoidung/don-hang.php');
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+      $_SESSION['id'] = $_POST['id'];
+      $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
+      $donHangs = $this->modelNguoiDung->getMyOrder($_SESSION['id']);
+      $noiDungs = $this->modelNguoiDung->getAdressShop();
+      require_once('./views/nguoidung/don-hang.php');
+      exit();
+    } else {
+      $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
+      $donHangs = $this->modelNguoiDung->getMyOrder($_SESSION['id']);
+      $noiDungs = $this->modelNguoiDung->getAdressShop();
+      require_once('./views/nguoidung/don-hang.php');
+      exit();
+    }
   }
   public function viewManageOrder()
   {
+    $id = $_GET['id'];
+    $donHang = $this->modelNguoiDung->getOrderDetail($id);
+    $products = $this->modelNguoiDung->getProductsOrder($id);
     $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
     $noiDungs = $this->modelNguoiDung->getAdressShop();
     require_once('./views/nguoidung/manage-don-hang.php');
+  }
+  public function cancelOrder()
+  {
+    if ($_SERVER['REQUEST_METHOD'] == "POST") {
+      $id = $_POST['id'];
+      $this->modelNguoiDung->changeStatusOrder($id);
+
+      header('Location: ?act=don-hang');
+      exit();
+    }
   }
 }

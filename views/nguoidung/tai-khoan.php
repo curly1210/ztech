@@ -75,7 +75,7 @@
                                     <div class="dash__box dash__box--bg-white dash__box--shadow u-s-m-b-30">
                                         <div class="dash__pad-1">
 
-                                            <span class="dash__text u-s-m-b-16">Xin Chào : <?= $nguoiDung['ho_ten'] ?> </span>
+
                                             <ul class="dash__f-list ">
 
                                                 <li>

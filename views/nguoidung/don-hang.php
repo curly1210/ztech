@@ -75,7 +75,7 @@
                                     <div class="dash__box dash__box--bg-white dash__box--shadow u-s-m-b-30">
                                         <div class="dash__pad-1">
 
-                                            <span class="dash__text u-s-m-b-16">Xin chào, John Doe</span>
+
                                             <ul class="dash__f-list ">
 
                                                 <li>
@@ -135,125 +135,49 @@
                                             <span class="dash__text u-s-m-b-30">Danh sách các đơn hàng đã đặt</span>
 
                                             <div class="m-order__list">
-                                                <div class="m-order__get">
-                                                    <div class="manage-o__header u-s-m-b-30">
-                                                        <div class="dash-l-r">
-                                                            <div>
-                                                                <div class="manage-o__text-2 u-c-secondary">Order #305423126</div>
-                                                                <div class="manage-o__text u-c-silver">Đặt vào : 26 Oct 2016 09:08:37</div>
-                                                            </div>
-                                                            <div>
-                                                                <div class="dash__link dash__link--brand">
+                                                <?php foreach ($donHangs as $donHang): ?>
+                                                    <div class="m-order__get">
 
-                                                                    <a href="?act=quan-ly-don-hang" style="color:green; margin-right:15px">Chi tiết </a>
-                                                                    <a href="?act=quan-ly-don-hang">Hủy đơn </a>
+                                                        <div class="manage-o__header u-s-m-b-30">
+                                                            <div class="dash-l-r">
+                                                                <div>
+                                                                    <div class="manage-o__text-2 u-c-secondary">Mã đơn: <?= $donHang['id'] ?></div>
+                                                                    <div class="manage-o__text u-c-silver">Đặt vào : <?= $donHang['ngay_dat_hang'] ?>
+                                                                    </div>
+                                                                </div>
+                                                                <div>
+                                                                    <div style="display:inline-flex ; align-items:center ;justify-content:center;">
+
+                                                                        <a href="?act=chi-tiet-don-hang&id=<?= $donHang['id'] ?>" style="display:block;color:green;font-size:13px ;margin-right:15px">Chi tiết </a>
+                                                                        <?php if ($donHang['id_trang_thai_don_hang'] == 6): ?>
+                                                                            <form action="?act=huy-don-hang" onsubmit="return confirm('Bạn có chắc muốn hủy đơn hàng này không ?')" method="post">
+                                                                                <input type="hidden" name="id" value="<?= $donHang['id'] ?>">
+                                                                                <button type="submit" style="background: none; border:none; font-size:13px;color:red ; cursor:pointer">Hủy đơn hàng</button>
+                                                                            </form>
+                                                                        <?php endif; ?>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="manage-o__description">
-                                                        <div class="description__container">
-                                                            <div class="description__img-wrap">
 
-                                                                <img class="u-img-fluid" src="images/product/electronic/product3.jpg" alt="">
-                                                            </div>
-                                                            <div class="description-title">Yellow Wireless Headphone</div>
-                                                        </div>
-                                                        <div class="description__info-wrap">
-                                                            <div>
+                                                        <div class="manage-o__description">
+                                                            <div class="description__container">
+                                                                <div class="description__img-wrap">
 
-                                                                <span class="manage-o__badge badge--processing">Processing</span>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="m-order__get">
-                                                    <div class="manage-o__header u-s-m-b-30">
-                                                        <div class="dash-l-r">
-                                                            <div>
-                                                                <div class="manage-o__text-2 u-c-secondary">Order #305423126</div>
-                                                                <div class="manage-o__text u-c-silver">Placed on 26 Oct 2016 09:08:37</div>
-                                                            </div>
-                                                            <div>
-                                                                <div class="dash__link dash__link--brand">
-
-                                                                    <a href="dash-manage-order.html">MANAGE</a>
+                                                                    <img class="u-img-fluid" style="width: 100%;height:100%;object-fit:contain" src="<?= "admin/" . $donHang['hinh_anh_dau_tien'] ?>" alt="">
                                                                 </div>
+                                                                <div class="description-title"><?= $donHang['ten_san_pham_dau_tien'] ?></div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="manage-o__description">
-                                                        <div class="description__container">
-                                                            <div class="description__img-wrap">
-
-                                                                <img class="u-img-fluid" src="images/product/women/product8.jpg" alt="">
-                                                            </div>
-                                                            <div class="description-title">New Dress D Nice Elegant</div>
-                                                        </div>
-                                                        <div class="description__info-wrap">
-                                                            <div>
-
-                                                                <span class="manage-o__badge badge--shipped">Shipped</span>
-                                                            </div>
-                                                            <div>
-
-                                                                <span class="manage-o__text-2 u-c-silver">Quantity:
-
-                                                                    <span class="manage-o__text-2 u-c-secondary">1</span></span>
-                                                            </div>
-                                                            <div>
-
-                                                                <span class="manage-o__text-2 u-c-silver">Total:
-
-                                                                    <span class="manage-o__text-2 u-c-secondary">$16.00</span></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="m-order__get">
-                                                    <div class="manage-o__header u-s-m-b-30">
-                                                        <div class="dash-l-r">
-                                                            <div>
-                                                                <div class="manage-o__text-2 u-c-secondary">Order #305423126</div>
-                                                                <div class="manage-o__text u-c-silver">Placed on 26 Oct 2016 09:08:37</div>
-                                                            </div>
-                                                            <div>
-                                                                <div class="dash__link dash__link--brand">
-
-                                                                    <a href="dash-manage-order.html">MANAGE</a>
+                                                            <div class="description__info-wrap">
+                                                                <div>
+                                                                    <span class="manage-o__badge " style="color: <?= $donHang['ma_mau'] ?>;"><?= $donHang['ten_trang_thai'] ?></span>
                                                                 </div>
+
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="manage-o__description">
-                                                        <div class="description__container">
-                                                            <div class="description__img-wrap">
+                                                <?php endforeach; ?>
 
-                                                                <img class="u-img-fluid" src="images/product/men/product8.jpg" alt="">
-                                                            </div>
-                                                            <div class="description-title">New Fashion D Nice Elegant</div>
-                                                        </div>
-                                                        <div class="description__info-wrap">
-                                                            <div>
-
-                                                                <span class="manage-o__badge badge--delivered">Delivered</span>
-                                                            </div>
-                                                            <div>
-
-                                                                <span class="manage-o__text-2 u-c-silver">Quantity:
-
-                                                                    <span class="manage-o__text-2 u-c-secondary">1</span></span>
-                                                            </div>
-                                                            <div>
-
-                                                                <span class="manage-o__text-2 u-c-silver">Total:
-
-                                                                    <span class="manage-o__text-2 u-c-secondary">$16.00</span></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
