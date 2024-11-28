@@ -417,21 +417,33 @@ SELECT
       echo "Lỗi: " . $e->getMessage();
     }
   }
-  public function getProductsOrder($id)
+  public function getProductsOrder($id, $user)
   {
     try {
+
+      $idNguoiDung = empty($user) ? NULL : $user['id'];
       $sql = "SELECT 
           chi_tiet_don_hangs.*, san_phams.*,
-          MIN(hinh_anhs.hinh_anh) AS `image_url` , chi_tiet_don_hangs.id as id_chi_tiet_don_hang
+          MIN(hinh_anhs.hinh_anh) AS `image_url` , chi_tiet_don_hangs.id as id_chi_tiet_don_hang,
+           CASE 
+                WHEN danh_gias.id_nguoi_danh_gia IS NOT NULL THEN 1 
+                ELSE 0 
+            END AS is_review,
+            CASE 
+                WHEN danh_gias.id_nguoi_danh_gia IS NOT NULL THEN danh_gias.sao 
+                ELSE 0 
+            END AS sao_review
         FROM chi_tiet_don_hangs
         JOIN san_phams ON san_phams.id = chi_tiet_don_hangs.id_san_pham
         JOIN don_hangs ON don_hangs.id = chi_tiet_don_hangs.id_don_hang
         JOIN hinh_anhs ON hinh_anhs.id_san_pham = san_phams.id
+        LEFT JOIN danh_gias ON san_phams.id = danh_gias.id_san_pham and danh_gias.id_nguoi_danh_gia = :id_nguoi_dung
         WHERE chi_tiet_don_hangs.id_don_hang = :id
-        GROUP BY chi_tiet_don_hangs.id";
+        GROUP BY chi_tiet_don_hangs.id,danh_gias.sao";
 
       $stmt = $this->conn->prepare($sql);
       $stmt->bindParam(":id", $id);
+      $stmt->bindParam(":id_nguoi_dung", $idNguoiDung);
       $stmt->execute();
       return $stmt->fetchAll();
     } catch (PDOException $e) {
@@ -529,6 +541,24 @@ SELECT
 
       $stmt = $this->conn->prepare($sql);
       $stmt->bindParam(":id_nguoi_dung", $idNguoiDung);
+
+      $stmt->execute();
+      return true;
+    } catch (PDOException $e) {
+      echo "Lỗi : " . $e->getMessage();
+    }
+  }
+
+  public function reviewProduct($idProduct, $idNguoiDung, $sao)
+  {
+    try {
+
+      $sql = "INSERT INTO danh_gias(sao, id_nguoi_danh_gia, id_san_pham) 
+      VALUES (:sao, :id_nguoi_danh_gia, :id_san_pham)";
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(":sao", $sao);
+      $stmt->bindParam(":id_nguoi_danh_gia", $idNguoiDung);
+      $stmt->bindParam(":id_san_pham", $idProduct);
 
       $stmt->execute();
       return true;

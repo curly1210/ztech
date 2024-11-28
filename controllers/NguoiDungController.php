@@ -750,11 +750,14 @@ class NguoiDungController
       header("Location: ?act=/");
     }
   }
+
   public function viewManageOrder()
   {
     $id = $_GET['id'];
     $donHang = $this->modelNguoiDung->getOrderDetail($id);
-    $products = $this->modelNguoiDung->getProductsOrder($id);
+
+    $user = isset($_SESSION['user']) ? $_SESSION['user'] : '';
+    $products = $this->modelNguoiDung->getProductsOrder($id, $user);
     // print_r($donHang);
     // die();
     $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
@@ -762,6 +765,7 @@ class NguoiDungController
     $noiDungs = $this->modelNguoiDung->getAdressShop();
     require_once('./views/nguoidung/manage-don-hang.php');
   }
+
   public function cancelOrder()
   {
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -817,5 +821,17 @@ class NguoiDungController
       $this->modelNguoiDung->deleteListLike($idUser);
       header('Location: ?act=list-yeu-thich');
     }
+  }
+
+  public function reviewProduct()
+  {
+    if (!isset($_SESSION['user'])) {
+      header("Location: index.php");
+    }
+
+    $idProduct = $_POST['idProduct'];
+    $rating = $_POST['rating'];
+
+    $this->modelNguoiDung->reviewProduct($idProduct, $_SESSION['user']['id'], $rating);
   }
 }

@@ -137,7 +137,34 @@
 
                                                                 <img class="u-img-fluid" src="<?= "admin/" . $product['image_url'] ?>" alt="" style="width:100%;height:100%;object-fit:contain">
                                                             </div>
-                                                            <div class="description-title"><?= $product['ten'] ?></div>
+                                                            <div class="description-title product" data-id="<?= $product['id_san_pham'] ?>" data-check="<?= $product['is_review'] ?>" style="display: flex; flex-direction: column; gap: 5px;">
+                                                                <div class=""><?= $product['ten'] ?></div>
+                                                                <?php if ($donHang['ten_trang_thai_don_hang'] == "Giao hàng thành công") { ?>
+                                                                    <div style="display: flex; gap: 10px; align-items: center;">
+                                                                        <span style="font-size: 12px; line-height: 21px;">Đánh giá:</span>
+                                                                        <div class="review-o__rating gl-rating-style ">
+                                                                            <?php if ($product['sao_review'] == 0) { ?>
+                                                                                <i class="far fa-star" data-value=1></i>
+                                                                                <i class="far fa-star" data-value=2></i>
+                                                                                <i class="far fa-star" data-value=3></i>
+                                                                                <i class="far fa-star" data-value=4></i>
+                                                                                <i class="far fa-star" data-value=5></i>
+                                                                                <!-- <i class="fas fa-star" data-value=5></i> -->
+
+                                                                                <?php } else {
+                                                                                for ($x = 0; $x < $product['sao_review']; $x++) { ?>
+                                                                                    <i class="fas fa-star" data-value=5></i>
+                                                                                <?php }
+                                                                                for ($x = 0; $x < 5 - $product['sao_review']; $x++) { ?>
+                                                                                    <i class="far fa-star" data-value=5></i>
+                                                                            <?php  }
+                                                                            } ?>
+                                                                        </div>
+                                                                    </div>
+
+                                                                <?php } ?>
+                                                            </div>
+
                                                         </div>
                                                         <div class="description__info-wrap">
                                                             <div>
@@ -248,6 +275,75 @@
     <script src="https://www.google-analytics.com/analytics.js" async defer></script>
 
     <?php require_once "views/layout/lib_js.php" ?>
+
+    <script>
+        $(document).ready(function() {
+            let ratedValue = 0; // Giá trị đánh giá cuối cùng
+            // let isRated = false; // Cờ để kiểm tra nếu đã đánh giá
+
+            // Hiệu ứng hover
+            $('.fa-star').hover(
+                function() {
+                    if ($(this).closest('.product').data('check')) {
+                        // alert("Bạn đã đánh giá sản phẩm");
+                        return;
+                    }
+
+                    let value = $(this).data('value');
+                    // console.log(value);
+                    $(this).closest('.review-o__rating').children('.fa-star').each(function(index, element) {
+                        $(element).toggleClass('fas', $(element).data('value') <= value);
+                    });
+
+                },
+                function() {
+                    if ($(this).closest('.product').data('check')) {
+                        return;
+                    }
+                    $(this).closest('.review-o__rating').children('.fa-star').removeClass('fas');
+                    // $('.fa-star').removeClass('fas');
+                }
+            );
+
+            $('.fa-star').click(function() {
+                if ($(this).closest('.product').data('check')) {
+                    alert("Bạn đã đánh giá sản phẩm.");
+                    return;
+                }
+
+                $(this).closest('.product').data('check', 1);
+
+
+                ratedValue = $(this).data('value');
+                idProduct = $(this).closest('.product').data('id')
+
+                $(this).closest('.review-o__rating').children('.fa-star').each(function(index, element) {
+                    $(element).toggleClass('fas', $(element).data('value') <= ratedValue);
+                });
+                // $('.fa-star').each(function() {
+                //     $(this).toggleClass('fas', $(this).data('value') <= ratedValue);
+                // });
+
+                // Gửi dữ liệu đánh giá
+                $.ajax({
+                    url: '?act=danh-gia-san-pham', // Đổi URL này theo server backend của bạn
+                    method: 'POST',
+                    data: {
+                        idProduct: idProduct,
+                        rating: ratedValue
+                    },
+                    success: function(response) {
+                        alert("Đánh giá sản phẩm thành công.");
+                    },
+                    error: function() {
+                        alert("Có lỗi xảy ra khi gửi đánh giá. Vui lòng thử lại.");
+                    }
+                });
+            });
+
+
+        });
+    </script>
     <!--====== Noscript ======-->
     <noscript>
         <div class="app-setting">

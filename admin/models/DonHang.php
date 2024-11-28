@@ -17,7 +17,7 @@ class DonHang
     try {
       $sql = "SELECT *,don_hangs.id as id_don_hang FROM don_hangs JOIN nguoi_dungs 
       on don_hangs.id_nguoi_dung = nguoi_dungs.id JOIN trang_thai_don_hangs
-      on don_hangs.id_trang_thai_don_hang = trang_thai_don_hangs.id  WHERE don_hangs.id LIKE '%$search%' OR ho_ten LIKE '%$search%' ";
+      on don_hangs.id_trang_thai_don_hang = trang_thai_don_hangs.id  WHERE don_hangs.id LIKE '%$search%' OR ho_ten LIKE '%$search%' ORDER BY don_hangs.ngay_dat_hang desc  ";
       $stmt = $this->conn->prepare($sql);
       $stmt->execute();
       return $stmt->fetchAll();
