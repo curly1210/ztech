@@ -420,7 +420,7 @@
           type: "POST",
           data: $(this).serialize(), // Lấy dữ liệu form
           success: function(response) {
-            alert(response);
+            // alert(response);
             modal.style.display = "none";
             document.body.style.overflow = "auto";
             // alert(response);

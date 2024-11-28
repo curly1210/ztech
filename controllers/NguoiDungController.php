@@ -623,10 +623,12 @@ class NguoiDungController
         $errors['check'] = 0;
 
         // Check mã khuyến mãi
+        $tienKhuyenMai = 0;
         if (!empty($ma_khuyen_mai)) {
           $ma_khuyen_mai = $this->modelNguoiDung->getCoupon($ma_khuyen_mai);
           if ($ma_khuyen_mai) {
             $this->modelNguoiDung->updateCoupon($ma_khuyen_mai['id'], $ma_khuyen_mai['so_luong'] - 1);
+            $tienKhuyenMai = $ma_khuyen_mai['gia'];
             $ma_khuyen_mai = $ma_khuyen_mai ? $ma_khuyen_mai['id'] : '';
           }
         }
@@ -701,7 +703,7 @@ class NguoiDungController
           $mail->CharSet = 'UTF-8';
 
 
-          $body = "<h1>MÃ ĐƠN HÀNG: $idDonHang</h1>" . "<p>Bạn đã đặt hàng thành công.Chúng tôi sẽ giao đến cho bạn trong thời gian sớm nhất.</p><hr />";
+          $body = "<div><h1>MÃ ĐƠN HÀNG: $idDonHang</h1>" . "<p>Bạn đã đặt hàng thành công.Chúng tôi sẽ giao đến cho bạn trong thời gian sớm nhất.</p><hr />";
 
           $tongTien = 0;
           foreach ($gioHangs as $product) {
@@ -717,18 +719,17 @@ class NguoiDungController
           }
 
 
-          $ma_khuyen_mai = $this->modelNguoiDung->getCoupon($ma_khuyen_mai);
-          $tienKhuyenMai = $ma_khuyen_mai ? $ma_khuyen_mai['gia'] : 0;
           $thanhToan = $tongTien + 30000 - $tienKhuyenMai;
-          $tienKhuyenMai = $ma_khuyen_mai ? '0đ' : "-" . number_format($product['gia']) . "đ";
+          $tienKhuyenMai = !$tienKhuyenMai ? '0đ' : "-" . number_format($tienKhuyenMai) . "đ";
           $tongTien = number_format($tongTien) . "đ";
+          $thanhToan = number_format($thanhToan) . "đ";
 
           $body .= "<hr />
                   <p style='font-weight: 700'>Tổng tiền: <span style='font-weight: 400'>$tongTien</span></p>
                   <p style='font-weight: 700'>Tiền ship: <span style='font-weight: 400'>30,000đ</span></p>
                   <p style='font-weight: 700'>Giảm giá: <span style='font-weight: 400'>$tienKhuyenMai</span></p>
                   <p style='font-weight: 700'>Thanh toán: <span style='font-weight: 400'>$thanhToan</span></p>
-                  ";
+                  </div>";
 
 
           $mail->Subject = $subject;
