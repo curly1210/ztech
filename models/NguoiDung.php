@@ -356,38 +356,37 @@ class NguoiDung extends Base
   {
     try {
       $sql = "WITH san_pham_dau_tien AS (
-    SELECT 
+    SELECT
         don_hangs.id AS id_don_hang,
         san_phams.ten AS ten_san_pham,
         hinh_anhs.hinh_anh AS hinh_anh,
         ROW_NUMBER() OVER (PARTITION BY don_hangs.id ORDER BY san_phams.id ASC) AS row_num
-    FROM 
+    FROM
         don_hangs
     JOIN chi_tiet_don_hangs ON chi_tiet_don_hangs.id_don_hang = don_hangs.id
     JOIN san_phams ON san_phams.id = chi_tiet_don_hangs.id_san_pham
     JOIN hinh_anhs ON hinh_anhs.id_san_pham = san_phams.id
 )
-SELECT 
+SELECT
     don_hangs.*,
-    (SELECT COUNT(*) 
-     FROM don_hangs 
-     WHERE don_hangs.id_trang_thai_don_hang = 7) AS don_hang_huy,
-    (SELECT COUNT(*) 
-     FROM don_hangs 
-     WHERE don_hangs.id_trang_thai_don_hang IN (6, 8, 9, 10, 11, 12)) AS don_hang_dat,
+    COALESCE((SELECT COUNT(*)
+              FROM don_hangs
+              WHERE don_hangs.id_trang_thai_don_hang = 7), 0) AS don_hang_huy,
+    COALESCE((SELECT COUNT(*)
+              FROM don_hangs
+              WHERE don_hangs.id_trang_thai_don_hang IN (6, 8, 9, 10, 11, 12)), 0) AS don_hang_dat,
     nguoi_dungs.id AS id_nguoi_dung,
     trang_thai_don_hangs.ten AS ten_trang_thai,
     trang_thai_don_hangs.ma_mau AS ma_mau,
     san_pham_dau_tien.ten_san_pham AS ten_san_pham_dau_tien,
     san_pham_dau_tien.hinh_anh AS hinh_anh_dau_tien
-    FROM 
+FROM
     don_hangs
-    JOIN nguoi_dungs ON nguoi_dungs.id = don_hangs.id_nguoi_dung
-    JOIN trang_thai_don_hangs ON trang_thai_don_hangs.id = don_hangs.id_trang_thai_don_hang
-    JOIN san_pham_dau_tien ON san_pham_dau_tien.id_don_hang = don_hangs.id
-  WHERE 
-  
-     san_pham_dau_tien.row_num = 1 AND nguoi_dungs.id= :id ORDER BY don_hangs.ngay_dat_hang DESC;";
+JOIN nguoi_dungs ON nguoi_dungs.id = don_hangs.id_nguoi_dung
+JOIN trang_thai_don_hangs ON trang_thai_don_hangs.id = don_hangs.id_trang_thai_don_hang
+JOIN san_pham_dau_tien ON san_pham_dau_tien.id_don_hang = don_hangs.id
+WHERE
+    san_pham_dau_tien.row_num = 1; AND nguoi_dungs.id= :id ORDER BY don_hangs.ngay_dat_hang DESC;";
       $stmt = $this->conn->prepare($sql);
       $stmt->bindParam(":id", $id);
       $stmt->execute();

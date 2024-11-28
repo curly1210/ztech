@@ -116,7 +116,7 @@
 
                                                         <span class="dash__w-icon dash__w-icon-style-2"><i class="fas fa-times"></i></span>
 
-                                                        <span class="dash__w-text"><?= $donHangs[0]['don_hang_dat'] ?></span>
+                                                        <span class="dash__w-text"><?= $donHangs[0]['don_hang_huy'] ?></span>
 
                                                         <span class="dash__w-name">Đơn hàng đã hủy</span>
                                                     </div>
