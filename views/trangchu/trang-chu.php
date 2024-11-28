@@ -233,9 +233,11 @@
                               </div>
                             </div>
 
-                            <span style="display: flex; justify-content: space-between;" class="product-o__category">
+                            <span style="display: flex; justify-content: space-between;align-items: center;margin-top: 10px;" class="product-o__category">
                               <a href="shop-side-version-2.html"><?= $danhMuc['ten'] ?></a>
-
+                              <?php if (!$sanPham['hang_ton_kho']) { ?>
+                                <span style="font-size: 12px; color: red; padding: 3px 5px; border: 1px solid red; border-radius: 5px;">Hết hàng</span>
+                              <?php } ?>
                             </span>
 
                             <span class="product-o__name">

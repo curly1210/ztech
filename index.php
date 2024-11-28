@@ -88,7 +88,8 @@ match ($act) {
     'ma-khuyen-mai'     => (new MaKhuyenMaiController())->index(),
 
     //Đơn hàng
-    'don-hang'          => (new NguoiDungController())->viewMyOrder(),
-    'chi-tiet-don-hang' => (new NguoiDungController())->viewManageOrder(),
-    'huy-don-hang'      => (new NguoiDungController())->cancelOrder(),
+    'don-hang'              => (new NguoiDungController())->viewMyOrder(),
+    'chi-tiet-don-hang'     => (new NguoiDungController())->viewManageOrder(),
+    'huy-don-hang'          => (new NguoiDungController())->cancelOrder(),
+    'xac-nhan-thanh-cong'   => (new NguoiDungController())->confirmSuccessOrder(),
 };

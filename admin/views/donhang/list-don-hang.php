@@ -112,7 +112,7 @@
                                 <td class="text-center">
                                   <div class="d-flex justify-content-center align-items-center">
                                     <div class="form-check form-switch form-switch-md " dir="ltr">
-                                      <input type="checkbox" onchange="changeStatusPayment(<?= $donHang['id_don_hang'] ?>,this)" class="form-check-input" <?= $donHang['trang_thai_thanh_toan'] == 'Chưa thanh toán' ? '' : 'checked disabled'  ?>>
+                                      <input type="checkbox" onchange="changeStatusPayment('<?= $donHang['id_don_hang'] ?>',this)" class="form-check-input" <?= $donHang['trang_thai_thanh_toan'] == 'Chưa thanh toán' ? '' : 'checked disabled'  ?>>
                                     </div>
                                     <label id="orderPayment<?= $donHang['id_don_hang'] ?>" class="form-check-label"><?= $donHang['trang_thai_thanh_toan'] == 'Chưa thanh toán' ? 'Chưa thanh toán' : 'Đã thanh toán' ?></label>
                                   </div>
