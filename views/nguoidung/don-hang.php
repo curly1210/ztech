@@ -146,17 +146,25 @@
                                                                     </div>
                                                                 </div>
                                                                 <div>
-                                                                    <div style="display:inline-flex ; align-items:center ;justify-content:center;">
-
-                                                                        <a href="?act=chi-tiet-don-hang&id=<?= $donHang['id'] ?>" style="display:block;color:green;font-size:13px ;margin-right:15px">Chi tiết </a>
+                                                                    <div style="display:inline-flex ; align-items:center ;justify-content:center; gap: 10px;">
                                                                         <?php if ($donHang['id_trang_thai_don_hang'] == 6): ?>
                                                                             <form action="?act=huy-don-hang" onsubmit="return confirm('Bạn có chắc muốn hủy đơn hàng này không ?')" method="post">
 
                                                                                 <input type="hidden" name="id" value="<?= $donHang['id'] ?>">
                                                                                 <input type="hidden" name="id_nguoi_dung" value="<?= $_SESSION['id'] ?>">
-                                                                                <button type="submit" style="background: none; border:none; font-size:13px;color:red ; cursor:pointer">Hủy đơn hàng</button>
+                                                                                <button type="submit" style="background: none; border:1px solid red; padding: 6px 8px; border-radius: 5px; font-size:13px;color:red ; cursor:pointer">Hủy đơn hàng</button>
                                                                             </form>
                                                                         <?php endif; ?>
+                                                                        <?php if ($donHang['id_trang_thai_don_hang'] == 10): ?>
+                                                                            <form action="?act=xac-nhan-thanh-cong" onsubmit="return confirm('Xác nhận giao hàng thành công ?')" method="post">
+
+                                                                                <input type="hidden" name="id" value="<?= $donHang['id'] ?>">
+                                                                                <input type="hidden" name="id_nguoi_dung" value="<?= $_SESSION['id'] ?>">
+                                                                                <button type="submit" style="background: none; border:1px solid red; padding: 6px 8px; border-radius: 5px; font-size:13px;color:red ; cursor:pointer">Xác nhận thành công</button>
+                                                                            </form>
+                                                                        <?php endif; ?>
+                                                                        <a href="?act=chi-tiet-don-hang&id=<?= $donHang['id'] ?>" style="display:block;color:green;font-size:13px ;margin-right:15px">Chi tiết </a>
+
                                                                     </div>
                                                                 </div>
                                                             </div>

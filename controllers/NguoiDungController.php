@@ -770,11 +770,25 @@ class NguoiDungController
   {
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
       $id = $_POST['id'];
-      $this->modelNguoiDung->changeStatusOrder($id);
+      $idTrangThai = 7; // ID trạng thái hủy hàng 
+      $this->modelNguoiDung->changeStatusOrder($id, $idTrangThai);
       $_SESSION['id'] = $_POST['id_nguoi_dung'];
       header('Location: ?act=don-hang');
       exit();
     }
+  }
+
+  public function confirmSuccessOrder()
+  {
+    if (!isset($_SESSION['user'])) {
+      header("Location: index.php");
+    }
+
+    $id = $_POST['id'];
+    $idTrangThai = 12; // ID trạng thái thành công
+    $this->modelNguoiDung->changeStatusOrder($id, $idTrangThai);
+    header('Location: ?act=don-hang');
+    exit();
   }
 
   public function likeProduct()

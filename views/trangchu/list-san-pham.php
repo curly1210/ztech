@@ -200,26 +200,32 @@
                               </div>
                             </div>
                             <div class="product-m__content">
-                              <div class="product-m__category">
+                              <div style="display: flex; justify-content: space-between;align-items: center;" class="product-m__category">
 
                                 <a href="#"><?= $product['ten_danh_muc'] ?></a>
+                                <?php if (!$product['hang_ton_kho']) { ?>
+                                  <span style="font-size: 12px; color: red; padding: 3px 5px; border: 1px solid red; border-radius: 5px;">Hết hàng</span>
+                                <?php } ?>
                               </div>
-                              <div style="display: flex; justify-content: space-between;" class="product-m__name">
+                              <div style="display: flex; justify-content: space-between; align-items: center;" class="product-m__name">
                                 <a href="?act=chi-tiet-san-pham&id=<?= $product['id'] ?>"><?= $product['ten'] ?></a>
+
+                              </div>
+                              <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div class="product-m__rating gl-rating-style">
+                                  <i class="fas fa-star"></i>
+                                  <i class="fas fa-star"></i>
+                                  <i class="fas fa-star"></i>
+                                  <i class="fas fa-star"></i>
+                                  <i class="fas fa-star"></i>
+                                  <span class="product-o__review">(0)</span>
+                                </div>
                                 <?php if ($product['is_favorite']) { ?>
                                   <i data-id="<?= $product['id'] ?>" style="color: red;" class="fa-solid fa-heart like-product u-s-m-r-6"></i>
 
                                 <?php } else { ?>
                                   <i data-id="<?= $product['id'] ?>" class="fa-solid fa-heart like-product u-s-m-r-6"></i>
                                 <?php } ?>
-                              </div>
-                              <div class="product-m__rating gl-rating-style">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <span class="product-o__review">(0)</span>
                               </div>
 
 

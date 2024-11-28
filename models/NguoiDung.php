@@ -452,13 +452,14 @@ SELECT
   }
 
 
-  public function changeStatusOrder($id)
+  public function changeStatusOrder($id, $idTrangThai)
   {
     try {
-      $sql = "UPDATE don_hangs SET don_hangs.id_trang_thai_don_hang=7 WHERE id= :id";
+      $sql = "UPDATE don_hangs SET don_hangs.id_trang_thai_don_hang=:id_trang_thai WHERE id= :id";
 
       $stmt = $this->conn->prepare($sql);
       $stmt->bindParam(":id", $id);
+      $stmt->bindParam(":id_trang_thai", $idTrangThai);
       $stmt->execute();
       return $stmt->fetchAll();
     } catch (PDOException $e) {
