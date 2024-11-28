@@ -364,8 +364,6 @@
 
       $('#check-coupon').click(function() {
         let idKhuyenMai = $('#coupon').val();
-        // alert(khuyenMai);
-
 
         $.ajax({
           url: "?act=check-coupon",
@@ -386,7 +384,12 @@
               let khuyenMai = parseInt(response.gia);
 
               $('#tien_khuyen_mai').text('-' + khuyenMai.toLocaleString('en-US') + 'đ');
-              $('#thanh_toan').text((tongTien + 30000 - khuyenMai).toLocaleString('en-US') + 'đ');
+              if (tongTien + 30000 - khuyenMai < 0) {
+
+                $('#thanh_toan').text('0đ');
+              } else {
+                $('#thanh_toan').text((tongTien + 30000 - khuyenMai).toLocaleString('en-US') + 'đ');
+              }
 
             }
             setTimeout(() => {
