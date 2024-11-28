@@ -670,10 +670,10 @@ class NguoiDungController
           $this->modelNguoiDung->createOrderDetail($product['so_luong'], $product['gia'], $product['id_san_pham'], $idDonHang);
         }
 
-        // Xóa giỏ hàng, sau khi đặt hàng thành công
-        $this->modelNguoiDung->deleteAllCart($_SESSION['user']['id']);
+        // // Xóa giỏ hàng, sau khi đặt hàng thành công
+        // $this->modelNguoiDung->deleteAllCart($_SESSION['user']['id']);
 
-        $_SESSION['count_cart'] = 0;
+        // $_SESSION['count_cart'] = 0;
 
         //Gửi mail
 
@@ -701,14 +701,49 @@ class NguoiDungController
           $mail->CharSet = 'UTF-8';
 
 
-          $mail->isHTML(true);
+          $body = "<h1>MÃ ĐƠN HÀNG: $idDonHang</h1>" . "<p>Bạn đã đặt hàng thành công.Chúng tôi sẽ giao đến cho bạn trong thời gian sớm nhất.</p><hr />";
+
+          $tongTien = 0;
+          foreach ($gioHangs as $product) {
+            $tongTien += ($product['gia'] * $product['so_luong']);
+            $tenSanPham = $product['ten_san_pham'];
+            $donGia = number_format($product['gia']) . "đ";
+            $soLuong = $product['so_luong'];
+            $body .= "<div>
+                        <h3>Tên sản phẩm: $tenSanPham</h3>
+                        <p>Đơn giá: $donGia</p>
+                        <p>Số lượng: $soLuong</p>
+                      </div>";
+          }
+
+
+          $ma_khuyen_mai = $this->modelNguoiDung->getCoupon($ma_khuyen_mai);
+          $tienKhuyenMai = $ma_khuyen_mai ? $ma_khuyen_mai['gia'] : 0;
+          $thanhToan = $tongTien + 30000 - $tienKhuyenMai;
+          $tienKhuyenMai = $ma_khuyen_mai ? '0đ' : "-" . number_format($product['gia']) . "đ";
+          $tongTien = number_format($tongTien) . "đ";
+
+          $body .= "<hr />
+                  <p style='font-weight: 700'>Tổng tiền: <span style='font-weight: 400'>$tongTien</span></p>
+                  <p style='font-weight: 700'>Tiền ship: <span style='font-weight: 400'>30,000đ</span></p>
+                  <p style='font-weight: 700'>Giảm giá: <span style='font-weight: 400'>$tienKhuyenMai</span></p>
+                  <p style='font-weight: 700'>Thanh toán: <span style='font-weight: 400'>$thanhToan</span></p>
+                  ";
+
+
           $mail->Subject = $subject;
-          $mail->Body = $message;
+          $mail->Body = $body;
+          $mail->isHTML(true);
           $mail->send();
           // echo "Mail has been sent successfully!";
         } catch (Exception $e) {
           // echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         }
+
+        // Xóa giỏ hàng, sau khi đặt hàng thành công
+        $this->modelNguoiDung->deleteAllCart($_SESSION['user']['id']);
+
+        $_SESSION['count_cart'] = 0;
 
         echo json_encode($errors);
       } else {
