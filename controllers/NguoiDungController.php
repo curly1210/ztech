@@ -736,6 +736,8 @@ class NguoiDungController
         $_SESSION['id'] = $_POST['id'];
         $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
         $donHangs = $this->modelNguoiDung->getMyOrder($_SESSION['id']);
+        // print_r($donHangs);
+        // die();
         $noiDungs = $this->modelNguoiDung->getAdressShop();
         require_once('./views/nguoidung/don-hang.php');
         exit();
