@@ -531,7 +531,8 @@ class NguoiDungController
     $idSanPham =  $_GET['id'];
     $this->modelNguoiDung->deleteCart($idSanPham, $_SESSION['user']['id']);
     $_SESSION['count_cart']--;
-    header("Location: ?act=gio-hangs");
+    header("Location: " . $_SERVER['HTTP_REFERER']);
+    // header("Location: ?act=gio-hangs");
   }
 
   public function formCheckOut()
