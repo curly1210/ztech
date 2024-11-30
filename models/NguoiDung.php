@@ -566,4 +566,18 @@ WHERE
       echo "Lỗi : " . $e->getMessage();
     }
   }
+
+  public function checkOrderStatus($idOrder)
+  {
+    try {
+      $sql = "SELECT * FROM don_hangs WHERE don_hangs.id = :id ";
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(":id", $idOrder);
+
+      $stmt->execute();
+      return $stmt->fetch();
+    } catch (PDOException $e) {
+      echo "Lỗi : " . $e->getMessage();
+    }
+  }
 }

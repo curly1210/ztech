@@ -808,6 +808,11 @@ class NguoiDungController
   {
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
       $id = $_POST['id'];
+      $order = $this->modelNguoiDung->checkOrderStatus($id);
+      if ($order['id_trang_thai_don_hang'] != 6) {
+        header('Location: ?act=don-hang');
+        exit();
+      }
       $idTrangThai = 7; // ID trạng thái hủy hàng 
       $this->modelNguoiDung->changeStatusOrder($id, $idTrangThai);
       $_SESSION['id'] = $_POST['id_nguoi_dung'];
