@@ -49,11 +49,11 @@
           <div class="row">
             <div class="col-12">
               <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
-                <h4 class="mb-sm-0">Quản lý liên hệ</h4>
+                <h4 class="mb-sm-0">Quản lý người dùng</h4>
                 <div class="page-title-right">
                   <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboards</a></li>
-                    <li class="breadcrumb-item active">Chi tiết liên hệ</li>
+                    <li class="breadcrumb-item active">Chi tiết người dùng</li>
                   </ol>
                 </div>
 
@@ -110,7 +110,7 @@
                         <div class="mb-3">
                           <label class="form-label" for="gen-info-username-input">Trạng thái</label>
                           <div class="form-check form-switch form-switch-lg" dir="ltr">
-                            <input type="checkbox" class="form-check-input" id="userStatus" value="<?= $nguoiDung["id"] ?>" <?php if ($nguoiDung["trang_thai"] == 1) { ?>checked <?php } ?>>
+                            <input type="checkbox" class="form-check-input" id="userStatus" value="<?= $nguoiDung["id"] ?>" <?php if ($nguoiDung["trang_thai"] == 2) { ?>checked <?php } ?>>
                             <label class="form-check-label" for="customSwitchsizelg">Vô hiệu hóa/Hoạt động</label>
                           </div>
                         </div>
@@ -213,7 +213,7 @@
             id: id
           },
           success: function(response) {
-            if (response == 1) {
+            if (response == 2) {
               setTimeout(() => {
                 alert("Kích hoạt thành thành công");
               }, 200);

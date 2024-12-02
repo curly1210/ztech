@@ -46,7 +46,7 @@ class NguoiDung
   {
     $status = $this->getOneById($id)['trang_thai'];
     if ($status == 1) {
-      $status = 0;
+      $status = 2;
     } else {
       $status = 1;
     }
