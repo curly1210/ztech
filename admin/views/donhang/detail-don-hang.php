@@ -79,7 +79,7 @@
                                             <div class="row g-3">
                                                 <div class="col-lg-3 col-6">
                                                     <p class="text-muted mb-2 text-uppercase fw-semibold">Mã đơn hàng</p>
-                                                    <h5 class="fs-14 mb-0"><span id="invoice-no"><?= $donHang['id'] ?></span></h5>
+                                                    <h5 class="fs-14 mb-0"><span id="invoice-no"><?= $donHang['id_don_hang'] ?></span></h5>
                                                 </div>
                                                 <!--end col-->
                                                 <div class="col-lg-3 col-6">

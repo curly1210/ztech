@@ -63,7 +63,7 @@ class DonHang
       JOIN dia_chi_nhan_hangs on dia_chi_nhan_hangs.id = don_hangs.id_dia_chi_nhan_hang
       JOIN chi_tiet_don_hangs on chi_tiet_don_hangs.id_don_hang=don_hangs.id
       JOIN trang_thai_don_hangs on trang_thai_don_hangs.id = don_hangs.id_trang_thai_don_hang 
-      JOIN ma_khuyen_mais on ma_khuyen_mais.id = don_hangs.id_ma_khuyen_mai
+      LEFT JOIN ma_khuyen_mais on ma_khuyen_mais.id = don_hangs.id_ma_khuyen_mai
       WHERE don_hangs.id  = :id";
       $stmt = $this->conn->prepare($sql);
       $stmt->bindParam(":id", $id);

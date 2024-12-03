@@ -36,12 +36,11 @@ class DonHangController
   }
   public function showDetail()
   {
-    $id = $_GET['id'];
-
+    $id = (string)$_GET['id'];
     $donHang = $this->modelDonHang->getDetail($id);
-
     $sanPhamDonHang  = $this->modelDonHang->getListProducts($id);
-    // print_r($sanPhamDonHang);
+    // print_r($donHang);
+    // die();
     $tongTien = 0;
     foreach ($sanPhamDonHang as $sanPham) {
       $total = $sanPham['so_luong'] * $sanPham['gia_ban'];
