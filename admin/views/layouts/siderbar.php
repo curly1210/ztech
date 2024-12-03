@@ -110,12 +110,7 @@
                     </a>
 
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link menu-link " href="?act=thong-ke">
-                        <i class="las la-chart-pie"></i> <span data-key="thong-ke">Thống kê</span>
-                    </a>
 
-                </li>
 
                 <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Bán hàng</span></li>
 
