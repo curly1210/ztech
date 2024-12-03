@@ -580,4 +580,18 @@ WHERE
       echo "Lỗi : " . $e->getMessage();
     }
   }
+
+  public function checkUniquePhone($phone)
+  {
+    try {
+      $sql = "SELECT * FROM nguoi_dungs WHERE dien_thoai = :dien_thoai ";
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(":dien_thoai", $phone);
+
+      $stmt->execute();
+      return $stmt->fetch();
+    } catch (PDOException $e) {
+      echo "Lỗi : " . $e->getMessage();
+    }
+  }
 }

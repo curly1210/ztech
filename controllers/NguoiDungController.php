@@ -120,8 +120,13 @@ class NguoiDungController
       if (empty($email)) {
         $errors['email'] = 'Vui lòng nhập địa chỉ email';
       } else {
-        if (count($this->modelNguoiDung->checkUniqueEmail($email)) > 0) {
-          $errors['email'] = 'Địa chỉ email đã tồn tại';
+        $patternEmail = '/[A-Za-z0-9\._%+\-]+@[A-Za-z0-9\.\-]+\.[A-Za-z]{2,}/';
+        if (!preg_match($patternEmail, $email)) {
+          $errors['email'] = 'Sai định dạng email';
+        } else {
+          if (count($this->modelNguoiDung->checkUniqueEmail($email)) > 0) {
+            $errors['email'] = 'Địa chỉ email đã tồn tại';
+          }
         }
       }
 
@@ -142,6 +147,15 @@ class NguoiDungController
 
       if (empty($dienThoai)) {
         $errors['dien_thoai'] = 'Vui lòng nhập số điện thoại';
+      } else {
+        $patternPhone = '/^0[1-9]{9}$/';
+        if (!preg_match($patternPhone, $dienThoai)) {
+          $errors['dien_thoai'] = 'Sai định dạnh số điện thoại';
+        } else {
+          if ($this->modelNguoiDung->checkUniquePhone($dienThoai)) {
+            $errors['dien_thoai'] = "Số điện thoại đã tồn tại";
+          }
+        }
       }
 
       if (empty($gioiTinh)) {
@@ -607,12 +621,25 @@ class NguoiDungController
       if (empty($ho_ten)) {
         $errors['ho_ten'] = "Vui lòng nhập họ tên";
       }
+
       if (empty($email)) {
         $errors['email'] = "Vui lòng nhập email";
+      } else {
+        $patternEmail = '/[A-Za-z0-9\._%+\-]+@[A-Za-z0-9\.\-]+\.[A-Za-z]{2,}/';
+        if (!preg_match($patternEmail, $email)) {
+          $errors['email'] = 'Sai định dạng email';
+        }
       }
+
       if (empty($so_dien_thoai)) {
         $errors['so_dien_thoai'] = "Vui lòng nhập số điện thoại";
+      } else {
+        $patternPhone = '/^0[1-9]{9}$/';
+        if (!preg_match($patternPhone, $so_dien_thoai)) {
+          $errors['so_dien_thoai'] = 'Sai định dạnh số điện thoại';
+        }
       }
+
       if (empty($dia_chi)) {
         $errors['dia_chi'] = "Vui lòng nhập địa chỉ";
       }
