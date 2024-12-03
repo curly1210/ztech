@@ -127,11 +127,11 @@
                                 <div class="table-p__info">
 
                                   <span class="table-p__name">
-                                    <a href="product-detail.html"><?= $product['ten_san_pham'] ?></a>
+                                    <a href="?act=chi-tiet-san-pham&id=<?= $product['id_san_pham'] ?>"><?= $product['ten_san_pham'] ?></a>
                                   </span>
 
                                   <span class="table-p__category">
-                                    <a href="shop-side-version-2.html"><?= $product['ten_danh_muc'] ?></a>
+                                    <a><?= $product['ten_danh_muc'] ?></a>
                                   </span>
 
                                 </div>

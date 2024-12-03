@@ -217,7 +217,7 @@
                                 </div>
                               </div>
 
-                              <a class="o-card__del far fa-trash-alt"></a>
+                              <a onclick="return confirm('Bạn có chắc xóa sản phẩm này không?')" href="?act=xoa-gio-hang&id=<?= $sanPham['id_san_pham'] ?>" class="o-card__del far fa-trash-alt"></a>
                             </div>
                           <?php } ?>
 

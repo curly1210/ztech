@@ -120,8 +120,13 @@ class NguoiDungController
       if (empty($email)) {
         $errors['email'] = 'Vui lòng nhập địa chỉ email';
       } else {
-        if (count($this->modelNguoiDung->checkUniqueEmail($email)) > 0) {
-          $errors['email'] = 'Địa chỉ email đã tồn tại';
+        $patternEmail = '/[A-Za-z0-9\._%+\-]+@[A-Za-z0-9\.\-]+\.[A-Za-z]{2,}/';
+        if (!preg_match($patternEmail, $email)) {
+          $errors['email'] = 'Sai định dạng email';
+        } else {
+          if (count($this->modelNguoiDung->checkUniqueEmail($email)) > 0) {
+            $errors['email'] = 'Địa chỉ email đã tồn tại';
+          }
         }
       }
 
@@ -142,6 +147,15 @@ class NguoiDungController
 
       if (empty($dienThoai)) {
         $errors['dien_thoai'] = 'Vui lòng nhập số điện thoại';
+      } else {
+        $patternPhone = '/^0[1-9]{9}$/';
+        if (!preg_match($patternPhone, $dienThoai)) {
+          $errors['dien_thoai'] = 'Sai định dạnh số điện thoại';
+        } else {
+          if ($this->modelNguoiDung->checkUniquePhone($dienThoai)) {
+            $errors['dien_thoai'] = "Số điện thoại đã tồn tại";
+          }
+        }
       }
 
       if (empty($gioiTinh)) {
@@ -531,7 +545,8 @@ class NguoiDungController
     $idSanPham =  $_GET['id'];
     $this->modelNguoiDung->deleteCart($idSanPham, $_SESSION['user']['id']);
     $_SESSION['count_cart']--;
-    header("Location: ?act=gio-hangs");
+    header("Location: " . $_SERVER['HTTP_REFERER']);
+    // header("Location: ?act=gio-hangs");
   }
 
   public function formCheckOut()
@@ -606,12 +621,25 @@ class NguoiDungController
       if (empty($ho_ten)) {
         $errors['ho_ten'] = "Vui lòng nhập họ tên";
       }
+
       if (empty($email)) {
         $errors['email'] = "Vui lòng nhập email";
+      } else {
+        $patternEmail = '/[A-Za-z0-9\._%+\-]+@[A-Za-z0-9\.\-]+\.[A-Za-z]{2,}/';
+        if (!preg_match($patternEmail, $email)) {
+          $errors['email'] = 'Sai định dạng email';
+        }
       }
+
       if (empty($so_dien_thoai)) {
         $errors['so_dien_thoai'] = "Vui lòng nhập số điện thoại";
+      } else {
+        $patternPhone = '/^0[1-9]{9}$/';
+        if (!preg_match($patternPhone, $so_dien_thoai)) {
+          $errors['so_dien_thoai'] = 'Sai định dạnh số điện thoại';
+        }
       }
+
       if (empty($dia_chi)) {
         $errors['dia_chi'] = "Vui lòng nhập địa chỉ";
       }
@@ -808,6 +836,11 @@ class NguoiDungController
   {
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
       $id = $_POST['id'];
+      $order = $this->modelNguoiDung->checkOrderStatus($id);
+      if ($order['id_trang_thai_don_hang'] != 6) {
+        header('Location: ?act=don-hang');
+        exit();
+      }
       $idTrangThai = 7; // ID trạng thái hủy hàng 
       $this->modelNguoiDung->changeStatusOrder($id, $idTrangThai);
       $_SESSION['id'] = $_POST['id_nguoi_dung'];
