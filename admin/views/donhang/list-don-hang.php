@@ -112,7 +112,7 @@
                                 <td class="text-center">
                                   <div class="d-flex justify-content-center align-items-center">
                                     <div class="form-check form-switch form-switch-md " dir="ltr">
-                                      <input type="checkbox" onchange="changeStatusPayment('<?= $donHang['id_don_hang'] ?>',this)" class="form-check-input" <?= $donHang['trang_thai_thanh_toan'] == 'Chưa thanh toán' ? '' : 'checked disabled'  ?>>
+                                      <input type="checkbox" onchange="changeStatusPayment('<?= $donHang['id_don_hang'] ?>',this)" class="form-check-input" <?= $donHang['trang_thai_thanh_toan'] == 'Chưa thanh toán' ? '' : 'checked disabled' ?> <?= $donHang['id_trang_thai_don_hang'] == 7 || $donHang['id_trang_thai_don_hang'] == 11 ? 'disabled' : '' ?>>
                                     </div>
                                     <label id="orderPayment<?= $donHang['id_don_hang'] ?>" class="form-check-label"><?= $donHang['trang_thai_thanh_toan'] == 'Chưa thanh toán' ? 'Chưa thanh toán' : 'Đã thanh toán' ?></label>
                                   </div>
@@ -120,7 +120,7 @@
                                 <td class="text-center">
                                   <select onchange="changeStatusOrder('<?= $donHang['id_don_hang'] ?>',this)" data-current-status="<?= $donHang['id_trang_thai_don_hang'] ?>" style="color: <?= $donHang['ma_mau'] ?>" class="form-select">
                                     <?php foreach ($trangThaiDonHangs as $row) {
-                                      if (($row['ten'] == "Đã hủy" || $row['ten'] == "Giao hàng thất bại") && $donHang['id_trang_thai_don_hang'] == $row['id']) { ?>
+                                      if (($row['ten'] == "Đã hủy" || $row['ten'] == "Thất bại") && $donHang['id_trang_thai_don_hang'] == $row['id']) { ?>
                                         <!-- <option value="">cuong</option> -->
                                         <option style="color: <?= $row['ma_mau'] ?>;" value="<?= $row['id'] ?>" <?= $donHang['id_trang_thai_don_hang'] == $row['id'] ? 'selected' : '' ?>><?= $row['ten'] ?></option>
                                       <?php break;

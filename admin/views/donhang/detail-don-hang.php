@@ -155,14 +155,18 @@
                                                         <?php foreach ($sanPhamDonHang as $index => $sanPham): ?>
                                                             <tr>
                                                                 <th scope="row"><?= $index + 1 ?></th>
-                                                                <td class="text-start d-flex">
+                                                                <td class="text-start d-flex align-items-center">
                                                                     <img src="<?= $sanPham['image_url'] ?>" alt="" class="me-2 rounded" height="40">
                                                                     <span class="fw-medium"><?= $sanPham['ten'] ?></span>
 
                                                                 </td>
-                                                                <td><?= $sanPham['gia_ban'] ?></td>
-                                                                <td><?= $sanPham['so_luong'] ?></td>
-                                                                <td class="text-end"><?= $sanPham['gia']  ?></td>
+                                                                <td><?= number_format($sanPham['gia_ban']) . " đ" ?>
+                                                                <td>
+                                                                    <?= $sanPham['so_luong'] ?>
+                                                                </td>
+                                                                <td class="text-end">
+                                                                    <?= number_format($sanPham['gia']) . " đ" ?>
+                                                                </td>
                                                             </tr>
                                                         <?php endforeach; ?>
 
@@ -175,20 +179,24 @@
                                                     <tbody>
                                                         <tr>
                                                             <td>Tổng tiền</td>
-                                                            <td class="text-end"><?= $donHang['tong_tien'] ?></td>
+                                                            <td class="text-end">
+                                                                <?= number_format($donHang['tong_tien']) . " đ" ?>
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <td>Phí ship</td>
-                                                            <td class="text-end"><?= $donHang['tien_ship'] ?></td>
+                                                            <td class="text-end">30,000 đ</td>
                                                         </tr>
                                                         <tr>
                                                             <td>Mã giảm giá<small class="text-muted">(<?= $donHang['ten_ma_khuyen_mai'] ?>)</small></td>
-                                                            <td class="text-end">- <?= $donHang['giam_gia'] ?></td>
+                                                            <td class="text-end"><?= !$donHang['giam_gia'] ? '0đ' : "-" . number_format($donHang['giam_gia']) . " đ" ?></td>
                                                         </tr>
 
                                                         <tr class="border-top border-top-dashed fs-15">
                                                             <th scope="row">Thành tiền</th>
-                                                            <th class="text-end"><?= $donHang['thanh_toan'] ?></th>
+                                                            <th class="text-end">
+                                                                <?= number_format($donHang['thanh_toan']) . " đ" ?>
+                                                            </th>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -197,7 +205,7 @@
                                             <div class="mt-3">
                                                 <h6 class="text-muted text-uppercase fw-semibold mb-3">Thanh toán</h6>
                                                 <p class="text-muted mb-1">Phương thức thanh toán: <span class="fw-medium" id="payment-method"><?= $donHang['phuong_thuc_thanh_toan'] ?></span></p>
-                                                <p class="text-muted">Số tiền thanh toán: <span class="fw-medium" id=""></span><span id="card-total-amount"><?= $donHang['thanh_toan'] ?></span></p>
+                                                <p class="text-muted">Số tiền thanh toán: <span class="fw-medium" id=""></span><span id="card-total-amount"> <?= number_format($donHang['thanh_toan']) . " đ" ?></span></p>
                                             </div>
 
                                         </div>
