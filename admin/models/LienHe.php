@@ -12,7 +12,7 @@ class LienHe
   {
     try {
 
-      $sql = "SELECT * FROM lien_hes WHERE ho_ten LIKE '%$search%' ";
+      $sql = "SELECT * FROM lien_hes WHERE ho_ten LIKE '%$search%' ORDER BY ngay_tao desc";
       $stmt = $this->conn->prepare($sql);
       $stmt->execute();
       return $stmt->fetchAll();

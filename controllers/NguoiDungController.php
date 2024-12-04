@@ -215,12 +215,25 @@ class NguoiDungController
       if (empty($hoTen)) {
         $errors['ho_ten'] = "Vui lòng điền họ tên";
       }
+
       if (empty($email)) {
         $errors['email'] = "Vui lòng điền email";
+      } else {
+        $patternEmail = '/[A-Za-z0-9\._%+\-]+@[A-Za-z0-9\.\-]+\.[A-Za-z]{2,}/';
+        if (!preg_match($patternEmail, $email)) {
+          $errors['email'] = 'Sai định dạng email';
+        }
       }
+
       if (empty($dienThoai)) {
         $errors['dien_thoai'] = "Vui lòng điền điện thoại";
+      } else {
+        $patternPhone = '/^0[1-9]{9}$/';
+        if (!preg_match($patternPhone, $dienThoai)) {
+          $errors['dien_thoai'] = 'Sai định danh số điện thoại';
+        }
       }
+
       if (empty($noiDung)) {
         $errors['noi_dung'] = "Vui lòng điền nội dung";
       }

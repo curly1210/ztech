@@ -245,7 +245,7 @@
           <div class="modal-body">
 
             <div class="mb-3">
-              <label for="customername-field" class="form-label">Họ và tsên</label>
+              <label for="customername-field" class="form-label">Họ và tên</label>
               <input name="ho_ten" type="text" id="customername-field" class="form-control" placeholder="Điền họ và tên" />
               <div id="err_hoTen" class="invalid-feedback"></div>
             </div>
@@ -256,47 +256,58 @@
               <div id="err_email" class="invalid-feedback"></div>
             </div>
 
-            <div class="mb-3">
-              <label for="email-field" class="form-label">Mật khẩu</label>
-              <input name="mat_khau" type="password" id="email-field" class="form-control" placeholder="Điền mật khẩu" />
-              <div id="err_matKhau" class="invalid-feedback"></div>
-            </div>
+            <div class="row">
 
-            <div class="mb-3">
-              <label for="email-field" class="form-label">Xác nhận mật khẩu</label>
-              <input name="re_mat_khau" type="password" id="email-field" class="form-control" placeholder="Điền xác nhận mật khẩu" />
-              <div id="err_reMatKhau" class="invalid-feedback"></div>
-            </div>
-
-            <div class="mb-3">
-              <label for="phone-field" class="form-label">Số điện thoại</label>
-              <input name="dien_thoai" type="text" id="phone-field" class="form-control" placeholder="Điền số điện thoại" />
-              <div id="err_dienThoai" class="invalid-feedback"></div>
-            </div>
-
-
-            <div class="mb-3">
-              <label for="phone-field" class="form-label">Giới tính</label>
-              <div class="d-flex gap-3">
-                <div class="d-flex align-items-center gap-1">
-                  <label for="phone-field" class="form-label mb-0">Nam</label>
-                  <input class="form-check-input mt-0" type="radio" name="gioi_tinh" value="1">
-
-                </div>
-                <div class="d-flex align-items-center gap-1">
-                  <label for=" phone-field" class="form-label mb-0">Nữ</label>
-                  <input class="form-check-input mt-0" type="radio" name="gioi_tinh" value="2">
-
-                </div>
+              <div class="mb-3 col-6">
+                <label for="email-field" class="form-label">Mật khẩu</label>
+                <input name="mat_khau" type="password" id="email-field" class="form-control" placeholder="Điền mật khẩu" />
+                <div id="err_matKhau" class="invalid-feedback"></div>
               </div>
-              <div id="err_gioiTinh" class="invalid-feedback"></div>
 
+              <div class="mb-3 col-6">
+                <label for="email-field" class="form-label">Xác nhận mật khẩu</label>
+                <input name="re_mat_khau" type="password" id="email-field" class="form-control" placeholder="Điền xác nhận mật khẩu" />
+                <div id="err_reMatKhau" class="invalid-feedback"></div>
+              </div>
             </div>
 
-            <div class="mb-3">
-              <label for="date-field" class="form-label">Năm sinh</label>
-              <input name="nam_sinh" type="date" class="form-control" id="exampleInputdate">
-              <div id="err_namSinh" class="invalid-feedback"></div>
+            <div class="row">
+              <div class="mb-3 col-6">
+                <label for="phone-field" class="form-label">Số điện thoại</label>
+                <input name="dien_thoai" type="text" id="phone-field" class="form-control" placeholder="Điền số điện thoại" />
+                <div id="err_dienThoai" class="invalid-feedback"></div>
+              </div>
+
+              <div class="mb-3 col-6">
+                <label for="phone-field" class="form-label">Địa chỉ</label>
+                <input name="dia_chi" type="text" id="phone-field" class="form-control" placeholder="Điền địa chỉ" />
+                <div id="err_diaChi" class="invalid-feedback"></div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="mb-3 col-6">
+                <label for="date-field" class="form-label">Năm sinh</label>
+                <input name="nam_sinh" type="date" class="form-control" id="exampleInputdate">
+                <div id="err_namSinh" class="invalid-feedback"></div>
+              </div>
+              <div class="mb-3 col-6">
+                <label for="phone-field" class="form-label">Giới tính</label>
+                <div class="d-flex gap-3">
+                  <div class="d-flex align-items-center gap-1">
+                    <label for="phone-field" class="form-label mb-0">Nam</label>
+                    <input class="form-check-input mt-0" type="radio" name="gioi_tinh" value="1">
+
+                  </div>
+                  <div class="d-flex align-items-center gap-1">
+                    <label for=" phone-field" class="form-label mb-0">Nữ</label>
+                    <input class="form-check-input mt-0" type="radio" name="gioi_tinh" value="2">
+
+                  </div>
+                </div>
+                <div id="err_gioiTinh" class="invalid-feedback"></div>
+
+              </div>
             </div>
 
             <!-- <div class="row">
@@ -359,6 +370,7 @@
           const err_dienThoai = document.getElementById("err_dienThoai");
           const err_gioiTinh = document.getElementById("err_gioiTinh");
           const err_namSinh = document.getElementById("err_namSinh");
+          const err_diaChi = document.getElementById("err_diaChi")
 
           err_hoTen.innerHTML = "";
           err_email.innerHTML = "";
@@ -367,6 +379,7 @@
           err_dienThoai.innerHTML = "";
           err_gioiTinh.innerHTML = "";
           err_namSinh.innerHTML = "";
+          err_diaChi.innerHTML = "";
 
 
 
@@ -393,6 +406,11 @@
             if ("dien_thoai" in response) {
               err_dienThoai.innerHTML = response["dien_thoai"];
               err_dienThoai.style = "display:block";
+            }
+
+            if ("dia_chi" in response) {
+              err_diaChi.innerHTML = response["dia_chi"];
+              err_diaChi.style = "display:block";
             }
 
             if ("gioi_tinh" in response) {

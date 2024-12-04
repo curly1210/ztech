@@ -43,6 +43,7 @@ class NguoiDungController
       $matKhau = $_POST['mat_khau'];
       $reMatKhau = $_POST['re_mat_khau'];
       $dienThoai = $_POST['dien_thoai'];
+      $diaChi = $_POST['dia_chi'];
       $gioiTinh = $_POST['gioi_tinh'] ?? null;
       $namSinh = $_POST['nam_sinh'];
 
@@ -76,6 +77,10 @@ class NguoiDungController
 
       if (empty($dienThoai)) {
         $errors['dien_thoai'] = 'Vui lòng nhập số điện thoại';
+      }
+
+      if (empty($diaChi)) {
+        $errors['dia_chi'] = 'Vui lòng nhập địa chỉ';
       }
 
       if (empty($gioiTinh)) {

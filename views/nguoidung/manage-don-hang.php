@@ -139,7 +139,7 @@
                                                             </div>
                                                             <div class="description-title product" data-id="<?= $product['id_san_pham'] ?>" data-check="<?= $product['is_review'] ?>" style="display: flex; flex-direction: column; gap: 5px;">
                                                                 <div class=""><?= $product['ten'] ?></div>
-                                                                <?php if ($donHang['ten_trang_thai_don_hang'] == "Giao hàng thành công") { ?>
+                                                                <?php if ($donHang['ten_trang_thai_don_hang'] == "Thành công") { ?>
                                                                     <div style="display: flex; gap: 10px; align-items: center;">
                                                                         <span style="font-size: 12px; line-height: 21px;">Đánh giá:</span>
                                                                         <div class="review-o__rating gl-rating-style ">
