@@ -150,7 +150,7 @@ class NguoiDungController
       } else {
         $patternPhone = '/^0[1-9]{9}$/';
         if (!preg_match($patternPhone, $dienThoai)) {
-          $errors['dien_thoai'] = 'Sai định dạnh số điện thoại';
+          $errors['dien_thoai'] = 'Sai định danh số điện thoại';
         } else {
           if ($this->modelNguoiDung->checkUniquePhone($dienThoai)) {
             $errors['dien_thoai'] = "Số điện thoại đã tồn tại";
