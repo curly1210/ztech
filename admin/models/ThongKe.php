@@ -11,7 +11,7 @@ class ThongKe
         try {
             $sql = "SELECT SUM(don_hangs.thanh_toan) AS TongDoanhThu FROM don_hangs 
             JOIN trang_thai_don_hangs ON trang_thai_don_hangs.id = don_hangs.id_trang_thai_don_hang 
-            WHERE trang_thai_don_hangs.ten LIKE 'Giao hàng thành công' 
+            WHERE trang_thai_don_hangs.ten LIKE 'Thành công' 
             ";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
@@ -88,7 +88,7 @@ class ThongKe
         try {
             $sql = "SELECT COUNT(*) AS SoLuongDonHangGiaoThanhCong FROM don_hangs  
             JOIN trang_thai_don_hangs ON trang_thai_don_hangs.id = don_hangs.id_trang_thai_don_hang  
-            WHERE trang_thai_don_hangs.ten = 'Giao hàng thành công' ";
+            WHERE trang_thai_don_hangs.ten = 'Thành công' ";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
             return $stmt->fetch();
@@ -101,7 +101,7 @@ class ThongKe
         try {
             $sql = "SELECT COUNT(*) AS SoLuongDonHangGiaoThatBai FROM don_hangs  
             JOIN trang_thai_don_hangs ON trang_thai_don_hangs.id = don_hangs.id_trang_thai_don_hang  
-            WHERE trang_thai_don_hangs.ten = 'Giao hàng thất bại' ";
+            WHERE trang_thai_don_hangs.ten = 'Thất bại' ";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
             return $stmt->fetch();
@@ -181,7 +181,7 @@ class ThongKe
         try {
             $sql = "SELECT COUNT(*) AS SoLuongDonHang FROM don_hangs  
             JOIN trang_thai_don_hangs ON trang_thai_don_hangs.id = don_hangs.id_trang_thai_don_hang  
-            WHERE trang_thai_don_hangs.ten = 'Giao hàng thành công' AND don_hangs.ngay_dat_hang= :ngayThongKe ";
+            WHERE trang_thai_don_hangs.ten = 'Thành công' AND don_hangs.ngay_dat_hang= :ngayThongKe ";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':ngayThongKe', $ngayThongKe);
 
@@ -196,7 +196,7 @@ class ThongKe
         try {
             $sql = "SELECT SUM(don_hangs.thanh_toan) AS TongDoanhThu FROM don_hangs 
             JOIN trang_thai_don_hangs ON trang_thai_don_hangs.id = don_hangs.id_trang_thai_don_hang 
-            WHERE trang_thai_don_hangs.ten = 'Giao hàng thành công'  AND don_hangs.ngay_dat_hang= :ngayThongKe 
+            WHERE trang_thai_don_hangs.ten = 'Thành công'  AND don_hangs.ngay_dat_hang= :ngayThongKe 
             ";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':ngayThongKe', $ngayThongKe);
@@ -211,7 +211,7 @@ class ThongKe
     {
         try {
             $sql = "SELECT date(don_hangs.ngay_dat_hang) as ngay_dat, COUNT(don_hangs.id) as so_don_hang, SUM(don_hangs.tong_tien) as tong_tien FROM don_hangs JOIN trang_thai_don_hangs on don_hangs.id_trang_thai_don_hang = trang_thai_don_hangs.id
-            WHERE trang_thai_don_hangs.ten LIKE 'Giao hàng thành công'
+            WHERE trang_thai_don_hangs.ten LIKE 'Thành công'
             GROUP by DATE(don_hangs.ngay_dat_hang)";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
