@@ -386,7 +386,7 @@ JOIN nguoi_dungs ON nguoi_dungs.id = don_hangs.id_nguoi_dung
 JOIN trang_thai_don_hangs ON trang_thai_don_hangs.id = don_hangs.id_trang_thai_don_hang
 JOIN san_pham_dau_tien ON san_pham_dau_tien.id_don_hang = don_hangs.id
 WHERE
-    san_pham_dau_tien.row_num = 1 AND nguoi_dungs.id= :id ORDER BY don_hangs.ngay_dat_hang DESC;";
+    san_pham_dau_tien.row_num = 1 AND nguoi_dungs.id= :id ORDER BY don_hangs.ngay_dat_hang DESC LIMIT 10";
       $stmt = $this->conn->prepare($sql);
       $stmt->bindParam(":id", $id);
       $stmt->execute();
