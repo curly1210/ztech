@@ -278,6 +278,32 @@ class Home extends Base
         }
     }
 
+    public function getNumberLikeProduct($idSanPham)
+    {
+        try {
+            $sql = "SELECT * FROM san_pham_yeu_thichs WHERE id_san_pham = :id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':id', $idSanPham);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        } catch (PDOException $e) {
+            echo "Lỗi : " . $e->getMessage();
+        }
+    }
+
+    public function getNumberReviewProduct($idSanPham)
+    {
+        try {
+            $sql = "SELECT * FROM danh_gias WHERE id_san_pham   = :id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':id', $idSanPham);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        } catch (PDOException $e) {
+            echo "Lỗi : " . $e->getMessage();
+        }
+    }
+
     // public function getListLikeProduct($idNguoiDung)
     // {
     //     try {
