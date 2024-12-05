@@ -71,7 +71,13 @@ class HomeController
         }
 
 
+        // Lấy lượt thích sản phẩm bằng idProduct
+        $soLuotThich = count($this->modalHome->getNumberLikeProduct($idSanPham));
 
+        // Lấy lượt đánh giá sản phẩm
+        $soLuotDanhGia = count($this->modalHome->getNumberReviewProduct($idSanPham));
+
+        // Lấy thông tin sản phẩm
         $sanPham = $this->modalHome->getProductById($idSanPham);
         $idDanhMuc = $sanPham['danh_muc_id'];
 

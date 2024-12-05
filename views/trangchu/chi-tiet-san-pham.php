@@ -110,14 +110,14 @@
                   <div class="pd-detail__inline">
                     <span class="pd-detail__price"><?= number_format($sanPham['gia_khuyen_mai']) . " đ" ?></span>
 
-                    <span class="pd-detail__discount">(76% OFF)</span><del class="pd-detail__del"><?= number_format($sanPham['gia_ban']) . " đ" ?></del>
+                    <span class="pd-detail__discount">(<?= round((($sanPham['gia_ban'] - $sanPham['gia_khuyen_mai']) / $sanPham['gia_ban']) * 100, 0) ?>% OFF)</span><del class="pd-detail__del"><?= number_format($sanPham['gia_ban']) . " đ" ?></del>
                   </div>
                 </div>
                 <div class="u-s-m-b-15">
                   <div class="pd-detail__rating gl-rating-style">
                     <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
 
-                    <span class="pd-detail__review u-s-m-l-4"> <a data-click-scroll="#view-review">23 Reviews</a></span>
+                    <span class="pd-detail__review u-s-m-l-4"> <a data-click-scroll="#view-review"><?= $soLuotDanhGia ?> Reviews</a></span>
                   </div>
                 </div>
                 <div class="u-s-m-b-15">
@@ -140,10 +140,10 @@
 
                       <a href="#">Yêu thích sản phẩm</a>
 
-                      <span class="pd-detail__click-count">(222)</span></span>
+                      <span class="pd-detail__click-count">(<?= $soLuotThich ?>)</span></span>
                   </div>
                 </div>
-                <div class="u-s-m-b-15">
+                <!-- <div class="u-s-m-b-15">
                   <div class="pd-detail__inline">
                     <span class="pd-detail__click-wrap"><i class="far fa-envelope u-s-m-r-6"></i>
 
@@ -151,7 +151,7 @@
 
                       <span class="pd-detail__click-count">(20)</span></span>
                   </div>
-                </div>
+                </div> -->
                 <div class="u-s-m-b-15">
                   <ul class="pd-social-list">
                     <li>
@@ -402,7 +402,7 @@
                       <div class="product-o__rating gl-rating-style">
                         <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
 
-                        <span class="product-o__review">(20)</span>
+                        <span class="product-o__review">(0)</span>
                       </div>
 
                       <span class="product-o__price">
@@ -450,7 +450,7 @@
   <script src="https://www.google-analytics.com/analytics.js" async defer></script>
 
   <!--====== Vendor Js ======-->
-  <!-- <?php require_once "views/layout/lib_js.php" ?> -->
+  <?php require_once "views/layout/lib_js.php" ?>
 
   <!-- Xử lý comment -->
   <script>

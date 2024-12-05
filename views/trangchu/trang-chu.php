@@ -282,7 +282,7 @@
 
                             <span class="product-o__price"><?= number_format($sanPham['gia_khuyen_mai']) . " đ" ?>
 
-                              <span class="product-o__discount"><?= number_format($sanPham['gia_ban']) . " đ" ?></span></span>
+                              <span class="product-o__discount" style="color: #ff4500;"><?= number_format($sanPham['gia_ban']) . " đ" ?></span></span>
                           </div>
                         </div>
                   <?php
@@ -297,7 +297,9 @@
             </div>
             <div class="col-lg-12">
               <div class="load-more">
-                <button class="btn btn--e-brand" type="button">Xem thêm</button>
+                <a class="load-more" href="?act=list-san-pham">
+                  <button class="btn btn--e-brand" type="button">Xem thêm</button>
+                </a>
               </div>
             </div>
           </div>
@@ -381,7 +383,7 @@
 
                       <span class="product-o__price"><?= number_format($sanPhamMoi['gia_khuyen_mai']) . "đ" ?>
 
-                        <span class="product-o__discount"><?= number_format($sanPhamMoi['gia_ban']) . "đ" ?></span></span>
+                        <span class="product-o__discount" style="color: #ff4500;"><?= number_format($sanPhamMoi['gia_ban']) . "đ" ?></span></span>
                     </div>
                   </div>
             <?php endif;
@@ -502,7 +504,7 @@
 
                         <span class="product-o__price"><?= number_format($sanPhamUaThich['gia_khuyen_mai']) . 'đ' ?>
 
-                          <span class="product-o__discount"><?= number_format($sanPhamUaThich['gia_ban']) . 'đ' ?></span></span>
+                          <span class="product-o__discount" style="color: #ff4500;"><?= number_format($sanPhamUaThich['gia_ban']) . 'đ' ?></span></span>
                       </div>
                     </div>
               <?php endif;
