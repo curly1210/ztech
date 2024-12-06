@@ -855,8 +855,11 @@ class NguoiDungController
         header('Location: ?act=don-hang');
         exit();
       }
+
       $idTrangThai = 7; // ID trạng thái hủy hàng 
       $this->modelNguoiDung->changeStatusOrder($id, $idTrangThai);
+      // echo $id;
+      // die();
       $_SESSION['id'] = $_POST['id_nguoi_dung'];
       header('Location: ?act=don-hang');
       exit();

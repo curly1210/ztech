@@ -159,7 +159,7 @@ class Home extends Base
             }
 
             if (!empty($search)) {
-                $sql .= " AND ten LIKE '%$search%'";
+                $sql .= " AND san_phams.ten LIKE '%$search%'";
             }
 
             $sql .= "GROUP BY san_phams.id, san_phams.ten, san_phams.gia_ban, san_phams.trang_thai, hinh_anhs.id_san_pham";

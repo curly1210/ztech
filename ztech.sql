@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 03, 2024 at 10:55 AM
+-- Generation Time: Dec 06, 2024 at 04:18 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -20,6 +20,46 @@ SET time_zone = "+00:00";
 --
 -- Database: `ztech`
 --
+
+DELIMITER $$
+--
+-- Procedures
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_ton_kho` (IN `ma_don_hang` VARCHAR(255))   BEGIN
+    DECLARE done INT DEFAULT 0;
+    DECLARE ma_san_pham INT;
+    DECLARE so_luong INT;
+
+    -- Con trỏ để duyệt bảng chi tiết đơn hàng
+    DECLARE cur CURSOR FOR
+        SELECT chi_tiet_don_hangs.id_san_pham, chi_tiet_don_hangs.so_luong
+        FROM chi_tiet_don_hangs
+        WHERE chi_tiet_don_hangs.id_don_hang = ma_don_hang;
+
+    -- Xử lý khi hết dữ liệu trong con trỏ
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+
+    -- Mở con trỏ
+    OPEN cur;
+
+    -- Vòng lặp qua các bản ghi trong chi tiết đơn hàng
+    read_loop: LOOP
+        FETCH cur INTO ma_san_pham, so_luong;
+        IF done THEN
+            LEAVE read_loop;
+        END IF;
+
+        -- Cập nhật lại số lượng tồn kho
+        UPDATE san_phams
+        SET san_phams.hang_ton_kho = san_phams.hang_ton_kho + so_luong
+        WHERE san_phams.id = ma_san_pham;
+    END LOOP;
+
+    -- Đóng con trỏ
+    CLOSE cur;
+END$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -65,15 +105,7 @@ CREATE TABLE `binh_luans` (
 --
 
 INSERT INTO `binh_luans` (`id`, `noi_dung`, `ngay_binh_luan`, `id_nguoi_dung`, `id_san_pham`, `trang_thai`) VALUES
-(3, ' dsadsa', '2024-11-11 03:18:18', 29, 2, 1),
-(5, 'Sản phẩm chất lượng', '2024-11-19 16:36:02', 30, 10, 2),
-(6, 'hôm nay tôi buồn', '2024-11-22 09:57:39', 29, 1, 2),
-(7, 'hôm nay là thứ 6', '2024-11-22 09:57:52', 29, 1, 2),
-(21, 'SD', '2024-11-22 14:48:03', 30, 10, 2),
-(22, 'ds', '2024-11-23 22:39:53', 30, 1, 2),
-(23, 'hello', '2024-11-23 22:41:08', 30, 1, 2),
-(24, 'dss', '2024-11-23 22:47:44', 30, 11, 2),
-(25, 'sd', '2024-11-24 22:43:46', 30, 13, 2);
+(5, 'Sản phẩm chất lượng', '2024-11-19 16:36:02', 30, 10, 2);
 
 -- --------------------------------------------------------
 
@@ -86,7 +118,7 @@ CREATE TABLE `chi_tiet_don_hangs` (
   `so_luong` int NOT NULL,
   `gia` int NOT NULL,
   `id_san_pham` int NOT NULL,
-  `id_don_hang` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
+  `id_don_hang` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -94,14 +126,9 @@ CREATE TABLE `chi_tiet_don_hangs` (
 --
 
 INSERT INTO `chi_tiet_don_hangs` (`id`, `so_luong`, `gia`, `id_san_pham`, `id_don_hang`) VALUES
-(7, 1, 41000, 2, 'ORD055351V2'),
-(8, 1, 45000, 2, 'ORD064217NI'),
-(9, 1, 25000, 1, 'ORD0711341U'),
-(10, 1, 2100000, 9, 'ORD0711341U'),
-(11, 1, 30000, 1, 'ORD071432F6'),
-(12, 1, 12000000, 9, 'ORD07245286'),
-(13, 1, 12000000, 9, 'ORD100033XI'),
-(14, 1, 30000, 1, 'ORD0936432T');
+(60, 1, 6500000, 9, 'ORD041132RE'),
+(61, 2, 5000000, 12, 'ORD041132RE'),
+(62, 2, 5500000, 1, 'ORD0413382U');
 
 --
 -- Triggers `chi_tiet_don_hangs`
@@ -133,10 +160,9 @@ CREATE TABLE `danh_gias` (
 --
 
 INSERT INTO `danh_gias` (`id`, `sao`, `ngay_danh_gia`, `trang_thai`, `id_nguoi_danh_gia`, `id_san_pham`) VALUES
-(3, 4, '2024-11-18 16:18:34', 2, 30, 10),
-(4, 2, '2024-11-19 16:37:50', 2, 29, 10),
-(5, 4, '2024-11-22 10:56:01', 2, 30, 1),
-(6, 2, '2024-11-22 10:56:07', 2, 5, 1);
+(25, 4, '2024-11-28 13:14:00', 2, 30, 9),
+(26, 3, '2024-11-28 13:14:14', 2, 30, 1),
+(27, 2, '2024-11-28 13:28:52', 2, 30, 2);
 
 -- --------------------------------------------------------
 
@@ -161,7 +187,7 @@ INSERT INTO `danh_mucs` (`id`, `ten`, `hinh_anh`, `trang_thai`, `mo_ta`) VALUES
 (3, 'Laptop', './uploads/81N6HAWnb0L._AC_SL1500_.jpg', 2, 'gồm các loại máy tính'),
 (4, 'Điện thoại', './uploads/danhmuc1.jpg', 2, 'Bao gồm các sản phẩm điện thoại thông minh'),
 (5, 'Đồng hồ thông minh', './uploads/dong-ho-thong-minh-dinh-vi-y31-3-1.jpg', 2, 'Đồng hồ thông minh'),
-(6, 'tablet', './uploads/71mdoicpqWL._AC_SL1500_.jpg', 2, 'tablet');
+(6, 'Tablet', './uploads/71mdoicpqWL._AC_SL1500_.jpg', 2, 'Tablet');
 
 -- --------------------------------------------------------
 
@@ -186,12 +212,36 @@ CREATE TABLE `dia_chi_nhan_hangs` (
 
 INSERT INTO `dia_chi_nhan_hangs` (`id`, `tinh`, `quan`, `phuong`, `dia_chi`, `ten_nguoi_nhan`, `so_dien_thoai`, `email_nguoi_nhan`) VALUES
 (64, NULL, NULL, NULL, 'Đông Sơn, Thanh Hóa', 'đâsdsadas', '312312', 'cuongpxph48448@gmail.com'),
-(65, NULL, NULL, NULL, 'HoanKiem-HaNoi', 'PN123', '0293847583', 'namppph48575@gmail.com'),
-(66, NULL, NULL, NULL, 'HoanKiem-HaNoi', 'PN123', '0293847583', 'namppph48575@gmail.com'),
-(67, NULL, NULL, NULL, 'HoanKiem-HaNoi', 'PN123', '0293847583', 'namppph48575@gmail.com'),
-(68, NULL, NULL, NULL, 'HoanKiem-HaNoi', 'PN123', '0293847583', 'namppph48575@gmail.com'),
-(69, NULL, NULL, NULL, 'ád', 'cuong', '0898645513', 'cuong@gmail.com'),
-(70, NULL, NULL, NULL, 'adada', 'cuong HTT', '0898645513', 'cuong@gmail.com');
+(65, NULL, NULL, NULL, 'Đông Sơn, Thanh Hóa', 'đâsdsadas', '312312', 'cuongpxph48448@gmail.com'),
+(66, NULL, NULL, NULL, 'Đông Sơn, Thanh Hóa', 'đâsdsadas', '312312', 'cuongpxph48448@gmail.com'),
+(67, NULL, NULL, NULL, 'Đông Sơn, Thanh Hóa', 'đâsdsadas', '312312', 'cuongpxph48448@gmail.com'),
+(68, NULL, NULL, NULL, 'Đông Sơn, Thanh Hóa', 'đâsdsadas', '312312', 'cuongpxph48448@gmail.com'),
+(69, NULL, NULL, NULL, 'Đông Sơn, Thanh Hóa', 'đâsdsadas', '312312', 'cuongpxph48448@gmail.com'),
+(70, NULL, NULL, NULL, 'Đông Sơn, Thanh Hóa', 'đâsdsadas', '312312', 'cuongpxph48448@gmail.com'),
+(71, NULL, NULL, NULL, 'Đông Sơn, Thanh Hóa', 'đâsdsadas', '312312', 'cuongpxph48448@gmail.com'),
+(72, NULL, NULL, NULL, 'Đông Sơn, Thanh Hóa', 'đâsdsadas', '312312', 'cuongpxph48448@gmail.com'),
+(73, NULL, NULL, NULL, 'Đông Sơn, Thanh Hóa', 'đâsdsadas', '312312', 'cuongpxph48448@gmail.com'),
+(74, NULL, NULL, NULL, 'Đông Sơn, Thanh Hóa', 'đâsdsadas', '312312', 'cuongpxph48448@gmail.com'),
+(75, NULL, NULL, NULL, 'Đông Sơn, Thanh Hóa', 'đâsdsadas', '312312', 'cuongpxph48448@gmail.com'),
+(76, NULL, NULL, NULL, 'Đông Sơn, Thanh Hóa', 'đâsdsadas', '312312', 'cuongpxph48448@gmail.com'),
+(77, NULL, NULL, NULL, 'Đông Sơn, Thanh Hóa', 'đâsdsadas', '312312', 'cuongpxph48448@gmail.com'),
+(78, NULL, NULL, NULL, 'Đông Sơn, Thanh Hóa', 'đâsdsadas', '312312', 'cuongpxph48448@gmail.com'),
+(79, NULL, NULL, NULL, 'Đông Sơn, Thanh Hóa', 'đâsdsadas', '312312', 'cuongpxph48448@gmail.com'),
+(80, NULL, NULL, NULL, 'Đông Sơn, Thanh Hóa', 'đâsdsadas', '312312', 'cuongpxph48448@gmail.com'),
+(81, NULL, NULL, NULL, 'Đông Sơn, Thanh Hóa', 'đâsdsadas', '312312', 'cuongpxph48448@gmail.com'),
+(82, NULL, NULL, NULL, 'Đông Sơn, Thanh Hóa', 'đâsdsadas', '312312', 'cuongpxph48448@gmail.com'),
+(83, NULL, NULL, NULL, 'Đông Sơn, Thanh Hóa', 'đâsdsadas', '312312', 'cuongpxph48448@gmail.com'),
+(84, NULL, NULL, NULL, 'Đông Sơn, Thanh Hóa', 'đâsdsadas', '312312', 'cuongpxph48448@gmail.com'),
+(85, NULL, NULL, NULL, 'Đông Sơn, Thanh Hóa', 'đâsdsadas', '312312', 'cuongpxph48448@gmail.com'),
+(86, NULL, NULL, NULL, 'Đông Sơn, Thanh Hóa', 'đâsdsadas', '312312', 'cuongpxph48448@gmail.com'),
+(87, NULL, NULL, NULL, 'Đông Sơn, Thanh Hóa', 'đâsdsadas', '312312', 'cuongpxph48448@gmail.com'),
+(88, NULL, NULL, NULL, 'Đông Sơn, Thanh Hóa', 'đâsdsadas', '312312', 'cuongpxph48448@gmail.com'),
+(89, NULL, NULL, NULL, 'Đông Sơn, Thanh Hóa', 'đâsdsadas', '312312', 'cuongpxph48448@gmail.com'),
+(90, NULL, NULL, NULL, 'Đông Sơn, Thanh Hóa', 'đâsdsadas', '312312', 'cuongpxph48448@gmail.com'),
+(91, NULL, NULL, NULL, 'Đông Sơn, Thanh Hóa', 'đâsdsadas', '312312', 'cuongpxph48448@gmail.com'),
+(92, NULL, NULL, NULL, 'Đông Sơn, Thanh Hóa', 'đâsdsadas', '312312', 'cuongpxph48448@gmail.com'),
+(93, NULL, NULL, NULL, 'Đông Sơn, Thanh Hóa', 'phamcuong', '0898645514', 'cuongpxph48448@gmail.com'),
+(94, NULL, NULL, NULL, 'Đông Sơn, Thanh Hóa', 'phamcuong', '0898645513', 'cuongpxph48448@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -200,7 +250,7 @@ INSERT INTO `dia_chi_nhan_hangs` (`id`, `tinh`, `quan`, `phuong`, `dia_chi`, `te
 --
 
 CREATE TABLE `don_hangs` (
-  `id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `ngay_dat_hang` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `tien_ship` int NOT NULL,
   `tong_tien` int DEFAULT '0',
@@ -208,6 +258,7 @@ CREATE TABLE `don_hangs` (
   `trang_thai_thanh_toan` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Chưa thanh toán',
   `phuong_thuc_thanh_toan` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `ghi_chu` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ngay_cap_nhat_trang_thai_don_hang` datetime DEFAULT NULL,
   `id_dia_chi_nhan_hang` int NOT NULL,
   `id_nguoi_dung` int NOT NULL,
   `id_ma_khuyen_mai` int DEFAULT NULL,
@@ -218,18 +269,21 @@ CREATE TABLE `don_hangs` (
 -- Dumping data for table `don_hangs`
 --
 
-INSERT INTO `don_hangs` (`id`, `ngay_dat_hang`, `tien_ship`, `tong_tien`, `thanh_toan`, `trang_thai_thanh_toan`, `phuong_thuc_thanh_toan`, `ghi_chu`, `id_dia_chi_nhan_hang`, `id_nguoi_dung`, `id_ma_khuyen_mai`, `id_trang_thai_don_hang`) VALUES
-('ORD055351V2', '2024-11-26 12:53:51', 30000, 41000, 71000, 'Chưa thanh toán', 'COD', NULL, 64, 30, NULL, 7),
-('ORD064217NI', '2024-11-26 13:42:17', 30000, 45000, 75000, 'Đã thanh toán', 'COD', NULL, 65, 31, NULL, 12),
-('ORD0711341U', '2024-11-26 14:11:34', 30000, 2125000, 2155000, 'Chưa thanh toán', 'COD', NULL, 66, 31, NULL, 7),
-('ORD071432F6', '2024-11-26 14:14:32', 30000, 30000, 60000, 'Chưa thanh toán', 'COD', 'zxXZ', 67, 31, NULL, 7),
-('ORD07245286', '2024-11-26 14:24:52', 30000, 12000000, 12030000, 'Chưa thanh toán', 'COD', NULL, 68, 31, NULL, 7),
-('ORD0936432T', '2024-12-03 16:36:43', 30000, 30000, 60000, 'Đã thanh toán', 'COD', 'we', 70, 5, NULL, 12),
-('ORD100033XI', '2024-11-28 17:00:33', 30000, 12000000, 12030000, 'Chưa thanh toán', 'COD', NULL, 69, 5, NULL, 6);
+INSERT INTO `don_hangs` (`id`, `ngay_dat_hang`, `tien_ship`, `tong_tien`, `thanh_toan`, `trang_thai_thanh_toan`, `phuong_thuc_thanh_toan`, `ghi_chu`, `ngay_cap_nhat_trang_thai_don_hang`, `id_dia_chi_nhan_hang`, `id_nguoi_dung`, `id_ma_khuyen_mai`, `id_trang_thai_don_hang`) VALUES
+('ORD041132RE', '2024-12-06 11:11:32', 30000, 16500000, 16530000, 'Chưa thanh toán', 'COD', NULL, NULL, 93, 30, NULL, 6),
+('ORD0413382U', '2024-12-06 11:13:38', 30000, 11000000, 10930000, 'Đã thanh toán', 'COD', NULL, '2024-12-06 11:14:58', 94, 30, 4, 12);
 
 --
 -- Triggers `don_hangs`
 --
+DELIMITER $$
+CREATE TRIGGER `CapNhatNgayTrangThai` BEFORE UPDATE ON `don_hangs` FOR EACH ROW BEGIN
+    IF NEW.id_trang_thai_don_hang = 10 THEN
+        SET NEW.ngay_cap_nhat_trang_thai_don_hang = NOW();
+    END IF;
+END
+$$
+DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `cap_nhat_thanh_toan_insert` BEFORE INSERT ON `don_hangs` FOR EACH ROW BEGIN
 DECLARE gia_tri_khuyen_mai INT DEFAULT 0;
@@ -260,9 +314,20 @@ $$
 DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `trg_Update_TrangThaiThanhToan` BEFORE UPDATE ON `don_hangs` FOR EACH ROW BEGIN
-    -- Kiểm tra nếu trạng thái mới được cập nhật thành 12
-    IF NEW.id_trang_thai_don_hang = 12 THEN
+    -- Kiểm tra nếu trạng thái mới được cập nhật thành 10
+    IF NEW.id_trang_thai_don_hang = 10 OR NEW.id_trang_thai_don_hang = 9 THEN
         SET NEW.trang_thai_thanh_toan = 'Đã thanh toán';
+    ELSEIF NEW.id_trang_thai_don_hang = 11 THEN
+   		SET NEW.trang_thai_thanh_toan = 'Chưa thanh toán';
+    END IF;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `trg_after_update_order_status` AFTER UPDATE ON `don_hangs` FOR EACH ROW BEGIN
+    -- Kiểm tra nếu trạng thái đơn hàng là 'hủy'
+    IF NEW.id_trang_thai_don_hang = 7 OR NEW.id_trang_thai_don_hang =  11 THEN
+        CALL update_ton_kho(NEW.id);
     END IF;
 END
 $$
@@ -307,7 +372,46 @@ INSERT INTO `hinh_anhs` (`id`, `hinh_anh`, `id_san_pham`) VALUES
 (24, './uploads/product/Tính năng PAI trên đồng hồ, vòng đeo tay Xiaomi là gì_ PAI bao nhiêu là tốt_.jpg', 14),
 (25, './uploads/product/Samsung - Galaxy Tab S8+ Tablette Android 12,4 Pouces Wi-FI ram 8 Go 256 Go Tablette Andr___.jpg', 15),
 (30, './uploads/product/smart-tivi-samsung-4k-43-inch-ua43au7002-6.webp', 1),
-(31, './uploads/product/smart-tivi-samsung-4k-43-inch-ua43au7002-7.jpg', 1);
+(31, './uploads/product/smart-tivi-samsung-4k-43-inch-ua43au7002-7.jpg', 1),
+(42, './uploads/product/vi-vn-smart-tivi-samsung-4k-55-inch-ua55cu8000-1 (1).jpg', 16),
+(43, './uploads/product/vi-vn-smart-tivi-samsung-4k-55-inch-ua55cu8000-8.png', 16),
+(44, './uploads/product/google-tv-aqua-qled-4k-65-inch-aqt65s800ux-1-638645970371841104-700x467.jpg', 17),
+(45, './uploads/product/google-tv-aqua-qled-4k-65-inch-aqt65s800ux-3-638645970392969071-700x467.jpg', 17),
+(46, './uploads/product/google-tv-aqua-qled-4k-65-inch-aqt65s800ux-(5).jpg', 17),
+(47, './uploads/product/smart-nanocell-lg-4k-55-inch-55nano76sqa-2-2-700x467.jpg', 18),
+(48, './uploads/product/vi-vn-smart-nanocell-lg-4k-55-inch-55nano76sqa-001-1020x570.jpg', 18),
+(49, './uploads/product/smart-samsung-4k-55-inch-ua55bu8000-11-638660090403234695-700x467.jpg', 19),
+(50, './uploads/product/smart-samsung-4k-55-inch-ua55bu8000-thumb-638649317772756611-550x340.jpg', 19),
+(51, './uploads/product/1-1020x570.jpg', 20),
+(52, './uploads/product/smart-samsung-4k-55-inch-ua55bu8000-11-638660090403234695-700x467.jpg', 20),
+(53, './uploads/product/vi-vn-asus-vivobook-go-15-e1504fa-r5-nj776w-slider-1.jpg', 21),
+(54, './uploads/product/asus-vivobook-go-15-e1504fa-r5-nj776w-thumb-600x600.jpg', 21),
+(55, './uploads/product/vi-vn-hp-15-fd0303tu-i3-a2nl4pa-slider-1.jpg', 22),
+(56, './uploads/product/hp-15-fd0303tu-i3-a2nl4pa-thumb-1-600x600.jpg', 22),
+(57, './uploads/product/vi-vn-lenovo-ideapad-5-14iah8-i5-83bf003wvn-slider-1.jpg', 23),
+(58, './uploads/product/lenovo-ideapad-5-14iah8-i5-83bf003wvn-thumb-laptop-638632059812795496-600x600.jpg', 23),
+(59, './uploads/product/vi-vn-acer-aspire-lite-14-51m-36mh-i3-nxktvsv001-slider-1.jpg', 24),
+(60, './uploads/product/acer-aspire-lite-14-51m-36mh-i3-nxktvsv001-thumb-600x600.jpg', 24),
+(61, './uploads/product/vi-vn-hp-245-g10-r5-a20tdpt-1.jpg', 25),
+(62, './uploads/product/hp-245-g10-r5-a20tdpt-thumb-600x600.jpg', 25),
+(63, './uploads/product/iphone-16-blue-600x600.png', 26),
+(64, './uploads/product/iphone-16-xanh-luu-ly-1-638639088268837180-750x500.jpg', 26),
+(65, './uploads/product/samsung-galaxy-s24-ultra-xam-6-750x500.jpg', 27),
+(66, './uploads/product/samsung-galaxy-s24-ultra-grey-thumbnew-600x600.jpg', 27),
+(67, './uploads/product/oppo-reno12-f-5g-cam-1-750x500.jpg', 28),
+(68, './uploads/product/oppo-reno12-f-5g-orange-thumb-600x600.jpg', 28),
+(69, './uploads/product/vi-vn-samsung-galaxy-fit3-slider-2.jpg', 29),
+(70, './uploads/product/samsung-galaxy-fit3-hong-thumb-1-600x600.jpg', 29),
+(71, './uploads/product/vi-vn-xiaomi-watch-s-3-slider-4.jpg', 30),
+(72, './uploads/product/xiaomi-watch-s-3-bac-tn-600x600.jpg', 30),
+(73, './uploads/product/dong-ho-dinh-vi-tre-em-imoo-z1-41-mm-xanh-duong638329652158134133.jpg', 31),
+(74, './uploads/product/dong-ho-dinh-vi-tre-em-imoo-z1-41-mm-xanh-duong-tb-600x600.jpg', 31),
+(75, './uploads/product/lenovo-tab-plus-4-750x500.jpg', 32),
+(76, './uploads/product/lenovo-tab-plus-wifi-8gb-256gb-thumb-600x600.jpg', 32),
+(77, './uploads/product/ipad-air-11-inch-m2-wifi-blue-1-750x500.jpg', 33),
+(78, './uploads/product/ipad-air-11-inch-m2-wifi-blue-thumb-600x600.jpg', 33),
+(79, './uploads/product/ipad-10-wifi-bac-2-750x500.jpg', 34),
+(80, './uploads/product/iPad-Gen-10-sliver-thumb-600x600.jpg', 34);
 
 -- --------------------------------------------------------
 
@@ -324,17 +428,6 @@ CREATE TABLE `lien_hes` (
   `ngay_tao` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `trang_thai` tinyint NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `lien_hes`
---
-
-INSERT INTO `lien_hes` (`id`, `ho_ten`, `so_dien_thoai`, `email`, `noi_dung`, `ngay_tao`, `trang_thai`) VALUES
-(5, 'dsad', 'ád', 'sada', 'ád', '2024-11-09 13:23:53', 1),
-(6, 'đá', 'sadas', 'sadas', 'sad', '2024-11-09 13:24:50', 1),
-(7, 'đâs', 'âsdsa', 'đas', 'đá', '2024-11-09 13:25:00', 1),
-(8, 'sds', 'đá', 'sdas', 'sdas', '2024-11-19 21:54:20', 1),
-(9, 'Phạm Xuân Cường', '0898645513', 'cuongpxph48448@gmail.com', 'Tôi yêu bạn!', '2024-11-19 21:54:49', 2);
 
 -- --------------------------------------------------------
 
@@ -357,9 +450,7 @@ CREATE TABLE `ma_khuyen_mais` (
 --
 
 INSERT INTO `ma_khuyen_mais` (`id`, `ten`, `gia`, `so_luong`, `ngay_bat_dau`, `ngay_ket_thuc`, `trang_thai`) VALUES
-(1, 'vn50', 50000, 23, '2024-11-12 00:00:00', '2024-11-22 00:00:00', 1),
-(2, 'vn23', 12321, 12, '2024-11-07 00:00:00', '2024-11-22 00:00:00', 1),
-(3, 'VN100', 100000, 19, '2024-11-19 00:00:00', '2024-12-07 00:00:00', 3);
+(4, 'VN100', 100000, 19, '2024-12-05 00:00:00', '2024-12-28 00:00:00', 3);
 
 -- --------------------------------------------------------
 
@@ -377,18 +468,17 @@ CREATE TABLE `nguoi_dungs` (
   `dien_thoai` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `admin` tinyint NOT NULL DEFAULT '0',
   `trang_thai` tinyint DEFAULT '2',
-  `dia_chi` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
+  `dia_chi` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `nguoi_dungs`
 --
 
-INSERT INTO `nguoi_dungs` (`id`, `ho_ten`, `gioi_tinh`, `nam_sinh`, `email`, `mat_khau`, `dien_thoai`, `admin`, `trang_thai`, `dia_chi`) VALUES
-(5, 'cuong', 1, '2024-11-08', 'cuong@gmail.com', '123456', '0898645513', 1, 2, ''),
-(29, 'easdas', 2, '2024-11-28', 'sdsda@gmail.cdsad', '12312', '123', 0, 2, ''),
-(30, 'đâsdsadas', 1, '2024-11-25', 'cuongpxph48448@gmail.com', '123', '312312', 0, 2, 'Đông Sơn, Thanh Hóa'),
-(31, 'PN123', 1, '2024-11-20', 'namppph48575@gmail.com', '123456', '0293847583', 0, 2, 'HoanKiem-HaNoi');
+INSERT INTO `nguoi_dungs` (`id`, `ho_ten`, `gioi_tinh`, `nam_sinh`, `email`, `mat_khau`, `dien_thoai`, `admin`, `trang_thai`, `dia_chi`, `code`) VALUES
+(5, 'cuong', 1, '2024-11-08', 'cuong@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', '0898645512', 1, 2, '', NULL),
+(30, 'phamcuong', 1, '2024-11-25', 'cuongpxph48448@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', '0898645513', 0, 2, 'Đông Sơn, Thanh Hóa', '546010');
 
 -- --------------------------------------------------------
 
@@ -439,15 +529,34 @@ CREATE TABLE `san_phams` (
 --
 
 INSERT INTO `san_phams` (`id`, `ten`, `mo_ta`, `mo_ta_chi_tiet`, `gia_nhap`, `gia_ban`, `gia_khuyen_mai`, `ngay_nhap`, `hang_ton_kho`, `luot_xem`, `trang_thai`, `danh_muc_id`) VALUES
-(1, 'Màn hình tivi', 'Đây màn hình tivi', '<p>Chi tiết dài lắm</p>', 20000, 30000, 25000, '2024-11-11 00:00:00', 7, 0, 2, 2),
-(2, 'Máy tính apple 2000', 'Máy tính nhanh nhất thế giới', '<p>àng chính hãng - Bảo Hành &nbsp;- Mới 100% nguyên đai nguyên kiện - Không hàng trưng bày</p>', 36000, 45000, 41000, '2024-11-11 00:00:00', 84, 0, 2, 6),
-(9, 'Laptop Apple', 'laptop cấu hình xẹp', '<p>laptop cấu hình xẹp</p>', 1000000, 12000000, 2100000, '2024-11-13 00:00:00', 7, 0, 2, 3),
-(10, 'Đồng hồ thông minh', 'Đồng hồ thông minh ', '<p>sadasdasd</p>', 5000000, 6000000, 5500000, '2024-11-07 00:00:00', 10, 0, 2, 5),
-(11, 'Màn hình tivi sony', 'màn hình ti vi', '<p>sadasd</p>', 12000000, 13000000, 12500000, '2024-11-08 00:00:00', 0, 0, 2, 2),
-(12, 'Điện thoại thông minh nokia', 'Điện thoại thông minh nokia', '<p>Điện thoại thông minh nokia</p>', 3900000, 4000000, 4200000, '2024-11-19 00:00:00', 10, 0, 2, 4),
-(13, 'Điện thoại nokia XS 2024', 'Điện thoại nokia XS 2024', '<p>Điện thoại nokia XS 2024</p>', 5500000, 6000000, 5600000, '2024-11-19 00:00:00', 0, 0, 2, 4),
-(14, 'Đồng hồ thông minh xiaomi', 'Đồng hồ thông minh xiaomi', '<p>Đồng hồ thông minh xiaomi</p>', 1800000, 2300000, 2000000, '2024-11-19 00:00:00', 0, 0, 2, 5),
-(15, 'tablet galaxy S8+', 'tablet galaxy S8+', '<p>tablet galaxy S8+</p>', 4000000, 4800000, 4700000, '2024-11-19 00:00:00', 0, 0, 2, 6);
+(1, 'Màn hình tivi', 'Màn hình tivi', '<p>Chi tiết dài lắm</p>', 5000000, 6000000, 5500000, '2024-11-11 00:00:00', 18, 0, 2, 2),
+(2, 'Máy tính apple 2000', 'Máy tính nhanh nhất thế giới', '<p>Máy tính cấu hình cao, mạnh mẽ</p>', 5000000, 6000000, 5600000, '2024-11-11 00:00:00', 68, 0, 2, 6),
+(9, 'Laptop Apple', 'Laptop cấu hình đẹp', '<p>Laptop cấu hình đẹp, giá rẻ</p>', 4500000, 7000000, 6500000, '2024-11-13 00:00:00', 19, 0, 2, 3),
+(10, 'Đồng hồ thông minh', 'Đồng hồ thông minh ', '<p>Đồng hồ thông minh</p>', 1200000, 3000000, 2500000, '2024-11-07 00:00:00', 20, 0, 2, 5),
+(11, 'Màn hình tivi sony', 'Màn hình ti vi', '<p>Màn hình siêu mỏng </p>', 12000000, 15000000, 14500000, '2024-11-08 00:00:00', 20, 0, 2, 2),
+(12, 'Điện thoại nokia', 'Điện thoại nokia', '<p>Điện thoại thông minh nokia</p>', 4500000, 6000000, 5000000, '2024-11-19 00:00:00', 18, 0, 2, 4),
+(13, 'Điện thoại nokia XS 2024', 'Điện thoại nokia XS 2024', '<p>Điện thoại nokia XS 2024</p>', 1200000, 3000000, 2500000, '2024-11-19 00:00:00', 20, 0, 2, 4),
+(14, 'Đồng hồ thông minh xiaomi', 'Đồng hồ thông minh Xiaomi', '<p>Đồng hồ thông minh xiaomi</p>', 600000, 1200000, 1000000, '2024-11-19 00:00:00', 20, 0, 2, 5),
+(15, 'tablet galaxy S8+', 'Tablet galaxy S8+', '<p>Tablet galaxy S8+</p>', 3500000, 5500000, 5000000, '2024-11-19 00:00:00', 20, 0, 2, 6),
+(16, 'Smart Tivi Samsung 4K 55 inch', 'Smart Tivi Samsung 4K 55 inch UA55CU8000', '<p><i><strong>Smart Tivi Samsung 4K 55 inch UA55CU8000&nbsp;đem đến trải nghiệm tuyệt đỉnh nhờ màn hình 55 inch độ phân giải 4K với hơn 8 triệu điểm ảnh, khung hình sống động nhờ bộ vi xử lý Crystal 4K, âm thanh chuyển động theo hình ảnh OTS Lite, hệ điều hành Tizen™ đa nhiệm, dễ sử dụng cùng nhiều tiện ích thông minh khác.</strong></i></p>', 10000000, 13400000, 12400000, '2024-12-03 00:00:00', 50, 0, 2, 2),
+(17, 'Google Tivi QLED Aqua', 'Google Tivi QLED Aqua 4K 65 inch AQT65S800UX', '<p><i>Google Tivi QLED Aqua 4K 65 inch AQT65S800UX <strong>sở hữu thiết kế tinh tế, tối giản nhưng đậm nét sang trọng, màn hình Quantum Dot 4K cho hình ảnh sắc nét và sống động, Dolby Atmos cung cấp trải nghiệm âm thanh vòm 360 độ, hệ điều hành Google TV tích hợp kho ứng dụng giải trí đa dạng và phong phú.</strong></i></p>', 12000000, 17990000, 14490000, '2024-12-05 00:00:00', 25, 0, 2, 2),
+(18, 'Smart Tivi NanoCell LG 4K', 'Smart Tivi NanoCell LG 4K 55 inch 55NANO76SQA', '<p><i><strong>Smart Tivi NanoCell LG 4K 55 inch 55NANO76SQA, một tuyệt tác đến từ LG với thiết kế đơn giản, tinh tế, tái hiện sống động cuộc sống thực lên màn hình 4K trên dải màu Nano Color, tối ưu hiển thị và âm thanh nhờ bộ xử&nbsp;α5 Gen5 AI 4K, AI Sound Pro tinh chỉnh âm thanh lôi cuốn, cùng mang lại trải nghiệm nghe nhìn hoàn hảo trên các lựa chọn phong phú từ hệ điều hành WebOS 22.</strong></i></p>', 10000000, 20000000, 15000000, '2024-12-05 00:00:00', 30, 0, 2, 2),
+(19, 'Smart Tivi Samsung 4K', 'Smart Tivi Samsung 4K Crystal UHD 55 inch UA55BU8000', '<p><i><strong>Smart Tivi Samsung 4K Crystal UHD 55 inch UA55BU8000&nbsp;sở hữu&nbsp;thiết kế tinh tế, màn hình&nbsp;LED viền (Edge LED), VA LCD&nbsp;siêu mỏng đi cùng chất lượng hình ảnh 4K cực nét, công nghệ OTS Lite điều chỉnh âm thanh theo chuyển động của vật thể, hệ điều hành Tizen™ trực quan, thân thiện và vô số các tiện ích giải trí đi kèm&nbsp;chắc chắn đáp ứng nhu cầu giải trí cơ bản của gia đình bạn.</strong></i></p>', 7000000, 12900000, 12000000, '2024-12-05 00:00:00', 45, 0, 2, 2),
+(20, 'Smart Tivi Neo QLED 4K', 'Smart Tivi Neo QLED 4K 55 inch Samsung QA55QN85C', '<p><i><strong>Smart Tivi Neo QLED 4K 55 inch Samsung QA55QN85C&nbsp;có thiết kế siêu mỏng, sang trọng, tái hiện hình ảnh chuẩn 4K nổi bật nhờ bộ xử lý Neural Quantum 4K AI&nbsp;20 nơ-ron, tạo nên hình ảnh độ tương phản cao với công nghệ Quantum Matrix, hình ảnh giàu sắc thái, màu sắc sống động nhờ công nghệ&nbsp;Neo Quantum HDR, cho bạn tận hưởng âm thanh vòm như ở rạp hát với công nghệ Dolby Atmos, hệ điều hành Tizen™&nbsp;thao tác tiện lợi, điều khiển bằng giọng nói với Bixby có tiếng Việt tiết kiệm thời gian.</strong></i></p>', 15000000, 25000000, 22000000, '2024-12-05 00:00:00', 30, 0, 2, 2),
+(21, 'Laptop Asus Vivobook Go', 'Laptop Asus Vivobook Go 15 E1504FA R5 7520U/16GB/512GB/Chuột/Win11 (NJ776W)', '<p>Laptop Asus Vivobook Go 15 E1504FA R5 7520U (NJ776W)&nbsp;được trang bị vi xử lý AMD Ryzen 7000 Series mới, giúp người dùng hoàn thành tác vụ một cách nhanh chóng và hiệu quả. Nhiều tính năng hiện đại giúp khẳng định cá tính riêng, sẵn sàng đồng hành để bạn luôn linh hoạt và chủ động trong công việc.</p>', 7000000, 14000000, 12000000, '2024-12-05 00:00:00', 25, 0, 2, 3),
+(22, 'Laptop HP 15 fd0303TU i3', 'Laptop HP 15 fd0303TU i3 1315U/8GB/512GB/Win11 (A2NL4PA)', '<p>Laptop HP 15 fd0303TU i3 1315U (A2NL4PA) không chỉ đáp ứng nhu cầu học tập, văn phòng và thiết kế đồ họa cơ bản, mà còn là người bạn đồng hành lý tưởng cho mọi hành trình của bạn. Với thiết kế thanh lịch, hiệu năng ổn định, màn hình sắc nét, kết nối đa dạng và giá thành hợp lý, sản phẩm này xứng đáng là lựa chọn hàng đầu trong phân khúc laptop giá rẻ.</p>', 8000000, 12000000, 10000000, '2024-12-04 00:00:00', 60, 0, 2, 3),
+(23, 'Laptop Lenovo Ideapad', 'Laptop Lenovo Ideapad Slim 5 14IAH8 i5 12450H/16GB/1TB/Win11 (83BF003WVN)', '<p>Nếu bạn muốn tìm kiếm cho mình một sản phẩm trong phân khúc giá hợp lý, cấu hình mạnh thì không thể nào bỏ qua với chiếc laptop Lenovo Ideapad Slim 5 14IAH8 i5 12450H (83BF003WVN). Sự kết hợp đặc sắc giữa hiệu năng ấn tượng cùng nhiều tính năng đáng chú ý, đây chắc chắn là một lựa chọn đáng cân nhắc cho mọi người dùng.</p>', 12000000, 16000000, 15500000, '2024-12-05 00:00:00', 30, 0, 2, 3),
+(24, 'Laptop Acer Aspire', 'Laptop Acer Aspire Lite 14 51M 36MH i3 1215U/8GB/256GB/Win11 (NX.KTVSV.001)', '<p>Laptop Acer Aspire Lite 14 51M 36MH i3 1215U (NX.KTVSV.001) là cái tên đang \"làm mưa làm gió\" trong phân khúc laptop học tập - văn phòng bởi sự kết hợp hoàn hảo giữa hiệu năng ổn định, thiết kế thanh lịch và mức giá vô cùng hợp lý. Máy đáp ứng tốt các nhu cầu sử dụng và giải trí cơ bản của nhiều người dùng khi được trang bị chip Intel Core i3 thế hệ 12.</p>', 5000000, 9550000, 7000000, '2024-12-05 00:00:00', 50, 0, 2, 3),
+(25, 'Laptop HP 245', 'Laptop HP 245 G10 R5 7530U/8GB/512GB/Win11 (A20TDPT)', '<p>Laptop HP 245 G10 R5 7530U (A20TDPT) sự lựa chọn hợp lý dành cho các bạn đang tìm kiếm một bộ máy có thể hoàn thành đa dạng các tác vụ trong học tập và công việc hằng ngày nhờ sở hữu chip AMD Ryzen 5 7000 series mới hiện nay.</p>', 8800000, 12500000, 10500000, '2024-12-05 00:00:00', 25, 0, 2, 3),
+(26, ' IPhone 16 128GB', 'Điện thoại iPhone 16 128GB', '<p>Tháng 9 năm 2024, Apple đã chính thức trình làng iPhone 16, Bên cạnh thiết kế tinh tế và hiệu năng mạnh mẽ, chiếc điện thoại còn gây ấn tượng với những tính năng thông minh, hứa hẹn nâng cao chất lượng sử dụng smartphone của người dùng.</p>', 19900000, 23000000, 22500000, '2024-12-05 00:00:00', 25, 0, 2, 4),
+(27, 'Điện thoại Samsung Galaxy S24', 'Điện thoại Samsung Galaxy S24 Ultra 5G 12GB/256GB', '<p>Samsung Galaxy S24 Ultra&nbsp;một bước tiến đáng kể trong thế giới di động năm 2024. Sản phẩm không chỉ là sự tiếp nối thành công từ thế hệ trước mà còn đem đến nhiều cải tiến đáng chú ý về thiết kế, hiệu suất, camera và thời lượng pin. Đặc biệt, với sự hỗ trợ đến từ AI thông qua các tính năng mới giúp máy trở nên đáng chú ý hơn bao giờ hết.</p>', 20000000, 25000000, 22500000, '2024-12-05 00:00:00', 35, 0, 2, 4),
+(28, 'Điện thoại OPPO Reno12', 'Điện thoại OPPO Reno12 F 5G 12GB/256GB', '<p>OPPO Reno12 là chiếc điện thoại mới, thiết kế đẹp mắt, phù hợp cho những ai cần một chiếc máy vừa mạnh mẽ vừa dễ sử dụng. Với khả năng sạc nhanh, camera rõ nét và màn hình sống động, sản phẩm sẽ mang đến trải nghiệm tuyệt vời cho người dùng.</p>', 6000000, 9000000, 7500000, '2024-12-05 00:00:00', 25, 0, 2, 4),
+(29, 'Vòng tay thông minh Samsung Galaxy Fit3', 'Vòng tay thông minh Samsung Galaxy Fit3', '<p>Samsung Galaxy Fit3&nbsp;mang đến một trải nghiệm hoàn toàn mới so với thế hệ tiền nhiệm với màn hình lớn 1.6 inch, đi cùng nhiều tính năng tiên tiến hỗ trợ theo dõi sức khỏe và luyện tập thể thao hiệu quả. Nổi bật nhất là thời lượng pin ấn tượng, đáp ứng nhu cầu sử dụng cơ bản trong nhiều ngày liền.</p>', 6000000, 1200000, 1000000, '2024-12-05 00:00:00', 25, 0, 2, 5),
+(30, 'Đồng hồ thông minh Xiaomi Watch S3 47mm', 'Đồng hồ thông minh Xiaomi Watch S3 47mm', '<p>Với thiết kế sang trọng, hiện đại, tích hợp nhiều tính năng thông minh cùng một thời lượng pin dài. Xiaomi Watch S3 hứa hẹn sẽ là một lựa chọn tuyệt vời cho người dùng yêu thích công nghệ, mong muốn trải nghiệm một chiếc smartwatch đa năng.&nbsp;</p>', 2500000, 3500000, 3200000, '2024-12-05 00:00:00', 35, 0, 2, 5),
+(31, 'Em imoo Z1 Xanh dương', 'Đồng Hồ Định Vị Trẻ Em imoo Z1 Xanh dương', '<p>Đồng Hồ Định Vị Trẻ Em imoo Z1 41mm dây TPU Xanh dương&nbsp;là thiết bị liên lạc tiện lợi dành cho các bé và phụ huynh mà không cần kết nối với điện thoại. Nhờ được trang bị Nano SIM, định vị độc lập, camera tích hợp,... cha mẹ có thể yên tâm hơn vào những lúc không ở cạnh trẻ.</p>', 1500000, 2500000, 1790000, '2024-12-05 00:00:00', 30, 0, 2, 5),
+(32, 'Máy tính bảng Lenovo', 'Máy tính bảng Lenovo Tab Plus WiFi 8GB/256GB', '<p>Lenovo Tab Plus mang đến thiết kế thanh lịch, hiệu năng mạnh và trải nghiệm giải trí tuyệt vời. Với màn hình lớn, chân đế tiện dụng, âm thanh sống động và pin lâu dài, máy đáp ứng tốt nhu cầu từ công việc đến giải trí. Đây là lựa chọn phù hợp cho người dùng tìm kiếm một chiếc tablet tầm trung đến cao cấp.</p>', 5500000, 8000000, 7500000, '2024-12-05 00:00:00', 50, 0, 2, 6),
+(33, 'Máy tính bảng iPad Air 6', 'Máy tính bảng iPad Air 6 M2 11 inch WiFi 128GB', '<p>Nâng cao trải nghiệm người dùng với hiệu suất ấn tượng và thiết kế tinh tế đến từ iPad Air M2 128GB, sở hữu chip Apple M2 8 nhân đầy mạnh mẽ. Hứa hẹn mang đến cho bạn không chỉ một công cụ giải trí lý tưởng mà còn là người bạn làm làm việc đầy hiệu quả.</p>', 14000000, 18000000, 16500000, '2024-12-05 00:00:00', 50, 0, 2, 6),
+(34, 'Máy tính bảng iPad 10', 'Máy tính bảng iPad 10 WiFi 64GB', '<p>iPad 10 WiFi 64GB là mẫu máy tính bảng giá rẻ được nhà Apple giới thiệu trong khoảng thời gian gần đây với mức giá vô cùng hấp dẫn, đây được xem là sự lột xác hoàn toàn so với iPad 9 ở năm ngoái khi máy sở hữu ngoại hình khác biệt và thanh mảnh hơn. Bên cạnh đó thì hiệu năng cũng được xem là điểm nổi bật nhờ trang bị con chip Apple A14 Bionic.</p>', 6500000, 10000000, 8500000, '2024-12-04 00:00:00', 50, 0, 2, 6);
 
 -- --------------------------------------------------------
 
@@ -466,9 +575,9 @@ CREATE TABLE `san_pham_yeu_thichs` (
 --
 
 INSERT INTO `san_pham_yeu_thichs` (`id`, `id_nguoi_dung`, `id_san_pham`) VALUES
-(1, 5, 11),
-(2, 5, 10),
-(3, 5, 2);
+(29, 30, 11),
+(30, 30, 9),
+(31, 30, 1);
 
 -- --------------------------------------------------------
 
@@ -518,8 +627,8 @@ INSERT INTO `trang_thai_don_hangs` (`id`, `ten`, `ma_mau`) VALUES
 (8, 'Đã xác nhận', '#fcba03'),
 (9, 'Đang giao', '#03e3fc'),
 (10, 'Đã giao', '#03fcf8'),
-(11, 'Giao hàng thất bại', '#fcad03'),
-(12, 'Giao hàng thành công', '#fc5a03');
+(11, 'Thất bại', '#fcad03'),
+(12, 'Thành công', '#fc5a03');
 
 --
 -- Indexes for dumped tables
@@ -664,13 +773,13 @@ ALTER TABLE `binh_luans`
 -- AUTO_INCREMENT for table `chi_tiet_don_hangs`
 --
 ALTER TABLE `chi_tiet_don_hangs`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT for table `danh_gias`
 --
 ALTER TABLE `danh_gias`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `danh_mucs`
@@ -682,37 +791,37 @@ ALTER TABLE `danh_mucs`
 -- AUTO_INCREMENT for table `dia_chi_nhan_hangs`
 --
 ALTER TABLE `dia_chi_nhan_hangs`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
 
 --
 -- AUTO_INCREMENT for table `gio_hangs`
 --
 ALTER TABLE `gio_hangs`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 
 --
 -- AUTO_INCREMENT for table `hinh_anhs`
 --
 ALTER TABLE `hinh_anhs`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 
 --
 -- AUTO_INCREMENT for table `lien_hes`
 --
 ALTER TABLE `lien_hes`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `ma_khuyen_mais`
 --
 ALTER TABLE `ma_khuyen_mais`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `nguoi_dungs`
 --
 ALTER TABLE `nguoi_dungs`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `noi_dungs`
@@ -724,13 +833,13 @@ ALTER TABLE `noi_dungs`
 -- AUTO_INCREMENT for table `san_phams`
 --
 ALTER TABLE `san_phams`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `san_pham_yeu_thichs`
 --
 ALTER TABLE `san_pham_yeu_thichs`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `tin_tucs`
@@ -803,6 +912,20 @@ ALTER TABLE `san_phams`
 ALTER TABLE `san_pham_yeu_thichs`
   ADD CONSTRAINT `fk_product_in_favourite` FOREIGN KEY (`id_san_pham`) REFERENCES `san_phams` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `fk_user_in_favourite` FOREIGN KEY (`id_nguoi_dung`) REFERENCES `nguoi_dungs` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+DELIMITER $$
+--
+-- Events
+--
+CREATE DEFINER=`root`@`localhost` EVENT `CapNhatTrangThaiMoi2Phut` ON SCHEDULE EVERY 1 DAY STARTS '2024-12-04 10:28:48' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
+    UPDATE don_hangs
+    SET id_trang_thai_don_hang = 12,
+        ngay_cap_nhat_trang_thai_don_hang = NOW()
+    WHERE id_trang_thai_don_hang = 10
+      AND TIMESTAMPDIFF(DAY, ngay_cap_nhat_trang_thai_don_hang, NOW()) >= 3;
+END$$
+
+DELIMITER ;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

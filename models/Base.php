@@ -6,6 +6,19 @@ class Base
   {
     $this->conn = connectDB();
   }
+
+  public function updateViewTinTuc($id)
+  {
+    try {
+      $sql = "UPDATE tin_tucs SET luot_xem=luot_xem+1 WHERE id = :id";
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(":id", $id);
+      $stmt->execute();
+      return $stmt->fetch();
+    } catch (PDOException $e) {
+      echo "Lỗi : " . $e->getMessage();
+    }
+  }
   public function getTinTucById($id)
   {
     try {

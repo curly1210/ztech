@@ -19,6 +19,7 @@ class TinTucController
     public function viewDetail()
     {
         $id = $_GET['id'];
+        $this->modelTinTuc->updateViewTinTuc($id);
         $noiDungs = $this->modelTinTuc->getAdressShop();
         $danhMucs = $this->modelTinTuc->getAllDanhMuc();
         $tinTuc = $this->modelTinTuc->getTinTucById($id);

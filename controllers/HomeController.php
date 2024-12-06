@@ -53,7 +53,8 @@ class HomeController
 
         // echo $search;
         $products = $this->modalHome->getPaginationListProductFilter($category, $search, $min, $max, $calc_page, $num_results_on_page, $arrange, $user);
-
+        // print_r($products);
+        // die();
         // echo count($products);
         // print_r($products);
         require_once './views/trangchu/list-san-pham.php';
