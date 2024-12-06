@@ -98,19 +98,19 @@
                       <div class="col-lg-4">
                         <div class="mb-3">
                           <label class="form-label" for="gen-info-email-input">Giá nhập</label>
-                          <input value="<?= $sanPham["gia_nhap"] ?>" readonly type="text" class="form-control" id="gen-info-email-input">
+                          <input value="<?= number_format($sanPham["gia_nhap"]) . " đ" ?>" readonly type="text" class="form-control" id="gen-info-email-input">
                         </div>
                       </div>
                       <div class="col-lg-4">
                         <div class="mb-3">
                           <label class="form-label" for="gen-info-username-input">Giá bán</label>
-                          <input value="<?= $sanPham["gia_ban"] ?>" readonly type="text" class="form-control" id="gen-info-username-input">
+                          <input value="<?= number_format($sanPham["gia_ban"]) . " đ" ?>" readonly type="text" class="form-control" id="gen-info-username-input">
                         </div>
                       </div>
                       <div class="col-lg-4">
                         <div class="mb-3">
                           <label class="form-label" for="gen-info-username-input">Giá khuyến mãi</label>
-                          <input value="<?= $sanPham['gia_khuyen_mai'] ?>" readonly type="text" class="form-control" id="gen-info-username-input">
+                          <input value="<?= number_format($sanPham['gia_khuyen_mai']) . " đ" ?>" readonly type="text" class="form-control" id="gen-info-username-input">
                         </div>
                       </div>
                     </div>

@@ -19,7 +19,7 @@ class SanPham
     try {
 
       $sql = "SELECT san_phams.id,san_phams.ten,san_phams.gia_ban,san_phams.hang_ton_kho,san_phams.luot_xem, MIN(hinh_anhs.hinh_anh) as `url` 
-      FROM hinh_anhs JOIN san_phams on hinh_anhs.id_san_pham = san_phams.id WHERE san_phams.ten LIKE '%$search%' GROUP by hinh_anhs.id_san_pham";
+      FROM hinh_anhs JOIN san_phams on hinh_anhs.id_san_pham = san_phams.id WHERE san_phams.ten LIKE '%$search%' GROUP by hinh_anhs.id_san_pham ORDER BY san_phams.id DESC";
       $stmt = $this->conn->prepare($sql);
       $stmt->execute();
       return $stmt->fetchAll();

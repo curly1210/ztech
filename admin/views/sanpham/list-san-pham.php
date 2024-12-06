@@ -121,7 +121,7 @@
 
                                   <?= $row['ten'] ?>
                                 </td>
-                                <td class="text-center"><?= $row['gia_ban'] ?></td>
+                                <td class="text-center"> <?= number_format($row['gia_ban']) . " đ" ?></td>
                                 <td class="text-center"><?= $row['hang_ton_kho'] ?></td>
                                 <td class="text-center"><?= $row['luot_xem'] ?></td>
                                 <td>
