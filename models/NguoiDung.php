@@ -594,4 +594,61 @@ WHERE
       echo "Lỗi : " . $e->getMessage();
     }
   }
+
+  public function checkEmail($email)
+  {
+    try {
+      $sql = "SELECT * FROM nguoi_dungs WHERE email = :email";
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(":email", $email);
+
+      $stmt->execute();
+      return $stmt->fetch();
+    } catch (PDOException $e) {
+      echo "Lỗi : " . $e->getMessage();
+    }
+  }
+
+  public function addCodeToConfirm($email, $code)
+  {
+    try {
+      $sql = "UPDATE nguoi_dungs SET code=:code  WHERE email=:email";
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(":code", $code);
+      $stmt->bindParam(":email", $email);
+
+      $stmt->execute();
+    } catch (PDOException $e) {
+      echo "Lỗi : " . $e->getMessage();
+    }
+  }
+
+  public function verifyCode($email, $code)
+  {
+    try {
+      $sql = "SELECT * FROM nguoi_dungs WHERE email = :email AND code LIKE :code";
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(":email", $email);
+      $stmt->bindParam(":code", $code);
+
+      $stmt->execute();
+      return $stmt->fetch();
+    } catch (PDOException $e) {
+      echo "Lỗi : " . $e->getMessage();
+    }
+  }
+
+  public function changePasswordByEmail($password, $email)
+  {
+    try {
+      $sql = "UPDATE nguoi_dungs SET mat_khau=:mat_khau  WHERE email=:email";
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(":mat_khau", $password);
+      $stmt->bindParam(":email", $email);
+
+      $stmt->execute();
+    } catch (PDOException $e) {
+      echo "Lỗi : " . $e->getMessage();
+    }
+  }
 }

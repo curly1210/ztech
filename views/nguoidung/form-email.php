@@ -8,10 +8,51 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <link href="images/favicon.png" rel="shortcut icon">
-  <title>Đăng nhập | TechZ</title>
+  <title>Quên mật khẩu | TechZ</title>
 
   <!--====== Google Font ======-->
-  <?php require_once "views/layout/lib_css.php"  ?>
+  <?php require_once "views/layout/lib_css.php" ?>
+
+  <style>
+    /* Modal overlay */
+    .modal-load {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      /* Màu nền mờ */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      /* Hiển thị trên cùng */
+      display: none;
+      /* Ẩn mặc định */
+    }
+
+    /* Spinner */
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid rgba(255, 255, 255, 0.2);
+      border-top: 5px solid white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    /* Animation */
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
 </head>
 
 <body class="config">
@@ -48,7 +89,7 @@
                   </li>
                   <li class="is-marked">
 
-                    <a href="signin.html">Đăng nhập</a>
+                    <a href="?act=form-email-quen-mat-khau">Quên mật khẩu</a>
                   </li>
                 </ul>
               </div>
@@ -63,12 +104,12 @@
       <div class="u-s-p-b-60">
 
         <!--====== Section Intro ======-->
-        <div class="section__intro u-s-m-b-40">
+        <div class="section__intro u-s-m-b-60">
           <div class="container">
             <div class="row">
               <div class="col-lg-12">
                 <div class="section__text-wrap">
-                  <h1 class="section__heading u-c-secondary">ĐĂNG NHẬP</h1>
+                  <h1 class="section__heading u-c-secondary">QUÊN MẬT KHẨU?</h1>
                 </div>
               </div>
             </div>
@@ -84,54 +125,24 @@
               <div class="col-lg-6 col-md-8 u-s-m-b-30">
                 <div class="l-f-o">
                   <div class="l-f-o__pad-box">
-                    <h1 class="gl-h1">BẠN LÀ KHÁCH HÀNG MỚI</h1>
+                    <h1 class="gl-h1">ĐẶT LẠI MẬT KHẨU</h1>
 
-                    <div class="u-s-m-b-15">
-
-                      <a class="l-f-o__create-link btn--e-transparent-brand-b-2" href="?act=form-dang-ky">TẠO TÀI KHOẢN</a>
-                    </div>
-                    <h1 class="gl-h1">Đăng nhập</h1>
-
-                    <form class="l-f-o__form" action="?act=dang-nhap" method="post">
-
+                    <span class="gl-text u-s-m-b-30">Điền email vào ô bên dưới, chúng tôi sẽ gửi mã xác nhận để đặt lại khẩu của bạn</span>
+                    <form id="formForgetPassword" class="l-f-o__form">
                       <div class="u-s-m-b-30">
-                        <div style="display: flex; align-items: center;gap: 10px; color: red; font-size: small;">
-                          <label class="gl-label" for="login-email">E-MAIL *</label>
-                          <span style="margin-bottom: 8px;"><?= !empty($_SESSION['errors']['email']) ? $_SESSION['errors']['email'] : '' ?></span>
-                        </div>
 
-                        <input class="input-text input-text--primary-style" type="text" name="email" id="login-email" placeholder="Nhập mật khẩu">
-                      </div>
-                      <div class="u-s-m-b-30">
-                        <div style="display: flex; align-items: center;gap: 10px; color: red; font-size: small;">
-                          <label class="gl-label" for="login-password">MẬT KHẨU *</label>
-                          <span style="margin-bottom: 8px;"><?= !empty($_SESSION['errors']['matKhau']) ? $_SESSION['errors']['matKhau'] : '' ?></span>
-                        </div>
+                        <label class="gl-label" for="reset-email">E-MAIL *</label>
 
-                        <input class="input-text input-text--primary-style" name="mat_khau" type="password" id="login-password" placeholder="Nhập mật khẩu">
-                      </div>
-                      <div class="gl-inline">
-                        <div class="u-s-m-b-30">
-
-                          <button class="btn btn--e-transparent-brand-b-2" type="submit">Đăng Nhập</button>
-                        </div>
-                        <div class="u-s-m-b-30">
-
-                          <a class="gl-link" href="?act=form-email-quen-mat-khau">Quên mật khẩu</a>
-                        </div>
+                        <input class="input-text input-text--primary-style" type="text" name="email" id="reset-email" placeholder="Điền email">
+                        <span id="err_email" style="color: red; margin-top: 5px; display: block;"></span>
                       </div>
                       <div class="u-s-m-b-30">
 
-                        <!--====== Check Box ======-->
-                        <!-- <div class="check-box">
+                        <button class="btn btn--e-transparent-brand-b-2" type="submit">GỬI</button>
+                      </div>
+                      <div class="u-s-m-b-30">
 
-                          <input type="checkbox" id="remember-me">
-                          <div class="check-box__state check-box__state--primary">
-
-                            <label class="check-box__label" for="remember-me">Remember Me</label>
-                          </div>
-                        </div> -->
-                        <!--====== End - Check Box ======-->
+                        <a class="gl-link" href="?act=form-dang-nhap">Trang đăng nhập</a>
                       </div>
                     </form>
                   </div>
@@ -147,8 +158,13 @@
     <!--====== End - App Content ======-->
 
 
+
     <!--====== Main Footer ======-->
     <?php require_once "views/layout/footer.php" ?>
+  </div>
+
+  <div id="loadingModal" class="modal-load">
+    <div class="spinner"></div>
   </div>
   <!--====== End - Main App ======-->
 
@@ -168,7 +184,47 @@
   <!--====== Vendor Js ======-->
   <?php require_once "views/layout/lib_js.php" ?>
 
-  <?php unset($_SESSION['errors']); ?>
+  <script>
+    $(document).ready(function() {
+
+      // Thêm nhiều sản phẩm
+      $("#formForgetPassword").submit(function(event) {
+        event.preventDefault();
+        const modal = document.getElementById("loadingModal");
+        modal.style.display = "flex"; // Hiển thị modal
+        document.body.style.overflow = "hidden"; // Ngăn cuộn trang
+        $.ajax({
+          url: '?act=kiem-tra-email',
+          type: 'POST',
+          data: $(this).serialize(),
+          success: function(response) {
+            console.log(response);
+            // alert(response);
+            modal.style.display = "none";
+            document.body.style.overflow = "auto";
+
+            response = JSON.parse(response);
+            if (!response['check']) {
+              $("#err_email").text(response['error']);
+            } else {
+              window.location = "?act=form-verify-code"
+            }
+
+            // alert(response['check_login']);
+            // if (!response['check_login']) {
+            //   openModalCheckLogin();
+            // } else {
+            //   alert(response['message']);
+            // }
+          },
+          error: function() {
+            alert("Lỗi");
+          }
+        });
+      });
+
+    });
+  </script>
 
   <!--====== Noscript ======-->
   <noscript>

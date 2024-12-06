@@ -92,7 +92,7 @@ class NguoiDungController
       }
 
       if (empty($errors)) {
-        // $matKhau = md5($matKhau);
+        $matKhau = md5($matKhau);
         $this->modelNguoiDung->create($hoTen, $email, $matKhau, $dienThoai, $gioiTinh, $namSinh);
         $errors['check'] = 0;
         echo json_encode($errors);

@@ -51,6 +51,7 @@ class NguoiDungController
     }
 
     if (!empty($email) && !empty($matKhau)) {
+      $matKhau = md5($matKhau);
       $nguoiDung = $this->modelNguoiDung->checkLogin($email, $matKhau);
       if (count($nguoiDung) == 0) {
         $errors['matKhau'] = "Sai email hoặc mật khẩu";
@@ -171,7 +172,7 @@ class NguoiDungController
       }
 
       if (empty($errors)) {
-        // $matKhau = md5($matKhau);
+        $matKhau = md5($matKhau);
         $this->modelNguoiDung->create($hoTen, $email, $matKhau, $dienThoai, $gioiTinh, $namSinh, $diaChi);
         $errors['check'] = 0;
         echo json_encode($errors);
@@ -931,5 +932,229 @@ class NguoiDungController
     $rating = $_POST['rating'];
 
     $this->modelNguoiDung->reviewProduct($idProduct, $_SESSION['user']['id'], $rating);
+  }
+
+  public function formEmail()
+  {
+    if (isset($_SESSION['user'])) {
+      header("Location: index.php");
+    }
+
+    $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
+    $noiDungs = $this->modelNguoiDung->getAdressShop();
+
+    require_once './views/nguoidung/form-email.php';
+  }
+
+  public function checkEmail()
+  {
+    if (isset($_SESSION['user'])) {
+      header("Location: index.php");
+    }
+
+    // if (!isset($_SESSION['forget_password'])) {
+    //   header("Location: index.php");
+    // } else {
+    //   if (time() - $_SESSION['forget_password']['last_activity'] >= 300) {
+    //     unset($_SESSION['forget_password']);
+    //     header("Location: index.php");
+    //   }
+    // }
+
+    $email = $_POST["email"];
+    $json = [];
+    if (empty($email)) {
+      $json['error'] = "Vui lòng điền email";
+    } else {
+      $checkEmail = $this->modelNguoiDung->checkEmail($email);
+      // $json['check'] = 0;
+      if ($checkEmail) {
+        $json['check'] = 1;
+
+        // Lưu session 
+        $_SESSION['forget_password'] = [
+          'email' => $email, // Dữ liệu cụ thể của session này
+          'last_activity' => time()        // Thời gian hoạt động hiện tại
+        ];
+
+        // Gửi mail và thêm code vào database
+        $code = rand(100000, 999999);
+        $this->modelNguoiDung->addCodeToConfirm($email, $code);
+
+        // addCode($account[0]["email"], $code);
+
+        $to = $email;
+        $subject = 'ĐẶT LẠI MẬT KHẨU';
+        $message = "Mã xác thực: " . $code;
+        // $headers = 'From : 11cuongpham@gmail.com';
+
+        $mail = new PHPMailer(true);
+
+        try {
+          // $mail->SMTPDebug = 2;                      //Enable verbose debug output
+          $mail->isSMTP();                                            //Send using SMTP
+          $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+          $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+          $mail->Username   = '1210.curly@gmail.com';                     //SMTP username
+          $mail->Password   = 'vkzcosgjfbyoyxvd';                          //SMTP password
+          $mail->SMTPSecure = 'ssl';            //Enable implicit TLS encryption
+          $mail->Port       = 465;
+
+          $mail->setFrom('1210.curly@gmail.com', 'TechZ');
+          $mail->addAddress($to);
+
+          $mail->CharSet = 'UTF-8';
+
+
+          $mail->isHTML(true);
+          $mail->Subject = $subject;
+          $mail->Body = $message;
+          $mail->send();
+          // echo "Mail has been sent successfully!";
+        } catch (Exception $e) {
+          // echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        }
+      } else {
+        $json['check'] = 0;
+        $json['error'] = "Email không tồn tại";
+      }
+    }
+    echo json_encode($json);
+  }
+
+  public function formVerifyCode()
+  {
+    if (isset($_SESSION['user'])) {
+      header("Location: index.php");
+    }
+
+    if (!isset($_SESSION['forget_password'])) {
+      header("Location: index.php");
+    } else {
+      if (time() - $_SESSION['forget_password']['last_activity'] >= 300) {
+        unset($_SESSION['forget_password']);
+        header("Location: index.php");
+      }
+    }
+
+    $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
+    $noiDungs = $this->modelNguoiDung->getAdressShop();
+
+
+    require_once './views/nguoidung/verify-code.php';
+  }
+
+  public function verifyCode()
+  {
+    if (isset($_SESSION['user'])) {
+      header("Location: index.php");
+    }
+
+    if (!isset($_SESSION['forget_password'])) {
+      header("Location: index.php");
+    } else {
+      if (time() - $_SESSION['forget_password']['last_activity'] >= 300) {
+        unset($_SESSION['forget_password']);
+        header("Location: index.php");
+      }
+    }
+
+    $code = $_POST['code'];
+    $email = $_SESSION['forget_password']['email'];
+    $verify = $this->modelNguoiDung->verifyCode($email, $code);
+
+    $json = [];
+    if ($verify) {
+      $json['check'] = 1;
+      $_SESSION['forget_password']['code'] = $code;
+    } else {
+      $json['check'] = 0;
+      $json['error'] = "Mã xác thực không hợp lệ";
+    }
+
+    echo json_encode($json);
+
+    // echo $code;
+  }
+
+  public function formChangePassword()
+  {
+    if (isset($_SESSION['user'])) {
+      header("Location: index.php");
+    }
+
+    if (!isset($_SESSION['forget_password']) && !isset($_SESSION['forget_password']['code'])) {
+      header("Location: index.php");
+    } else {
+      if (time() - $_SESSION['forget_password']['last_activity'] >= 300) {
+        unset($_SESSION['forget_password']);
+        header("Location: index.php");
+      }
+    }
+
+    $danhMucs = $this->modelNguoiDung->getAllDanhMuc();
+    $noiDungs = $this->modelNguoiDung->getAdressShop();
+
+    require_once './views/nguoidung/form-doi-mat-khau.php';
+  }
+
+  public function resetPassword()
+  {
+    if (isset($_SESSION['user'])) {
+      header("Location: index.php");
+    }
+
+    if (!isset($_SESSION['forget_password']) && !isset($_SESSION['forget_password']['code'])) {
+      header("Location: index.php");
+    } else {
+      if (time() - $_SESSION['forget_password']['last_activity'] >= 300) {
+        unset($_SESSION['forget_password']);
+        header("Location: index.php");
+      }
+    }
+
+    $password = $_POST['password'];
+    $re_password = $_POST['re_password'];
+
+    $json = [];
+    $json["check"] = 1;
+
+    if ($password == "" || $re_password == "") {
+      if ($password == "") {
+        $json["errPassword"] = "Mật khẩu không được để trống";
+        $json["check"] = 0;
+      } else {
+        if (strlen($password) < 6 || strlen($password) > 15) {
+          $json["errPassword"] = "Mật khẩu nằm trong khoảng 6-15 ký tự";
+          $json["check"] = 0;
+        }
+      }
+
+      if ($re_password == "") {
+        $json["errRePassword"] = "Nhập lại mật khẩu không được để trống";
+        $json["check"] = 0;
+      }
+    } else {
+      if (strlen($password) < 6 || strlen($password) > 15) {
+        $json["errPassword"] = "Mật khẩu nằm trong khoảng 6-15 ký tự";
+        $json["check"] = 0;
+      } else {
+        if ($password != $re_password) {
+          $json["errRePassword"] = "Mật khẩu không trùng nhau";
+          $json["check"] = 0;
+        }
+      }
+    }
+
+    if ($json["check"] == 1) {
+      $password = md5($password);
+      $email =  $_SESSION['forget_password']['email'];
+      $this->modelNguoiDung->changePasswordByEmail($password, $email);
+      unset($_SESSION["forget_password"]);
+    }
+
+
+
+    echo json_encode($json);
   }
 }

@@ -69,6 +69,15 @@ match ($act) {
     'xoa-list-yeu-thich'      => (new NguoiDungController())->deleteAllLike(),
     'danh-gia-san-pham'       => (new NguoiDungController())->reviewProduct(),
 
+    // Quên mật khẩu
+    'form-email-quen-mat-khau' => (new NguoiDungController())->formEmail(),
+    'kiem-tra-email'           => (new NguoiDungController())->checkEmail(),
+    'form-verify-code'         => (new NguoiDungController())->formVerifyCode(),
+    'kiem-tra-code'            => (new NguoiDungController())->verifyCode(),
+    'form-doi-mat-khau'        => (new NguoiDungController())->formChangePassword(),
+    'reset-mat-khau'           => (new NguoiDungController())->resetPassword(),
+
+
     // Giỏ hàng, Thanh Toán
     'them-gio-hang'           => (new NguoiDungController())->addToCart(),
     'gio-hangs'               => (new NguoiDungController())->listCart(),

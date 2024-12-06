@@ -8,10 +8,12 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <link href="images/favicon.png" rel="shortcut icon">
-  <title>Đăng nhập | TechZ</title>
+  <title>Quên mật khẩu | TechZ</title>
 
   <!--====== Google Font ======-->
-  <?php require_once "views/layout/lib_css.php"  ?>
+  <?php require_once "views/layout/lib_css.php" ?>
+
+
 </head>
 
 <body class="config">
@@ -43,13 +45,9 @@
               <div class="breadcrumb__wrap">
                 <ul class="breadcrumb__list">
                   <li class="has-separator">
-
                     <a href="?act=/">Trang chủ</a>
                   </li>
-                  <li class="is-marked">
 
-                    <a href="signin.html">Đăng nhập</a>
-                  </li>
                 </ul>
               </div>
             </div>
@@ -63,12 +61,12 @@
       <div class="u-s-p-b-60">
 
         <!--====== Section Intro ======-->
-        <div class="section__intro u-s-m-b-40">
+        <div class="section__intro u-s-m-b-60">
           <div class="container">
             <div class="row">
               <div class="col-lg-12">
                 <div class="section__text-wrap">
-                  <h1 class="section__heading u-c-secondary">ĐĂNG NHẬP</h1>
+                  <h1 class="section__heading u-c-secondary">XÁC THỰC MÃ</h1>
                 </div>
               </div>
             </div>
@@ -84,54 +82,24 @@
               <div class="col-lg-6 col-md-8 u-s-m-b-30">
                 <div class="l-f-o">
                   <div class="l-f-o__pad-box">
-                    <h1 class="gl-h1">BẠN LÀ KHÁCH HÀNG MỚI</h1>
+                    <h1 class="gl-h1">ĐẶT LẠI MẬT KHẨU</h1>
 
-                    <div class="u-s-m-b-15">
-
-                      <a class="l-f-o__create-link btn--e-transparent-brand-b-2" href="?act=form-dang-ky">TẠO TÀI KHOẢN</a>
-                    </div>
-                    <h1 class="gl-h1">Đăng nhập</h1>
-
-                    <form class="l-f-o__form" action="?act=dang-nhap" method="post">
-
+                    <span class="gl-text u-s-m-b-30">Code đã được gửi tới <?= $_SESSION['forget_password']['email'] ?>. Vui lòng nhập mã xác thực. Mã có hiệu lực trong vòng 5 phút.</span>
+                    <form id="formVerifyCode" class="l-f-o__form">
                       <div class="u-s-m-b-30">
-                        <div style="display: flex; align-items: center;gap: 10px; color: red; font-size: small;">
-                          <label class="gl-label" for="login-email">E-MAIL *</label>
-                          <span style="margin-bottom: 8px;"><?= !empty($_SESSION['errors']['email']) ? $_SESSION['errors']['email'] : '' ?></span>
-                        </div>
 
-                        <input class="input-text input-text--primary-style" type="text" name="email" id="login-email" placeholder="Nhập mật khẩu">
-                      </div>
-                      <div class="u-s-m-b-30">
-                        <div style="display: flex; align-items: center;gap: 10px; color: red; font-size: small;">
-                          <label class="gl-label" for="login-password">MẬT KHẨU *</label>
-                          <span style="margin-bottom: 8px;"><?= !empty($_SESSION['errors']['matKhau']) ? $_SESSION['errors']['matKhau'] : '' ?></span>
-                        </div>
+                        <label class="gl-label" for="reset-email">Mã xác thực *</label>
 
-                        <input class="input-text input-text--primary-style" name="mat_khau" type="password" id="login-password" placeholder="Nhập mật khẩu">
-                      </div>
-                      <div class="gl-inline">
-                        <div class="u-s-m-b-30">
-
-                          <button class="btn btn--e-transparent-brand-b-2" type="submit">Đăng Nhập</button>
-                        </div>
-                        <div class="u-s-m-b-30">
-
-                          <a class="gl-link" href="?act=form-email-quen-mat-khau">Quên mật khẩu</a>
-                        </div>
+                        <input class="input-text input-text--primary-style" type="text" name="code" id="verifyCode" placeholder="Nhập mã xác thực">
+                        <span id="err_code" style="color: red; margin-top: 5px; display: block;"></span>
                       </div>
                       <div class="u-s-m-b-30">
 
-                        <!--====== Check Box ======-->
-                        <!-- <div class="check-box">
+                        <button class="btn btn--e-transparent-brand-b-2" type="submit">GỬI</button>
+                      </div>
+                      <div class="u-s-m-b-30">
 
-                          <input type="checkbox" id="remember-me">
-                          <div class="check-box__state check-box__state--primary">
-
-                            <label class="check-box__label" for="remember-me">Remember Me</label>
-                          </div>
-                        </div> -->
-                        <!--====== End - Check Box ======-->
+                        <a class="gl-link" href="?act=form-dang-nhap">Trang đăng nhập</a>
                       </div>
                     </form>
                   </div>
@@ -147,8 +115,13 @@
     <!--====== End - App Content ======-->
 
 
+
     <!--====== Main Footer ======-->
     <?php require_once "views/layout/footer.php" ?>
+  </div>
+
+  <div id="loadingModal" class="modal-load">
+    <div class="spinner"></div>
   </div>
   <!--====== End - Main App ======-->
 
@@ -168,7 +141,39 @@
   <!--====== Vendor Js ======-->
   <?php require_once "views/layout/lib_js.php" ?>
 
-  <?php unset($_SESSION['errors']); ?>
+  <script>
+    $(document).ready(function() {
+
+      // Thêm nhiều sản phẩm
+      $("#formVerifyCode").submit(function(event) {
+        event.preventDefault();
+
+        $.ajax({
+          url: '?act=kiem-tra-code',
+          type: 'POST',
+          data: $(this).serialize(),
+          success: function(response) {
+
+            // alert(response);
+
+            response = JSON.parse(response);
+            if (!response['check']) {
+              $("#err_code").text(response['error']);
+            } else {
+              // console.log("mã hợp lệ");
+              window.location = "?act=form-doi-mat-khau"
+            }
+
+
+          },
+          error: function() {
+            alert("Lỗi");
+          }
+        });
+      });
+
+    });
+  </script>
 
   <!--====== Noscript ======-->
   <noscript>
